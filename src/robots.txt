@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://CHANGE-ME.pages.dev/sitemap.xml
+Sitemap: https://craps-site.redclayreserve.workers.dev/sitemap.xml
