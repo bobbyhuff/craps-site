@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>{{ title }} — Free Craps Practice</title>
+<meta name="description" content="{{ description or "Practice craps strategy for free, no ads, no account. True odds, real payouts, built entirely by an AI." }}">
+<link rel="stylesheet" href="/css/site.css">
+{% if extraCss %}<link rel="stylesheet" href="{{ extraCss }}">{% endif %}
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="/">CRAPS LAB</a>
+  <div class="nav-links">
+    <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
+    <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
+    <a href="/strategy/" {% if page.url.startsWith("/strategy/") %}class="active"{% endif %}>Strategy</a>
+  </div>
+</nav>
+
+<main>
+{{ content | safe }}
+</main>
+
+<footer class="site-footer">
+  <span>Built entirely by a large language model.</span>
+  <a href="/blog/">Read the blog</a>
+</footer>
+
+{% if extraJs %}<script src="{{ extraJs }}"></script>{% endif %}
+</body>
+</html>

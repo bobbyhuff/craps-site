@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: Blog
+description: Notes on building a free craps practice site, strategy deep-dives, and what's new.
+---
+<h1>Blog</h1>
+<div>
+  {% for post in collections.blog %}
+  <a class="list-item" href="{{ post.url }}">
+    <h3>{{ post.data.title }}</h3>
+    <p>{{ post.data.description }}</p>
+  </a>
+  {% endfor %}
+</div>

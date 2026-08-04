@@ -1,0 +1,18 @@
+---
+layout: base.njk
+title: Strategy
+description: Craps strategy guides — bet types, true odds explained, and bankroll management, for players who want to play smart, not just play.
+---
+<h1>Strategy</h1>
+<p>The math behind craps is fixed — the house edge on every bet is public knowledge. These guides walk through what actually matters: which bets keep the edge low, how odds bets work, and how to manage a bankroll so a cold streak doesn't end your session.</p>
+
+<div>
+  {% for article in collections.strategy %}
+  <a class="list-item" href="{{ article.url }}">
+    <h3>{{ article.data.title }}</h3>
+    <p>{{ article.data.description }}</p>
+  </a>
+  {% endfor %}
+</div>
+
+<p style="margin-top:24px;"><a href="/games/craps/">Practice these on the free craps table →</a></p>

@@ -1,0 +1,105 @@
+---
+layout: base.njk
+title: Craps
+description: Play free craps in your browser. Full table with Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, and Hardways — true odds, no ads, no account.
+extraCss: /games/craps/craps.css
+extraJs: /games/craps/craps.js
+---
+<div class="overlay" id="setupOverlay">
+  <div class="overlay-box">
+    <h2 id="overlayTitle">Welcome to Craps</h2>
+    <p id="overlayText">Set your starting bankroll to begin.</p>
+    <input type="number" id="overlayInput" min="1" step="1" value="200">
+    <div class="overlay-buttons">
+      <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+      <button class="btn-roll" id="overlayConfirm">Start</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <header>
+    <h1>CRAPS</h1>
+    <div class="bankroll-panel">
+      <div>Bankroll <b id="bankroll">$0.00</b></div>
+      <div>Net <b id="net">$0.00</b></div>
+      <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+    </div>
+  </header>
+
+  <div class="status-bar">
+    <span>Point: <b id="pointDisplay">OFF</b></span>
+    <span id="notice"></span>
+  </div>
+
+  <div class="roll-display">
+    <div class="current-roll" id="currentRoll">
+      <div class="die" id="die1">-</div>
+      <div class="die" id="die2">-</div>
+      <div class="roll-total" id="rollTotal">Roll the dice to begin</div>
+    </div>
+    <div class="roll-history-wrap">
+      <span class="chip-label">History:</span>
+      <div class="roll-history" id="rollHistory"></div>
+    </div>
+  </div>
+
+  <div class="chip-row">
+    <span class="chip-label">Chip:</span>
+    <div id="chipSelector"></div>
+    <div class="mode-toggle" id="modeToggle">
+      <span class="chip-label">Number bets:</span>
+      <label><input type="radio" name="numMode" value="place" checked> Place</label>
+      <label><input type="radio" name="numMode" value="buy"> Buy</label>
+    </div>
+    <label class="let-it-ride"><input type="checkbox" id="letItRide"> Let it ride (keep Place/Buy/Hardway bets up after a win)</label>
+  </div>
+
+  <div class="table">
+
+    <div class="row lines">
+      <div class="bet-strip" id="passLine"></div>
+      <div class="bet-strip dont" id="dontPass"></div>
+    </div>
+
+    <div class="row lines">
+      <div class="bet-strip come" id="comeStrip"></div>
+      <div class="bet-strip come dont" id="dontComeStrip"></div>
+    </div>
+
+    <div class="row numbers" id="numberRow"></div>
+
+    <div class="row onetime">
+      <div class="bet-box" id="field"></div>
+      <div class="bet-box" id="anySeven"></div>
+      <div class="bet-box" id="anyCraps"></div>
+    </div>
+
+    <div class="row hardways" id="hardRow"></div>
+
+  </div>
+
+  <div class="controls">
+    <button class="btn-roll" id="rollBtn">ROLL DICE</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Bet reference</summary>
+    <ul>
+      <li><b>Pass Line</b> — wins on 7/11 come-out, loses on 2/3/12; then wins if point repeats before a 7. Pays 1:1.</li>
+      <li><b>Don't Pass</b> — opposite of Pass Line, pushes on 12. Pays 1:1.</li>
+      <li><b>Come / Don't Come</b> — same as Pass/Don't Pass but placed after the point is on; travels to its own number.</li>
+      <li><b>Odds</b> — true-odds side bet behind Pass/Don't Pass/Come/Don't Come. No house edge. Max is 3x on 4/10, 4x on 5/9, 5x on 6/8 (times your base bet).</li>
+      <li><b>Place</b> — bet a number directly, wins if it repeats before 7. Pays 9:5 (4/10), 7:5 (5/9), 7:6 (6/8).</li>
+      <li><b>Buy</b> — same as Place but pays true odds (2:1 / 3:2 / 6:5) minus a 5% commission charged upfront.</li>
+      <li><b>Field</b> — one-roll bet, wins on 2,3,4,9,10,11,12. Pays double on 2, triple on 12, even money otherwise.</li>
+      <li><b>Any Seven</b> — one-roll, wins on 7. Pays 4:1.</li>
+      <li><b>Any Craps</b> — one-roll, wins on 2,3,12. Pays 7:1.</li>
+      <li><b>Hardways</b> — number rolls as a double (e.g. 3+3) before a 7 or before that number rolls "easy". Hard 4/10 pay 7:1, Hard 6/8 pay 9:1.</li>
+    </ul>
+  </details>
+
+  <p style="text-align:center; margin-top:16px;"><a href="/strategy/">Read the full strategy guides →</a></p>
+</div>
