@@ -1,5 +1,5 @@
 const NUMS = [4, 5, 6, 8, 9, 10];
-const CHIPS = [5, 10, 25, 50, 100, 250];
+const CHIPS = [1, 5, 10, 25, 50, 100, 250];
 
 // true-odds win ratios [num,den] and place-bet ratios (no vig)
 const TRUE_ODDS = { 4: [2, 1], 10: [2, 1], 5: [3, 2], 9: [3, 2], 6: [6, 5], 8: [6, 5] };
@@ -186,6 +186,51 @@ function removeAnyCraps() { credit(state.anyCraps); state.anyCraps = 0; render()
 
 function clickHard(n) { if (!spend(state.chip)) return; state.hard[n] += state.chip; render(); }
 function removeHard(n) { credit(state.hard[n]); state.hard[n] = 0; render(); }
+
+function clearAllBets() {
+  credit(state.passLine); state.passLine = 0;
+  credit(state.passOdds); state.passOdds = 0;
+  credit(state.dontPass); state.dontPass = 0;
+  credit(state.dontPassOdds); state.dontPassOdds = 0;
+  credit(state.comeTransit); state.comeTransit = 0;
+  credit(state.dontComeTransit); state.dontComeTransit = 0;
+  NUMS.forEach(n => {
+    const box = state.numbers[n];
+    credit(box.place); box.place = 0;
+    credit(box.buy); box.buy = 0; // vig already forfeited, not refunded
+    credit(box.comeAmt + box.comeOdds); box.comeAmt = 0; box.comeOdds = 0;
+    credit(box.dcAmt + box.dcOdds); box.dcAmt = 0; box.dcOdds = 0;
+  });
+  credit(state.field); state.field = 0;
+  credit(state.anySeven); state.anySeven = 0;
+  credit(state.anyCraps); state.anyCraps = 0;
+  [4, 6, 8, 10].forEach(n => { credit(state.hard[n]); state.hard[n] = 0; });
+  notice('All bets cleared.');
+  render();
+}
+
+function anyWorkingBetsOn() {
+  for (const n of NUMS) {
+    const box = state.numbers[n];
+    if (box.place > 0 && box.placeOn) return true;
+    if (box.buy > 0 && box.buyOn) return true;
+    if (box.comeAmt > 0 && box.comeOn) return true;
+    if (box.dcAmt > 0 && box.dcOn) return true;
+  }
+  return false;
+}
+
+function toggleAllWorking() {
+  const turnOn = !anyWorkingBetsOn();
+  NUMS.forEach(n => {
+    const box = state.numbers[n];
+    if (box.place > 0) box.placeOn = turnOn;
+    if (box.buy > 0) box.buyOn = turnOn;
+    if (box.comeAmt > 0) box.comeOn = turnOn;
+    if (box.dcAmt > 0) box.dcOn = turnOn;
+  });
+  render();
+}
 
 function resetBankroll() {
   showOverlay({
@@ -452,6 +497,7 @@ function render() {
 
   document.querySelector(`input[name=numMode][value=${state.numMode}]`).checked = true;
   document.getElementById('letItRide').checked = state.letItRide;
+  document.getElementById('toggleWorkingBtn').textContent = anyWorkingBetsOn() ? 'Bets Off' : 'Bets On';
 }
 
 function renderRollDisplay() {
@@ -461,7 +507,7 @@ function renderRollDisplay() {
   document.getElementById('rollTotal').textContent = last ? `Total: ${last.total}` : 'Roll the dice to begin';
 
   const hist = document.getElementById('rollHistory');
-  hist.innerHTML = state.rollHistory.slice(-10).map(r =>
+  hist.innerHTML = state.rollHistory.slice(-10).reverse().map(r =>
     `<div class="roll-chip ${r.total === 7 ? 'seven' : ''}">${r.total}</div>`
   ).join('');
 }
@@ -612,7 +658,10 @@ window.addEventListener('DOMContentLoaded', () => {
   state = newState(0);
 
   document.getElementById('rollBtn').addEventListener('click', rollDice);
+  document.getElementById('rollBtnTop').addEventListener('click', rollDice);
   document.getElementById('resetBtn').addEventListener('click', resetBankroll);
+  document.getElementById('clearBetsBtn').addEventListener('click', clearAllBets);
+  document.getElementById('toggleWorkingBtn').addEventListener('click', toggleAllWorking);
   document.querySelectorAll('input[name=numMode]').forEach(r => r.addEventListener('change', e => setNumMode(e.target.value)));
   document.getElementById('letItRide').addEventListener('change', e => { state.letItRide = e.target.checked; });
 

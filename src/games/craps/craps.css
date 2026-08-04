@@ -322,7 +322,10 @@ h1 {
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 14px;
   margin: 20px 0;
+  flex-wrap: wrap;
 }
 
 .btn-roll {
@@ -338,6 +341,13 @@ h1 {
 }
 
 .btn-roll:hover { background: #e0bb4a; }
+
+.btn-roll.small {
+  padding: 8px 20px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-left: auto;
+}
 
 .btn-outline {
   background: transparent;

@@ -24,6 +24,7 @@ extraJs: /games/craps/craps.js
       <div>Bankroll <b id="bankroll">$0.00</b></div>
       <div>Net <b id="net">$0.00</b></div>
       <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+      <button class="btn-outline" id="clearBetsBtn">Clear All Bets</button>
     </div>
   </header>
 
@@ -37,9 +38,10 @@ extraJs: /games/craps/craps.js
       <div class="die" id="die1">-</div>
       <div class="die" id="die2">-</div>
       <div class="roll-total" id="rollTotal">Roll the dice to begin</div>
+      <button class="btn-roll small" id="rollBtnTop">ROLL</button>
     </div>
     <div class="roll-history-wrap">
-      <span class="chip-label">History:</span>
+      <span class="chip-label">History (newest first):</span>
       <div class="roll-history" id="rollHistory"></div>
     </div>
   </div>
@@ -80,6 +82,7 @@ extraJs: /games/craps/craps.js
   </div>
 
   <div class="controls">
+    <button class="btn-outline" id="toggleWorkingBtn">Bets Off</button>
     <button class="btn-roll" id="rollBtn">ROLL DICE</button>
   </div>
 
