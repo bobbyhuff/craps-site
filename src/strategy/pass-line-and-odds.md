@@ -26,3 +26,5 @@ Most tables cap how much you can bet in Odds relative to your Pass Line bet — 
 A $10 Pass Line bet alone carries a 1.41% house edge. Add max Odds on a 3-4-5x table and your blended edge drops to roughly 0.37% — one of the best bets available anywhere in a casino. If you're optimizing for the lowest possible cost of play, Pass Line + max Odds is the combination to build a strategy around.
 
 The free [craps table](/games/craps/) shows your max Odds live based on the current point, so you can practice sizing these bets correctly before it matters.
+
+For how every other bet on the table compares, see the full [house edge ranking](/blog/craps-house-edge-by-bet/).
