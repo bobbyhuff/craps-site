@@ -1,7 +1,7 @@
 ---
 layout: base.njk
 title: Craps
-description: Play free craps in your browser. Full table with Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, and Hardways — true odds, no ads, no account.
+description: Play free craps in your browser and learn how to play — the come-out roll, the point, and every bet explained with diagrams. Full table with true odds, no ads, no account.
 extraCss: /games/craps/craps.css
 extraJs: /games/craps/craps.js
 ---
@@ -126,6 +126,8 @@ extraJs: /games/craps/craps.js
       <li><b>Hardways</b> — number rolls as a double (e.g. 3+3) before a 7 or before that number rolls "easy". Hard 4/10 pay 7:1, Hard 6/8 pay 9:1.</li>
     </ul>
   </details>
+
+  {% include "how-to-play.njk" %}
 
   <p class="strategy-link"><a href="/strategy/">Read the full strategy guides →</a></p>
 </div>

@@ -593,26 +593,186 @@ main {
 .log .lose { color: var(--lose); }
 .log .neutral { color: var(--text-muted); }
 
-.legend {
+/* Shared accordion — used by both the bet reference and the how-to-play guide */
+.legend,
+.accordion {
   background: var(--felt);
   border: 1px solid var(--edge);
   border-radius: var(--r-md);
-  padding: var(--s-3) var(--s-4);
-  font-size: 13.5px;
+  padding: 0 var(--s-4);
+  font-size: 14px;
+  margin-bottom: var(--s-2);
 }
 
-.legend summary {
+.legend summary,
+.accordion summary {
   cursor: pointer;
   color: var(--gold);
   font-weight: 600;
-  min-height: 32px;
+  min-height: 44px;
   display: flex;
   align-items: center;
+  gap: var(--s-2);
+  list-style-position: outside;
 }
 
-.legend ul { margin: var(--s-3) 0 0; padding-left: var(--s-5); line-height: 1.65; }
+.legend summary:hover,
+.accordion summary:hover { color: var(--gold-bright); }
+
+.legend ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); line-height: 1.65; }
 .legend li { margin-bottom: var(--s-2); color: var(--text-muted); }
 .legend li b { color: var(--text); }
+
+/* ============================================================
+   How-to-play guide
+   ============================================================ */
+
+.learn { margin-top: var(--s-5); }
+
+.learn-title {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 26px;
+  margin: 0 0 var(--s-2);
+}
+
+.learn-intro {
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 0 0 var(--s-4);
+}
+
+.accordion-body {
+  padding-bottom: var(--s-4);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.accordion-body p { margin: 0 0 var(--s-3); }
+.accordion-body b { color: var(--text); }
+.accordion-body i { color: var(--text); font-style: italic; }
+.accordion-body a { color: var(--gold); }
+
+.accordion-body ul,
+.learn-steps {
+  margin: 0 0 var(--s-3);
+  padding-left: var(--s-5);
+}
+
+.accordion-body li { margin-bottom: var(--s-2); }
+
+.learn-steps li { margin-bottom: var(--s-3); }
+.learn-steps li::marker { color: var(--gold); font-weight: 700; }
+
+.learn-h3 {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: var(--s-4) 0 var(--s-2);
+}
+
+.learn-note {
+  background: var(--felt-well);
+  border-left: 2px solid var(--gold-dim);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: var(--s-3);
+  font-size: 13.5px;
+  margin: 0 0 var(--s-3);
+}
+
+/* Unicode dice glyphs, matching the ones the game renders */
+.pips {
+  color: var(--cream);
+  font-size: 1.25em;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* ---- Diagrams ---- */
+
+.learn-figure {
+  margin: var(--s-4) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.learn-figure figcaption {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin-top: var(--s-2);
+  text-align: center;
+}
+
+.figure-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Pinned to 1:1 minimum (min-width == viewBox width) so diagram labels never
+   scale below their authored size. Narrower than that, the figure scrolls. */
+.dgm {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  min-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.dgm-wide { max-width: 560px; min-width: 540px; }
+
+.dgm text { font-family: var(--font-ui); fill: var(--text-muted); }
+
+.dgm-phase { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; fill: var(--text-dim); }
+.dgm-lede { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; fill: var(--cream); }
+.dgm-sub { font-size: 12px; fill: var(--text-muted); }
+.dgm-num { font-size: 14px; font-weight: 600; fill: var(--cream); }
+.dgm-num-sm { font-size: 13px; font-weight: 600; fill: var(--cream); }
+.dgm-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; fill: var(--gold); }
+.dgm-win { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; fill: var(--win); }
+.dgm-lose { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; fill: var(--lose); }
+
+.dgm-box { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; }
+.dgm-box-gold { fill: var(--felt-raised); stroke: var(--gold); stroke-width: 1.5; }
+.dgm-box-win { fill: rgba(111, 220, 140, 0.10); stroke: rgba(111, 220, 140, 0.45); stroke-width: 1; }
+.dgm-box-lose { fill: rgba(255, 138, 128, 0.10); stroke: rgba(255, 138, 128, 0.45); stroke-width: 1; }
+
+.dgm-line { stroke: var(--edge-felt); stroke-width: 2; fill: none; }
+.dgm-line-dash { stroke: var(--edge-felt); stroke-width: 2; fill: none; stroke-dasharray: 4 4; }
+.dgm-arrow { fill: var(--edge-felt); }
+.dgm-rule { stroke: var(--edge); stroke-width: 1; fill: none; }
+
+/* Frequency chart. Cream bars carry no identity — length is the data and the
+   single gold bar is the emphasis. Validated on the felt surface: CVD dE 20.0,
+   contrast 8.70:1 and 4.80:1. */
+.dgm-axis { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; fill: var(--text-dim); }
+.dgm-rowlab { font-size: 14px; font-weight: 600; fill: var(--text-muted); }
+.dgm-rowlab-hi { font-size: 14px; font-weight: 700; fill: var(--gold); }
+.dgm-val { font-size: 13px; font-weight: 600; fill: var(--text-muted); }
+.dgm-val-hi { font-size: 13px; font-weight: 700; fill: var(--gold); }
+.dgm-foot { font-size: 12px; fill: var(--text-dim); }
+
+.bar { fill: var(--text); }
+.bar-hi { fill: var(--gold); }
+
+/* Table layout map */
+.map-felt { fill: var(--felt-well); stroke: var(--edge-gold); stroke-width: 1; }
+.map-box { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; }
+.map-box-dont { fill: rgba(217, 140, 95, 0.14); stroke: rgba(217, 140, 95, 0.5); stroke-width: 1; }
+.map-box-pass { fill: var(--gold); stroke: var(--gold-deep); stroke-width: 1; }
+.map-box-prop { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; stroke-dasharray: 3 3; }
+.map-num { font-size: 17px; font-weight: 700; fill: var(--cream); }
+.map-label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: var(--gold); }
+.map-label-dark { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: #1a1206; }
+.map-fine { font-size: 12px; fill: var(--text-dim); }
+.map-fine-warn { font-size: 12px; font-style: italic; fill: var(--lose); }
 
 .strategy-link { text-align: center; margin-top: var(--s-4); }
 
