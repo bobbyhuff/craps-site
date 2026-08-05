@@ -494,6 +494,7 @@ function render() {
   renderOnetime();
   renderHardways();
   renderLog();
+  renderBetSheet();
 
   document.querySelector(`input[name=numMode][value=${state.numMode}]`).checked = true;
   document.getElementById('letItRide').checked = state.letItRide;
@@ -569,49 +570,119 @@ function renderLines() {
   dcome.onclick = clickDontCome;
 }
 
+// Compact, read-only summary of one bet. Editing happens in the bet sheet so the
+// controls can be full size instead of 17px wide.
+function summaryLine(label, amount, working) {
+  return `<div class="bet-line ${working ? '' : 'is-off'}">
+    <span class="label">${label}</span><span class="val">${fmt(amount)}</span>
+  </div>`;
+}
+
 function renderNumbers() {
   const row = document.getElementById('numberRow');
   row.innerHTML = NUMS.map(n => {
     const box = state.numbers[n];
     const lines = [];
-    if (box.place > 0) {
-      lines.push(`<div class="bet-line"><span class="label">Place ${fmt(box.place)}</span>
-        <span class="buttons">
-          <span class="mini-btn ${box.placeOn ? 'on' : 'off'}" onclick="event.stopPropagation();toggleOn(${n},'placeOn')">${box.placeOn ? 'ON' : 'OFF'}</span>
-          <span class="mini-btn" onclick="event.stopPropagation();removePlace(${n})">X</span>
-        </span></div>`);
-    }
-    if (box.buy > 0) {
-      lines.push(`<div class="bet-line"><span class="label">Buy ${fmt(box.buy)}</span>
-        <span class="buttons">
-          <span class="mini-btn ${box.buyOn ? 'on' : 'off'}" onclick="event.stopPropagation();toggleOn(${n},'buyOn')">${box.buyOn ? 'ON' : 'OFF'}</span>
-          <span class="mini-btn" onclick="event.stopPropagation();removeBuy(${n})">X</span>
-        </span></div>`);
-    }
-    if (box.comeAmt > 0) {
-      lines.push(`<div class="bet-line"><span class="label">Come ${fmt(box.comeAmt)} ${box.comeOdds ? '+O ' + fmt(box.comeOdds) : ''}</span>
-        <span class="buttons">
-          <span class="mini-btn ${box.comeOn ? 'on' : 'off'}" onclick="event.stopPropagation();toggleOn(${n},'comeOn')">${box.comeOn ? 'ON' : 'OFF'}</span>
-          <span class="mini-btn" onclick="event.stopPropagation();addComeOdds(${n})">+O</span>
-          <span class="mini-btn" onclick="event.stopPropagation();removeComeOdds(${n})">-O</span>
-        </span></div>`);
-    }
-    if (box.dcAmt > 0) {
-      lines.push(`<div class="bet-line"><span class="label">D.Come ${fmt(box.dcAmt)} ${box.dcOdds ? '+O ' + fmt(box.dcOdds) : ''}</span>
-        <span class="buttons">
-          <span class="mini-btn ${box.dcOn ? 'on' : 'off'}" onclick="event.stopPropagation();toggleOn(${n},'dcOn')">${box.dcOn ? 'ON' : 'OFF'}</span>
-          <span class="mini-btn" onclick="event.stopPropagation();addDontComeOdds(${n})">+O</span>
-          <span class="mini-btn" onclick="event.stopPropagation();removeDontComeOdds(${n})">-O</span>
-        </span></div>`);
-    }
-    if (lines.length === 0) lines.push(`<div class="bet-line"><span class="label">click ${n} to bet</span></div>`);
+    if (box.place > 0) lines.push(summaryLine('Place', box.place, box.placeOn));
+    if (box.buy > 0) lines.push(summaryLine('Buy', box.buy, box.buyOn));
+    if (box.comeAmt > 0) lines.push(summaryLine('Come', box.comeAmt + box.comeOdds, box.comeOn));
+    if (box.dcAmt > 0) lines.push(summaryLine('D.Come', box.dcAmt + box.dcOdds, box.dcOn));
+
     const isPoint = n === state.point;
+    const body = lines.length
+      ? `<div class="num-bets">${lines.join('')}</div>
+         <button class="num-edit" onclick="event.stopPropagation();openBetSheet(${n})">EDIT</button>`
+      : `<div class="num-empty">tap to bet</div>`;
+
     return `<div class="num-box ${isPoint ? 'is-point' : ''}">
       <div class="num-head" onclick="clickNumber(${n})">${n}</div>
       ${isPoint ? `<div class="point-tag">POINT</div>` : ''}
-      ${lines.join('')}
+      ${body}
     </div>`;
   }).join('');
+}
+
+// ---------- bet sheet ----------
+let sheetNum = null;
+
+function openBetSheet(n) {
+  sheetNum = n;
+  document.getElementById('betSheet').classList.remove('hidden');
+  document.body.classList.add('sheet-open');
+  renderBetSheet();
+}
+
+function closeBetSheet() {
+  sheetNum = null;
+  document.getElementById('betSheet').classList.add('hidden');
+  document.body.classList.remove('sheet-open');
+}
+
+function sheetBet(name, amount, meta, actions) {
+  return `<div class="sheet-bet">
+    <div class="sheet-bet-head">
+      <span class="sheet-bet-name">${name}</span>
+      <span class="sheet-bet-amt">${fmt(amount)}</span>
+    </div>
+    ${meta ? `<div class="sheet-bet-meta">${meta}</div>` : ''}
+    <div class="sheet-actions">${actions}</div>
+  </div>`;
+}
+
+function workingBtn(n, field, on) {
+  return `<button class="sheet-btn ${on ? 'on' : 'off'}" onclick="toggleOn(${n},'${field}')">${on ? 'WORKING' : 'OFF'}</button>`;
+}
+
+function renderBetSheet() {
+  if (sheetNum === null) return;
+  const n = sheetNum;
+  const box = state.numbers[n];
+
+  document.getElementById('sheetTitle').textContent =
+    `Number ${n}${n === state.point ? ' — Point' : ''}`;
+
+  const parts = [];
+
+  if (box.place > 0) {
+    parts.push(sheetBet('Place', box.place, null, `
+      ${workingBtn(n, 'placeOn', box.placeOn)}
+      <button class="sheet-btn danger" onclick="removePlace(${n})">Take down</button>`));
+  }
+
+  if (box.buy > 0) {
+    parts.push(sheetBet('Buy', box.buy, 'Commission already paid — not refunded.', `
+      ${workingBtn(n, 'buyOn', box.buyOn)}
+      <button class="sheet-btn danger" onclick="removeBuy(${n})">Take down</button>`));
+  }
+
+  if (box.comeAmt > 0) {
+    const max = maxPassOdds(box.comeAmt, n);
+    parts.push(sheetBet('Come', box.comeAmt + box.comeOdds,
+      `Base ${fmt(box.comeAmt)} · Odds ${fmt(box.comeOdds)} of ${fmt(max)} max`, `
+      ${workingBtn(n, 'comeOn', box.comeOn)}
+      <button class="sheet-btn" onclick="addComeOdds(${n})">+ Odds</button>
+      <button class="sheet-btn" onclick="removeComeOdds(${n})" ${box.comeOdds > 0 ? '' : 'disabled'}>− Odds</button>`));
+  }
+
+  if (box.dcAmt > 0) {
+    const max = maxLayOdds(box.dcAmt, n);
+    parts.push(sheetBet("Don't Come", box.dcAmt + box.dcOdds,
+      `Base ${fmt(box.dcAmt)} · Lay ${fmt(box.dcOdds)} of ${fmt(max)} max`, `
+      ${workingBtn(n, 'dcOn', box.dcOn)}
+      <button class="sheet-btn" onclick="addDontComeOdds(${n})">+ Lay</button>
+      <button class="sheet-btn" onclick="removeDontComeOdds(${n})" ${box.dcOdds > 0 ? '' : 'disabled'}>− Lay</button>`));
+  }
+
+  if (!parts.length) parts.push(`<p class="sheet-empty">No bets on ${n} yet.</p>`);
+
+  const mode = state.numMode === 'place' ? 'Place' : 'Buy';
+  parts.push(`<div class="sheet-add">
+    <div class="sheet-actions">
+      <button class="sheet-btn" onclick="clickNumber(${n})">Add ${mode} ${fmt(state.chip)}</button>
+    </div>
+  </div>`);
+
+  document.getElementById('sheetBody').innerHTML = parts.join('');
 }
 
 function renderOnetime() {
@@ -664,6 +735,19 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('toggleWorkingBtn').addEventListener('click', toggleAllWorking);
   document.querySelectorAll('input[name=numMode]').forEach(r => r.addEventListener('change', e => setNumMode(e.target.value)));
   document.getElementById('letItRide').addEventListener('change', e => { state.letItRide = e.target.checked; });
+
+  document.getElementById('sheetClose').addEventListener('click', closeBetSheet);
+  document.getElementById('sheetBackdrop').addEventListener('click', closeBetSheet);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sheetNum !== null) closeBetSheet(); });
+
+  // Swipe the sheet down to dismiss
+  const sheet = document.querySelector('#betSheet .sheet');
+  let touchStartY = null;
+  sheet.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchend', e => {
+    if (touchStartY !== null && e.changedTouches[0].clientY - touchStartY > 70) closeBetSheet();
+    touchStartY = null;
+  }, { passive: true });
 
   showOverlay({
     title: "Welcome to Craps",

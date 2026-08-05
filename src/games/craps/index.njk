@@ -9,7 +9,7 @@ extraJs: /games/craps/craps.js
   <div class="overlay-box">
     <h2 id="overlayTitle">Welcome to Craps</h2>
     <p id="overlayText">Set your starting bankroll to begin.</p>
-    <input type="number" id="overlayInput" min="1" step="1" value="200">
+    <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
     <div class="overlay-buttons">
       <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
       <button class="btn-roll" id="overlayConfirm">Start</button>
@@ -17,21 +17,37 @@ extraJs: /games/craps/craps.js
   </div>
 </div>
 
-<div class="app">
-  <header>
-    <h1>CRAPS</h1>
-    <div class="bankroll-panel">
-      <div>Bankroll <b id="bankroll">$0.00</b></div>
-      <div>Net <b id="net">$0.00</b></div>
-      <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
-      <button class="btn-outline" id="clearBetsBtn">Clear All Bets</button>
+<div class="sheet-wrap hidden" id="betSheet">
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head">
+      <h3 id="sheetTitle">Number</h3>
+      <button class="sheet-close" id="sheetClose" aria-label="Close">&times;</button>
     </div>
-  </header>
-
-  <div class="status-bar">
-    <span>Point: <b id="pointDisplay">OFF</b></span>
-    <span id="notice"></span>
+    <div class="sheet-body" id="sheetBody"></div>
   </div>
+</div>
+
+<div class="app">
+  <h1 class="page-title">CRAPS</h1>
+
+  <div class="statusbar">
+    <div class="sb-cell">
+      <span class="sb-k">Bankroll</span>
+      <b id="bankroll">$0.00</b>
+    </div>
+    <div class="sb-cell">
+      <span class="sb-k">Net</span>
+      <b id="net">$0.00</b>
+    </div>
+    <div class="sb-cell sb-point">
+      <span class="sb-k">Point</span>
+      <b id="pointDisplay">OFF</b>
+    </div>
+  </div>
+
+  <div id="notice"></div>
 
   <div class="roll-display">
     <div class="current-roll" id="currentRoll">
@@ -41,20 +57,18 @@ extraJs: /games/craps/craps.js
       <button class="btn-roll small" id="rollBtnTop">ROLL</button>
     </div>
     <div class="roll-history-wrap">
-      <span class="chip-label">History (newest first):</span>
+      <span class="chip-label">History</span>
       <div class="roll-history" id="rollHistory"></div>
     </div>
   </div>
 
-  <div class="chip-row">
-    <span class="chip-label">Chip:</span>
-    <div id="chipSelector"></div>
+  <div class="bet-opts">
     <div class="mode-toggle" id="modeToggle">
-      <span class="chip-label">Number bets:</span>
+      <span class="chip-label">Number bets</span>
       <label><input type="radio" name="numMode" value="place" checked> Place</label>
       <label><input type="radio" name="numMode" value="buy"> Buy</label>
     </div>
-    <label class="let-it-ride"><input type="checkbox" id="letItRide"> Let it ride (keep Place/Buy/Hardway bets up after a win)</label>
+    <label class="let-it-ride"><input type="checkbox" id="letItRide"> Let it ride <span class="hint">(keep Place/Buy/Hardway bets up after a win)</span></label>
   </div>
 
   <div class="table">
@@ -81,9 +95,18 @@ extraJs: /games/craps/craps.js
 
   </div>
 
-  <div class="controls">
+  <div class="table-actions">
     <button class="btn-outline" id="toggleWorkingBtn">Bets Off</button>
-    <button class="btn-roll" id="rollBtn">ROLL DICE</button>
+    <button class="btn-outline" id="clearBetsBtn">Clear All Bets</button>
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="actionbar">
+    <div class="chip-strip">
+      <span class="chip-label">Chip</span>
+      <div id="chipSelector"></div>
+    </div>
+    <button class="btn-roll" id="rollBtn">ROLL</button>
   </div>
 
   <div class="log" id="log"></div>
@@ -104,5 +127,5 @@ extraJs: /games/craps/craps.js
     </ul>
   </details>
 
-  <p style="text-align:center; margin-top:16px;"><a href="/strategy/">Read the full strategy guides →</a></p>
+  <p class="strategy-link"><a href="/strategy/">Read the full strategy guides →</a></p>
 </div>
