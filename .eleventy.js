@@ -15,7 +15,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   eleventyConfig.addCollection("strategy", (collectionApi) =>
-    collectionApi.getFilteredByGlob("src/strategy/*.md")
+    collectionApi.getFilteredByGlob("src/strategy/**/*.md")
   );
   eleventyConfig.addCollection("blog", (collectionApi) =>
     collectionApi.getFilteredByGlob("src/blog/*.md").sort((a, b) => b.date - a.date)

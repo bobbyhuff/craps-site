@@ -27,4 +27,4 @@ A $10 Pass Line bet alone carries a {{ odds.houseEdge.passLine }}% house edge. A
 
 The free [craps table](/games/craps/) shows your max Odds live based on the current point, so you can practice sizing these bets correctly before it matters.
 
-For how every other bet on the table compares, see the full [house edge ranking](/blog/craps-house-edge-by-bet/).
+For how every other bet on the table compares, see the full [house edge ranking](/the-pit/craps-house-edge-by-bet/).

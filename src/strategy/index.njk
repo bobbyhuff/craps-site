@@ -1,18 +1,24 @@
 ---
 layout: base.njk
 title: Strategy
-description: Craps strategy guides — bet types, true odds explained, and bankroll management, for players who want to play smart, not just play.
+description: Strategy guides for every game at Odds Lab — bankroll management, true odds explained, and per-game bet strategy.
 ---
 <h1>Strategy</h1>
-<p>The math behind craps is fixed — the house edge on every bet is public knowledge. These guides walk through what actually matters: which bets keep the edge low, how odds bets work, and how to manage a bankroll so a cold streak doesn't end your session.</p>
+<p>The math behind every game here is fixed and public. Bankroll management applies no matter what you're playing; the rest is specific to one game at a time.</p>
 
-<div>
-  {% for article in collections.strategy %}
-  <a class="list-item" href="{{ article.url }}">
-    <h3>{{ article.data.title }}</h3>
-    <p>{{ article.data.description }}</p>
+<div class="card-grid">
+  <a class="card" href="/strategy/bankroll-management/">
+    <h3>Bankroll Management</h3>
+    <p>General — sizing bets and setting limits so a cold streak doesn't end your session.</p>
   </a>
-  {% endfor %}
+  <a class="card" href="/strategy/craps/">
+    <h3>Craps</h3>
+    <p>How to play, the Pass Line and Odds, and every bet ranked by house edge.</p>
+  </a>
+  <a class="card" href="/strategy/blackjack/">
+    <h3>Blackjack</h3>
+    <p>Coming soon.</p>
+  </a>
 </div>
 
 <p style="margin-top:24px;"><a href="/games/craps/">Practice these on the free craps table →</a></p>
