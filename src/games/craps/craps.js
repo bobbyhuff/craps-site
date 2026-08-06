@@ -1,13 +1,9 @@
 const NUMS = [4, 5, 6, 8, 9, 10];
 const CHIPS = [1, 5, 10, 25, 50, 100, 250];
-
-// true-odds win ratios [num,den] and place-bet ratios (no vig)
-const TRUE_ODDS = { 4: [2, 1], 10: [2, 1], 5: [3, 2], 9: [3, 2], 6: [6, 5], 8: [6, 5] };
-const PLACE_ODDS = { 4: [9, 5], 10: [9, 5], 5: [7, 5], 9: [7, 5], 6: [7, 6], 8: [7, 6] };
-// standard "3-4-5x" table max-odds multipliers
-const ODDS_MULT = { 4: 3, 10: 3, 5: 4, 9: 4, 6: 5, 8: 5 };
-const HARD_PAY = { 4: 7, 6: 9, 8: 9, 10: 7 };
 const DIE_FACE = { 1: '⚀', 2: '⚁', 3: '⚂', 4: '⚃', 5: '⚄', 6: '⚅' };
+
+// All payout/odds numbers come from the ODDS global — see src/_data/odds.js,
+// loaded via a <script> tag in index.njk before this file.
 
 let state = null;
 
@@ -61,13 +57,13 @@ function log(msg, cls) {
 }
 
 // ---------- odds math ----------
-function maxPassOdds(base, point) { return base * ODDS_MULT[point]; }
+function maxPassOdds(base, point) { return base * ODDS.oddsMult[point]; }
 function maxLayOdds(base, point) {
-  const [n, d] = TRUE_ODDS[point];
-  return base * ODDS_MULT[point] * (n / d);
+  const [n, d] = ODDS.trueOdds[point];
+  return base * ODDS.oddsMult[point] * (n / d);
 }
 function layWin(amount, point) {
-  const [n, d] = TRUE_ODDS[point];
+  const [n, d] = ODDS.trueOdds[point];
   return amount * (d / n);
 }
 
@@ -161,7 +157,7 @@ function clickNumber(n) {
     if (!spend(state.chip)) return;
     box.place += state.chip;
   } else {
-    const commission = Math.max(1, Math.ceil(state.chip * 0.05));
+    const commission = Math.max(1, Math.ceil(state.chip * (ODDS.buyCommissionPct / 100)));
     if (!spend(state.chip + commission)) { notice(`Need ${fmt(state.chip + commission)} including vig.`); return; }
     box.buy += state.chip;
   }
@@ -354,19 +350,19 @@ function resolveRoll(d1, d2, total) {
 
 function resolveOneRoll(total) {
   if (state.field > 0) {
-    if (total === 2) { const w = state.field * 2; credit(state.field + w); log(`Field wins ${fmt(w)} (2 pays double).`, 'win'); }
-    else if (total === 12) { const w = state.field * 3; credit(state.field + w); log(`Field wins ${fmt(w)} (12 pays triple).`, 'win'); }
+    if (total === 2) { const w = payout(state.field, ODDS.fieldPay[2]); credit(state.field + w); log(`Field wins ${fmt(w)} (2 pays double).`, 'win'); }
+    else if (total === 12) { const w = payout(state.field, ODDS.fieldPay[12]); credit(state.field + w); log(`Field wins ${fmt(w)} (12 pays triple).`, 'win'); }
     else if ([3, 4, 9, 10, 11].includes(total)) { credit(state.field * 2); log(`Field wins ${fmt(state.field)}.`, 'win'); }
     else { log(`Field loses ${fmt(state.field)}.`, 'lose'); }
     state.field = 0;
   }
   if (state.anySeven > 0) {
-    if (total === 7) { const w = state.anySeven * 4; credit(state.anySeven + w); log(`Any Seven wins ${fmt(w)}!`, 'win'); }
+    if (total === 7) { const w = payout(state.anySeven, ODDS.anySevenPay); credit(state.anySeven + w); log(`Any Seven wins ${fmt(w)}!`, 'win'); }
     else { log(`Any Seven loses ${fmt(state.anySeven)}.`, 'lose'); }
     state.anySeven = 0;
   }
   if (state.anyCraps > 0) {
-    if ([2, 3, 12].includes(total)) { const w = state.anyCraps * 7; credit(state.anyCraps + w); log(`Any Craps wins ${fmt(w)}!`, 'win'); }
+    if ([2, 3, 12].includes(total)) { const w = payout(state.anyCraps, ODDS.anyCrapsPay); credit(state.anyCraps + w); log(`Any Craps wins ${fmt(w)}!`, 'win'); }
     else { log(`Any Craps loses ${fmt(state.anyCraps)}.`, 'lose'); }
     state.anyCraps = 0;
   }
@@ -378,7 +374,7 @@ function resolveHardways(d1, d2, total) {
     if (amt <= 0) continue;
     if (total === 7) { log(`Hard ${n} loses ${fmt(amt)} (seven).`, 'lose'); state.hard[n] = 0; }
     else if (total === n && d1 === d2) {
-      const w = amt * HARD_PAY[n]; credit(amt + w); log(`Hard ${n} wins ${fmt(w)}!`, 'win');
+      const w = amt * ODDS.hardPay[n]; credit(amt + w); log(`Hard ${n} wins ${fmt(w)}!`, 'win');
       if (!state.letItRide) state.hard[n] = 0;
     }
     else if (total === n && d1 !== d2) { log(`Hard ${n} loses ${fmt(amt)} (easy ${n}).`, 'lose'); state.hard[n] = 0; }
@@ -390,7 +386,7 @@ function winComePoint(n) {
   const amt = box.comeAmt;
   credit(amt * 2);
   let extra = 0;
-  if (box.comeOdds > 0) { extra = payout(box.comeOdds, TRUE_ODDS[n]); credit(box.comeOdds + extra); }
+  if (box.comeOdds > 0) { extra = payout(box.comeOdds, ODDS.trueOdds[n]); credit(box.comeOdds + extra); }
   log(`Come ${n} wins ${fmt(amt)}${extra ? ` + odds ${fmt(extra)}` : ''}.`, 'win');
   box.comeAmt = 0; box.comeOdds = 0;
 }
@@ -414,13 +410,13 @@ function loseDontComePoint(n) {
 }
 
 function winPlace(n) {
-  const box = state.numbers[n]; const w = payout(box.place, PLACE_ODDS[n]); credit(box.place + w);
+  const box = state.numbers[n]; const w = payout(box.place, ODDS.placeOdds[n]); credit(box.place + w);
   log(`Place ${n} wins ${fmt(w)}.`, 'win');
   if (!state.letItRide) box.place = 0;
 }
 function losePlace(n) { const box = state.numbers[n]; log(`Place ${n} loses ${fmt(box.place)}.`, 'lose'); box.place = 0; }
 function winBuy(n) {
-  const box = state.numbers[n]; const w = payout(box.buy, TRUE_ODDS[n]); credit(box.buy + w);
+  const box = state.numbers[n]; const w = payout(box.buy, ODDS.trueOdds[n]); credit(box.buy + w);
   log(`Buy ${n} wins ${fmt(w)}.`, 'win');
   if (!state.letItRide) box.buy = 0;
 }
@@ -465,7 +461,7 @@ function resolvePassLineComeOut(total) {
 
 function resolvePassLinePointMade(point) {
   if (state.passLine > 0) { credit(state.passLine * 2); log(`Pass Line wins ${fmt(state.passLine)}! Point ${point} made.`, 'win'); state.passLine = 0; }
-  if (state.passOdds > 0) { const w = payout(state.passOdds, TRUE_ODDS[point]); credit(state.passOdds + w); log(`Odds win ${fmt(w)}.`, 'win'); state.passOdds = 0; }
+  if (state.passOdds > 0) { const w = payout(state.passOdds, ODDS.trueOdds[point]); credit(state.passOdds + w); log(`Odds win ${fmt(w)}.`, 'win'); state.passOdds = 0; }
   if (state.dontPass > 0) { log(`Don't Pass loses ${fmt(state.dontPass)}.`, 'lose'); state.dontPass = 0; }
   if (state.dontPassOdds > 0) { log(`Lay odds lose ${fmt(state.dontPassOdds)}.`, 'lose'); state.dontPassOdds = 0; }
 }
@@ -687,19 +683,19 @@ function renderBetSheet() {
 
 function renderOnetime() {
   const field = document.getElementById('field');
-  field.innerHTML = `<div class="title">FIELD</div><div class="payline">2 pays 2:1<br>12 pays 3:1</div>
+  field.innerHTML = `<div class="title">FIELD</div><div class="payline">2 pays ${ODDS.fieldPayStr[2]}<br>12 pays ${ODDS.fieldPayStr[12]}</div>
     <div class="amt">${fmt(state.field)}</div>
     ${state.field > 0 ? `<span class="mini-btn" onclick="event.stopPropagation();removeField()">X</span>` : ''}`;
   field.onclick = clickField;
 
   const seven = document.getElementById('anySeven');
-  seven.innerHTML = `<div class="title">ANY SEVEN</div><div class="payline">pays 4:1</div>
+  seven.innerHTML = `<div class="title">ANY SEVEN</div><div class="payline">pays ${ODDS.anySevenPayStr}</div>
     <div class="amt">${fmt(state.anySeven)}</div>
     ${state.anySeven > 0 ? `<span class="mini-btn" onclick="event.stopPropagation();removeAnySeven()">X</span>` : ''}`;
   seven.onclick = clickAnySeven;
 
   const craps = document.getElementById('anyCraps');
-  craps.innerHTML = `<div class="title">ANY CRAPS</div><div class="payline">pays 7:1</div>
+  craps.innerHTML = `<div class="title">ANY CRAPS</div><div class="payline">pays ${ODDS.anyCrapsPayStr}</div>
     <div class="amt">${fmt(state.anyCraps)}</div>
     ${state.anyCraps > 0 ? `<span class="mini-btn" onclick="event.stopPropagation();removeAnyCraps()">X</span>` : ''}`;
   craps.onclick = clickAnyCraps;
@@ -710,7 +706,7 @@ function renderHardways() {
   row.innerHTML = [4, 6, 8, 10].map(n => `
     <div class="bet-box" onclick="clickHard(${n})">
       <div class="title">HARD ${n}</div>
-      <div class="payline">pays ${HARD_PAY[n]}:1</div>
+      <div class="payline">pays ${ODDS.hardPay[n]}:1</div>
       <div class="amt">${fmt(state.hard[n])}</div>
       ${state.hard[n] > 0 ? `<span class="mini-btn" onclick="event.stopPropagation();removeHard(${n})">X</span>` : ''}
     </div>

@@ -9,6 +9,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.css");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.js");
+  // Same file Eleventy reads as the `odds` global data object, also published
+  // as a plain script so craps.js can load the identical numbers in the browser.
+  eleventyConfig.addPassthroughCopy({ "src/_data/odds.js": "games/craps/odds.js" });
   eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   eleventyConfig.addCollection("strategy", (collectionApi) =>

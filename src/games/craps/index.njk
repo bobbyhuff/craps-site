@@ -5,6 +5,10 @@ description: Play free craps in your browser and learn how to play — the come-
 extraCss: /games/craps/craps.css
 extraJs: /games/craps/craps.js
 ---
+<!-- Single source of truth for every payout/odds number craps.js uses —
+     see src/_data/odds.js. Must load before craps.js. -->
+<script src="/games/craps/odds.js"></script>
+
 <div class="overlay" id="setupOverlay">
   <div class="overlay-box">
     <h2 id="overlayTitle">Welcome to Craps</h2>
@@ -116,13 +120,13 @@ extraJs: /games/craps/craps.js
       <li><b>Pass Line</b> — wins on 7/11 come-out, loses on 2/3/12; then wins if point repeats before a 7. Pays 1:1.</li>
       <li><b>Don't Pass</b> — opposite of Pass Line, pushes on 12. Pays 1:1.</li>
       <li><b>Come / Don't Come</b> — same as Pass/Don't Pass but placed after the point is on; travels to its own number.</li>
-      <li><b>Odds</b> — true-odds side bet behind Pass/Don't Pass/Come/Don't Come. No house edge. Max is 3x on 4/10, 4x on 5/9, 5x on 6/8 (times your base bet).</li>
-      <li><b>Place</b> — bet a number directly, wins if it repeats before 7. Pays 9:5 (4/10), 7:5 (5/9), 7:6 (6/8).</li>
-      <li><b>Buy</b> — same as Place but pays true odds (2:1 / 3:2 / 6:5) minus a 5% commission charged upfront.</li>
+      <li><b>Odds</b> — true-odds side bet behind Pass/Don't Pass/Come/Don't Come. No house edge. Max is {{ odds.oddsMult[4] }}x on 4/10, {{ odds.oddsMult[5] }}x on 5/9, {{ odds.oddsMult[6] }}x on 6/8 (times your base bet).</li>
+      <li><b>Place</b> — bet a number directly, wins if it repeats before 7. Pays {{ odds.placeOddsStr[4] }} (4/10), {{ odds.placeOddsStr[5] }} (5/9), {{ odds.placeOddsStr[6] }} (6/8).</li>
+      <li><b>Buy</b> — same as Place but pays true odds ({{ odds.trueOddsStr[4] }} / {{ odds.trueOddsStr[5] }} / {{ odds.trueOddsStr[6] }}) minus a {{ odds.buyCommissionPct }}% commission charged upfront.</li>
       <li><b>Field</b> — one-roll bet, wins on 2,3,4,9,10,11,12. Pays double on 2, triple on 12, even money otherwise.</li>
-      <li><b>Any Seven</b> — one-roll, wins on 7. Pays 4:1.</li>
-      <li><b>Any Craps</b> — one-roll, wins on 2,3,12. Pays 7:1.</li>
-      <li><b>Hardways</b> — number rolls as a double (e.g. 3+3) before a 7 or before that number rolls "easy". Hard 4/10 pay 7:1, Hard 6/8 pay 9:1.</li>
+      <li><b>Any Seven</b> — one-roll, wins on 7. Pays {{ odds.anySevenPayStr }}.</li>
+      <li><b>Any Craps</b> — one-roll, wins on 2,3,12. Pays {{ odds.anyCrapsPayStr }}.</li>
+      <li><b>Hardways</b> — number rolls as a double (e.g. 3+3) before a 7 or before that number rolls "easy". Hard 4/10 pay {{ odds.hardPay[4] }}:1, Hard 6/8 pay {{ odds.hardPay[6] }}:1.</li>
     </ul>
   </details>
 

@@ -10,29 +10,29 @@ Every bet on a craps table has a fixed, published house edge — none of it is h
 
 | Bet | House Edge |
 |---|---|
-| Pass Line / Come, with 3-4-5x Odds | 0.37% |
-| Pass Line / Come, with single Odds | 0.85% |
-| Don't Pass / Don't Come | 1.36% |
-| Pass Line / Come (no odds) | 1.41% |
-| Place 6 or 8 | 1.52% |
-| Place 5 or 9 | 4.00% |
-| Buy 4 or 10 (5% vig) | 4.76% |
-| Place 4 or 10 | 6.67% |
-| Field | 5.56% |
-| Any Craps | 11.11% |
-| Hard 6 or 8 | 9.09% |
-| Hard 4 or 10 | 11.11% |
-| Any Seven | 16.67% |
+| Pass Line / Come, with {{ odds.oddsMult[4] }}-{{ odds.oddsMult[5] }}-{{ odds.oddsMult[6] }}x Odds | {{ odds.houseEdge.passLineFullOdds }}% |
+| Pass Line / Come, with single Odds | {{ odds.houseEdge.passLineSingleOdds }}% |
+| Don't Pass / Don't Come | {{ odds.houseEdge.dontPass }}% |
+| Pass Line / Come (no odds) | {{ odds.houseEdge.passLine }}% |
+| Place 6 or 8 | {{ odds.houseEdge.place6or8 }}% |
+| Place 5 or 9 | {{ odds.houseEdge.place5or9 }}% |
+| Buy 4 or 10 ({{ odds.buyCommissionPct }}% vig) | {{ odds.houseEdge.buy4or10 }}% |
+| Place 4 or 10 | {{ odds.houseEdge.place4or10 }}% |
+| Field | {{ odds.houseEdge.field }}% |
+| Any Craps | {{ odds.houseEdge.anyCraps }}% |
+| Hard 6 or 8 | {{ odds.houseEdge.hard6or8 }}% |
+| Hard 4 or 10 | {{ odds.houseEdge.hard4or10 }}% |
+| Any Seven | {{ odds.houseEdge.anySeven }}% |
 
 ## What actually stands out
 
-**Odds bets are the only bet in the casino with zero house edge.** They don't appear in the table above on their own because they can't be made alone — but stacked behind a Pass Line bet, they pull the *blended* edge down to 0.37% on a standard 3-4-5x table. Nothing else on the layout comes close.
+**Odds bets are the only bet in the casino with zero house edge.** They don't appear in the table above on their own because they can't be made alone — but stacked behind a Pass Line bet, they pull the *blended* edge down to {{ odds.houseEdge.passLineFullOdds }}% on a standard {{ odds.oddsMult[4] }}-{{ odds.oddsMult[5] }}-{{ odds.oddsMult[6] }}x table. Nothing else on the layout comes close.
 
-**Place 6 and 8 are quietly excellent.** At 1.52%, they're barely worse than a bare Pass Line bet, and unlike Pass Line, you can bet them anytime without waiting for a new come-out roll.
+**Place 6 and 8 are quietly excellent.** At {{ odds.houseEdge.place6or8 }}%, they're barely worse than a bare Pass Line bet, and unlike Pass Line, you can bet them anytime without waiting for a new come-out roll.
 
-**Buy bets only make sense on 4 and 10.** The 5% commission is a flat tax, so it hurts most on numbers with the worst payout odds otherwise. On 4/10 it actually beats the equivalent Place bet (4.76% vs 6.67%); on 6/8 it's strictly worse than just Placing them.
+**Buy bets only make sense on 4 and 10.** The {{ odds.buyCommissionPct }}% commission is a flat tax, so it hurts most on numbers with the worst payout odds otherwise. On 4/10 it actually beats the equivalent Place bet ({{ odds.houseEdge.buy4or10 }}% vs {{ odds.houseEdge.place4or10 }}%); on 6/8 it's strictly worse than just Placing them.
 
-**Any Seven is the worst bet on the table.** A 16.67% edge means the casino keeps roughly a sixth of every dollar wagered on it, long-run. It's tempting because 7 is the single most common roll — but that's exactly why the payout is priced so badly against you.
+**Any Seven is the worst bet on the table.** A {{ odds.houseEdge.anySeven }}% edge means the casino keeps roughly a sixth of every dollar wagered on it, long-run. It's tempting because 7 is the single most common roll — but that's exactly why the payout is priced so badly against you.
 
 ## The takeaway
 

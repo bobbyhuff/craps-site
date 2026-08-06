@@ -3,7 +3,7 @@ title: The Pass Line and Why Odds Bets Matter
 description: Why the Pass Line is craps' foundation bet, and how stacking Odds behind it lowers the house edge closer to zero than any other bet on the table.
 ---
 
-The Pass Line is the bet almost everyone at a craps table has action on, and it's a good default for a reason: it's simple, it pays even money, and the house edge is a modest 1.41% — low compared to most casino games.
+The Pass Line is the bet almost everyone at a craps table has action on, and it's a good default for a reason: it's simple, it pays even money, and the house edge is a modest {{ odds.houseEdge.passLine }}% — low compared to most casino games.
 
 ## How it works
 
@@ -15,15 +15,15 @@ Once a point is established, you can back your Pass Line bet with an **Odds bet*
 
 Odds pay based on how likely the point is to repeat before a 7:
 
-- **Point 4 or 10** — pays 2:1
-- **Point 5 or 9** — pays 3:2
-- **Point 6 or 8** — pays 6:5
+- **Point 4 or 10** — pays {{ odds.trueOddsStr[4] }}
+- **Point 5 or 9** — pays {{ odds.trueOddsStr[5] }}
+- **Point 6 or 8** — pays {{ odds.trueOddsStr[6] }}
 
-Most tables cap how much you can bet in Odds relative to your Pass Line bet — commonly "3-4-5x," meaning up to 3x on points of 4/10, 4x on 5/9, and 5x on 6/8. The bigger the Odds bet relative to your flat bet, the more your *overall* bet blends toward that 0% edge.
+Most tables cap how much you can bet in Odds relative to your Pass Line bet — commonly "{{ odds.oddsMult[4] }}-{{ odds.oddsMult[5] }}-{{ odds.oddsMult[6] }}x," meaning up to {{ odds.oddsMult[4] }}x on points of 4/10, {{ odds.oddsMult[5] }}x on 5/9, and {{ odds.oddsMult[6] }}x on 6/8. The bigger the Odds bet relative to your flat bet, the more your *overall* bet blends toward that 0% edge.
 
 ## The practical takeaway
 
-A $10 Pass Line bet alone carries a 1.41% house edge. Add max Odds on a 3-4-5x table and your blended edge drops to roughly 0.37% — one of the best bets available anywhere in a casino. If you're optimizing for the lowest possible cost of play, Pass Line + max Odds is the combination to build a strategy around.
+A $10 Pass Line bet alone carries a {{ odds.houseEdge.passLine }}% house edge. Add max Odds on a {{ odds.oddsMult[4] }}-{{ odds.oddsMult[5] }}-{{ odds.oddsMult[6] }}x table and your blended edge drops to roughly {{ odds.houseEdge.passLineFullOdds }}% — one of the best bets available anywhere in a casino. If you're optimizing for the lowest possible cost of play, Pass Line + max Odds is the combination to build a strategy around.
 
 The free [craps table](/games/craps/) shows your max Odds live based on the current point, so you can practice sizing these bets correctly before it matters.
 

@@ -172,8 +172,8 @@
       </p>
       <p>
         It also explains why <b>Any Seven</b> is the worst bet on the layout. Yes, 7 is the
-        most common roll — but it pays only 4:1 when the true odds are 5:1, and that gap is
-        where the house edge lives.
+        most common roll — but it pays only {{ odds.anySevenPayStr }} when the true odds are
+        5:1, and that gap is where the house edge lives.
       </p>
     </div>
   </details>
@@ -285,10 +285,11 @@
         </li>
         <li>
           <b>Odds</b> — once a point is on, you can back your Pass Line bet with an extra
-          wager that pays <i>true odds</i>: <b>2:1</b> on a point of 4 or 10, <b>3:2</b> on
-          5 or 9, <b>6:5</b> on 6 or 8. This is the only bet on the table with
-          <b>no house edge at all</b>. The table above uses the standard 3-4-5x caps, so you
-          can back a point of 6 or 8 with up to five times your Pass Line bet.
+          wager that pays <i>true odds</i>: <b>{{ odds.trueOddsStr[4] }}</b> on a point of 4
+          or 10, <b>{{ odds.trueOddsStr[5] }}</b> on 5 or 9, <b>{{ odds.trueOddsStr[6] }}</b>
+          on 6 or 8. This is the only bet on the table with <b>no house edge at all</b>. The
+          table above uses the standard 3-4-5x caps, so you can back a point of 6 or 8 with
+          up to {{ odds.oddsMult[6] }} times your Pass Line bet.
           Use the <b>+ Odds</b> button in the bet sheet.
         </li>
         <li>
@@ -298,8 +299,9 @@
         </li>
         <li>
           <b>Place 6 and Place 8</b> — bet a number directly and win if it repeats before a
-          7. Pays <b>7:6</b>, so bet these in multiples of 6. Quietly one of the better
-          bets on the layout, and unlike the Pass Line you can make it whenever you like.
+          7. Pays <b>{{ odds.placeOddsStr[6] }}</b>, so bet these in multiples of 6. Quietly
+          one of the better bets on the layout, and unlike the Pass Line you can make it
+          whenever you like.
         </li>
       </ul>
 
@@ -311,26 +313,29 @@
           back). Slightly better odds than the Pass Line, and slightly lonely at a real table.
         </li>
         <li>
-          <b>Place 5 and 9</b> — pays <b>7:5</b>. Reasonable, not great.
+          <b>Place 5 and 9</b> — pays <b>{{ odds.placeOddsStr[5] }}</b>. Reasonable, not great.
         </li>
         <li>
-          <b>Buy 4 or 10</b> — pays the true <b>2:1</b> instead of Place's 9:5, but charges a
-          5% commission up front. On 4 and 10 that trade is worth it; on any other number
+          <b>Buy 4 or 10</b> — pays the true <b>{{ odds.trueOddsStr[4] }}</b> instead of
+          Place's {{ odds.placeOddsStr[4] }}, but charges a {{ odds.buyCommissionPct }}%
+          commission up front. On 4 and 10 that trade is worth it; on any other number
           it isn't.
         </li>
       </ul>
 
       <h3 class="learn-h3">Paying for excitement</h3>
       <ul>
-        <li><b>Field</b> — one roll only. Wins on 2, 3, 4, 9, 10, 11, 12; <b>2 pays 2:1</b>
-          and <b>12 pays 3:1</b>, the rest even money. Looks like it covers most of the
+        <li><b>Field</b> — one roll only. Wins on 2, 3, 4, 9, 10, 11, 12;
+          <b>2 pays {{ odds.fieldPayStr[2] }}</b> and <b>12 pays {{ odds.fieldPayStr[12] }}</b>,
+          the rest even money. Looks like it covers most of the
           board, but 5, 6, 7 and 8 are the most common totals and none of them are in it.</li>
         <li><b>Hardways</b> — betting a number comes up as a double: hard 6 is
           <span class="pips">&#9858;&#9858;</span>, not
-          <span class="pips">&#9857;&#9859;</span>. Hard 4 and 10 pay <b>7:1</b>, hard 6 and
-          8 pay <b>9:1</b>. Loses if a 7 shows or if the number rolls the easy way first.</li>
-        <li><b>Any Craps</b> — one roll, wins on 2, 3 or 12, pays <b>7:1</b>.</li>
-        <li><b>Any Seven</b> — one roll, wins on 7, pays <b>4:1</b>. The worst bet available.</li>
+          <span class="pips">&#9857;&#9859;</span>. Hard 4 and 10 pay <b>{{ odds.hardPay[4] }}:1</b>,
+          hard 6 and 8 pay <b>{{ odds.hardPay[6] }}:1</b>. Loses if a 7 shows or if the number
+          rolls the easy way first.</li>
+        <li><b>Any Craps</b> — one roll, wins on 2, 3 or 12, pays <b>{{ odds.anyCrapsPayStr }}</b>.</li>
+        <li><b>Any Seven</b> — one roll, wins on 7, pays <b>{{ odds.anySevenPayStr }}</b>. The worst bet available.</li>
       </ul>
 
       <p>
@@ -401,7 +406,8 @@
       <ul>
         <li>
           <a href="/strategy/pass-line-and-odds/">The Pass Line and why Odds bets matter</a>
-          — how stacking Odds pulls your effective house edge from 1.41% down to about 0.37%.
+          — how stacking Odds pulls your effective house edge from {{ odds.houseEdge.passLine }}%
+          down to about {{ odds.houseEdge.passLineFullOdds }}%.
         </li>
         <li>
           <a href="/strategy/bankroll-management/">Bankroll management for craps</a>
