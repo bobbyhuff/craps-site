@@ -1,20 +1,28 @@
+---
+layout: base.njk
+title: How to Play Craps
+description: How to play craps step by step — the come-out roll, the point, reading the table, and every bet ranked best to worst, with diagrams and a full worked example round.
+extraCss: /games/craps/craps.css
+---
 <section class="learn">
-  <h2 class="learn-title">How to play craps</h2>
+  <h1 class="learn-title">How to play craps</h1>
   <p class="learn-intro">
     Craps looks chaotic — a crowded layout, a dozen bets, people shouting. It isn't.
     The whole game runs on one simple loop, and once you see the loop the table stops
     being intimidating. Start at the top and work down; everything here can be tried on
-    the table above.
+    the free craps table.
   </p>
+
+  <p class="strategy-link"><a class="btn" href="/games/craps/">Play the free craps table →</a></p>
 
   <details class="accordion">
     <summary>1 &middot; What craps actually is</summary>
     <div class="accordion-body">
       <p>
         One player — the <b>shooter</b> — rolls two dice. Everyone at the table bets on
-        what those dice will total. That's it. You are never playing against a dealer and
-        never playing against the other players; you're all betting on the same dice, and
-        most of the table is usually betting the same direction.
+        what those dice will total. That's it. You're never playing against a dealer or
+        against the other players; you're all betting on the same dice, and most of the
+        table is usually betting the same direction.
       </p>
       <p>
         Because two dice can only total 2 through 12, and because some totals are far more
@@ -23,8 +31,9 @@
         and which are not.
       </p>
       <p class="learn-note">
-        The table above is a practice table — the chips aren't real and there's no money
-        involved. It's for learning the loop and testing a betting plan.
+        The <a href="/games/craps/">free craps table</a> is a practice table — the chips
+        aren't real and there's no money involved. It's for learning the loop and testing
+        a betting plan.
       </p>
     </div>
   </details>
@@ -34,7 +43,7 @@
     <div class="accordion-body">
       <p>
         Every round has two phases. The first roll of a round is the <b>come-out roll</b>,
-        and the status bar on the table above shows <b>OFF (come-out)</b> when you're in it.
+        and the status bar on the craps table shows <b>OFF (come-out)</b> when you're in it.
       </p>
       <p>On the come-out roll, a <b>Pass Line</b> bet resolves immediately if it can:</p>
       <ul>
@@ -255,7 +264,7 @@
           </svg>
         </div>
         <figcaption>
-          The layout above the fold uses this same grouping — line bets, then numbers,
+          The free craps table uses this same grouping — line bets, then numbers,
           then one-roll props.
         </figcaption>
       </figure>
@@ -273,8 +282,8 @@
     <summary>5 &middot; The bets, best to worst</summary>
     <div class="accordion-body">
       <p>
-        Every bet below exists on the table above. They're ordered by how much the house
-        keeps — the top of this list is where a thought-out session lives.
+        Every bet below exists on the free craps table. They're ordered by how much the
+        house keeps — the top of this list is where a thought-out session lives.
       </p>
 
       <h3 class="learn-h3">Start here</h3>
@@ -288,7 +297,7 @@
           wager that pays <i>true odds</i>: <b>{{ odds.trueOddsStr[4] }}</b> on a point of 4
           or 10, <b>{{ odds.trueOddsStr[5] }}</b> on 5 or 9, <b>{{ odds.trueOddsStr[6] }}</b>
           on 6 or 8. This is the only bet on the table with <b>no house edge at all</b>. The
-          table above uses the standard 3-4-5x caps, so you can back a point of 6 or 8 with
+          craps table uses the standard 3-4-5x caps, so you can back a point of 6 or 8 with
           up to {{ odds.oddsMult[6] }} times your Pass Line bet.
           Use the <b>+ Odds</b> button in the bet sheet.
         </li>
@@ -340,7 +349,7 @@
 
       <p>
         For the exact house edge on each of these, see the
-        <a href="/blog/craps-house-edge-by-bet/">full ranking</a>.
+        <a href="/the-pit/craps-house-edge-by-bet/">full ranking</a>.
       </p>
     </div>
   </details>
@@ -349,8 +358,8 @@
     <summary>6 &middot; A full round, step by step</summary>
     <div class="accordion-body">
       <p>
-        Here's one complete round with real numbers, the way it would read in the log on
-        the table above. Starting bankroll: <b>$300</b>.
+        Here's one complete round with real numbers, the way it would read in the roll log
+        on the free craps table. Starting bankroll: <b>$300</b>.
       </p>
 
       <ol class="learn-steps">
@@ -405,7 +414,7 @@
       <p>Once the loop makes sense, these go deeper:</p>
       <ul>
         <li>
-          <a href="/strategy/pass-line-and-odds/">The Pass Line and why Odds bets matter</a>
+          <a href="/strategy/craps/pass-line-and-odds/">The Pass Line and why Odds bets matter</a>
           — how stacking Odds pulls your effective house edge from {{ odds.houseEdge.passLine }}%
           down to about {{ odds.houseEdge.passLineFullOdds }}%.
         </li>
@@ -414,15 +423,17 @@
           — sizing bets and setting limits so a cold streak doesn't end the session.
         </li>
         <li>
-          <a href="/blog/craps-house-edge-by-bet/">Craps house edge by bet, ranked</a>
+          <a href="/the-pit/craps-house-edge-by-bet/">Craps house edge by bet, ranked</a>
           — every bet on the layout with its actual cost, best to worst.
         </li>
       </ul>
       <p>
-        The fastest way to make any of this stick is to scroll up, set a bankroll, and play
-        a few dozen rolls betting only the Pass Line with full Odds. It's a boring strategy.
-        It's also the best one on the table.
+        The fastest way to make any of this stick is to set a bankroll and play a few dozen
+        rolls betting only the Pass Line with full Odds. It's a boring strategy. It's also
+        the best one on the table.
       </p>
     </div>
   </details>
+
+  <p class="strategy-link"><a class="btn" href="/games/craps/">Play the free craps table →</a></p>
 </section>
