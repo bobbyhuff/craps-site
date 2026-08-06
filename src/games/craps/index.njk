@@ -49,17 +49,9 @@ extraJs: /games/craps/craps.js
 
   <div id="notice"></div>
 
-  <div class="roll-display">
-    <div class="current-roll" id="currentRoll">
-      <div class="die" id="die1">-</div>
-      <div class="die" id="die2">-</div>
-      <div class="roll-total" id="rollTotal">Roll the dice to begin</div>
-      <button class="btn-roll small" id="rollBtnTop">ROLL</button>
-    </div>
-    <div class="roll-history-wrap">
-      <span class="chip-label">History</span>
-      <div class="roll-history" id="rollHistory"></div>
-    </div>
+  <div class="roll-history-wrap">
+    <span class="chip-label">History</span>
+    <div class="roll-history" id="rollHistory"></div>
   </div>
 
   <div class="bet-opts">
@@ -106,7 +98,14 @@ extraJs: /games/craps/craps.js
       <span class="chip-label">Chip</span>
       <div id="chipSelector"></div>
     </div>
-    <button class="btn-roll" id="rollBtn">ROLL</button>
+    <div class="roll-group">
+      <div class="mini-dice">
+        <div class="die" id="die1">-</div>
+        <div class="die" id="die2">-</div>
+      </div>
+      <div class="roll-total" id="rollTotal">Roll the dice to begin</div>
+      <button class="btn-roll" id="rollBtn">ROLL</button>
+    </div>
   </div>
 
   <div class="log" id="log"></div>

@@ -687,7 +687,7 @@ function renderBetSheet() {
 
 function renderOnetime() {
   const field = document.getElementById('field');
-  field.innerHTML = `<div class="title">FIELD</div><div class="payline">2 pays 2:1, 12 pays 3:1</div>
+  field.innerHTML = `<div class="title">FIELD</div><div class="payline">2 pays 2:1<br>12 pays 3:1</div>
     <div class="amt">${fmt(state.field)}</div>
     ${state.field > 0 ? `<span class="mini-btn" onclick="event.stopPropagation();removeField()">X</span>` : ''}`;
   field.onclick = clickField;
@@ -729,7 +729,6 @@ window.addEventListener('DOMContentLoaded', () => {
   state = newState(0);
 
   document.getElementById('rollBtn').addEventListener('click', rollDice);
-  document.getElementById('rollBtnTop').addEventListener('click', rollDice);
   document.getElementById('resetBtn').addEventListener('click', resetBankroll);
   document.getElementById('clearBetsBtn').addEventListener('click', clearAllBets);
   document.getElementById('toggleWorkingBtn').addEventListener('click', toggleAllWorking);
