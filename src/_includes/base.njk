@@ -3,19 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{{ title }} — Free Craps Practice</title>
-<meta name="description" content="{{ description or "Practice craps strategy for free, no ads, no account. True odds, real payouts, built entirely by an AI." }}">
+<title>{{ title }} — Odds Lab</title>
+<meta name="description" content="{{ description or "Practice table game strategy for free, no ads, no account. True odds, real payouts, starting with craps." }}">
 <meta name="google-site-verification" content="uRxmMD7wGvgqilHl-WR63r0rWE-aJ87MsJVzC-rw1MQ" />
 <meta name="theme-color" content="#081810">
 <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/site.css">
 {% if extraCss %}<link rel="stylesheet" href="{{ extraCss }}">{% endif %}
+{% if redirectTo %}<meta http-equiv="refresh" content="0; url={{ redirectTo }}"><link rel="canonical" href="{{ site.url }}{{ redirectTo }}">{% endif %}
 </head>
 <body>
 
 <nav class="site-nav">
-  <a class="brand" href="/">CRAPS LAB</a>
+  <a class="brand" href="/">Odds Lab</a>
   <div class="nav-links">
     <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
     <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
