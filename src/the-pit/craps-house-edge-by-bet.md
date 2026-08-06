@@ -38,4 +38,4 @@ Every bet on a craps table has a fixed, published house edge — none of it is h
 
 If you're optimizing purely for the lowest cost of play: Pass Line (or Come) with max Odds, plus Place bets on 6 and 8, covers the low-edge side of the table almost completely. Everything below 4% edge is worth considering; everything above it is paying for excitement, not value.
 
-Read more on the [Pass Line and Odds](/strategy/pass-line-and-odds/) specifically, or practice sizing these bets on the [free craps table](/games/craps/).
+Read more on the [Pass Line and Odds](/strategy/craps/pass-line-and-odds/) specifically, or practice sizing these bets on the [free craps table](/games/craps/).

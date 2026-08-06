@@ -17,8 +17,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("strategy", (collectionApi) =>
     collectionApi.getFilteredByGlob("src/strategy/**/*.md")
   );
-  eleventyConfig.addCollection("blog", (collectionApi) =>
-    collectionApi.getFilteredByGlob("src/blog/*.md").sort((a, b) => b.date - a.date)
+  eleventyConfig.addCollection("pit", (collectionApi) =>
+    collectionApi.getFilteredByGlob("src/the-pit/*.md").sort((a, b) => b.date - a.date)
   );
 
   return {

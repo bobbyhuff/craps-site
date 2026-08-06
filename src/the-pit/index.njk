@@ -1,0 +1,14 @@
+---
+layout: base.njk
+title: The Pit
+description: Notes on building a free table game practice site, strategy deep-dives, and what's new at Odds Lab.
+---
+<h1>The Pit</h1>
+<div>
+  {% for post in collections.pit %}
+  <a class="list-item" href="{{ post.url }}">
+    <h3>{{ post.data.title }}</h3>
+    <p>{{ post.data.description }}</p>
+  </a>
+  {% endfor %}
+</div>
