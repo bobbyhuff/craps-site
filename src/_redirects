@@ -1,19 +1,9 @@
-# Every current URL, old host -> 0stakes.com, one hop straight to each URL's
-# final destination (including the 4 legacy paths that used to only have a
-# client-side meta-refresh: /blog/* and the old pass-line-and-odds URL).
-/                                         https://0stakes.com/                                              301
-/games/                                   https://0stakes.com/games/                                        301
-/games/craps/                             https://0stakes.com/games/craps/                                  301
-/games/blackjack/                         https://0stakes.com/games/blackjack/                              301
-/strategy/                                https://0stakes.com/strategy/                                     301
-/strategy/bankroll-management/            https://0stakes.com/strategy/bankroll-management/                 301
-/strategy/craps/                          https://0stakes.com/strategy/craps/                               301
-/strategy/craps/how-to-play/              https://0stakes.com/strategy/craps/how-to-play/                   301
-/strategy/craps/pass-line-and-odds/       https://0stakes.com/strategy/craps/pass-line-and-odds/            301
-/strategy/blackjack/                      https://0stakes.com/strategy/blackjack/                            301
-/the-pit/                                 https://0stakes.com/the-pit/                                       301
-/the-pit/built-by-an-llm/                 https://0stakes.com/the-pit/built-by-an-llm/                       301
-/the-pit/craps-house-edge-by-bet/         https://0stakes.com/the-pit/craps-house-edge-by-bet/               301
+# Path-changing redirects only. Cloudflare matches these on path alone --
+# it can't tell which hostname a request came in on, and 0stakes.com now
+# serves this same file. A rule whose source and destination path are
+# identical (e.g. /games/craps/ -> https://0stakes.com/games/craps/) would
+# redirect 0stakes.com to itself forever. Only keep rules where the path
+# actually changes, so they're safe to serve from any host that points here.
 /blog/                                    https://0stakes.com/the-pit/                                       301
 /blog/built-by-an-llm/                    https://0stakes.com/the-pit/built-by-an-llm/                       301
 /blog/craps-house-edge-by-bet/            https://0stakes.com/the-pit/craps-house-edge-by-bet/               301

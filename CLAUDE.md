@@ -158,13 +158,31 @@ same-host and cross-host rules for the same 4 paths as "harmless," which isn't t
 just rejects it outright with `code: 100324`). **Every source path in this file must be
 unique**, no exceptions, no "first rule wins" leniency to lean on.
 
-Every current URL redirects straight to `0stakes.com` (0stakes.com is registered and pointed
-at this same Cloudflare project — confirmed, not hypothetical), including the 4 legacy paths
-that used to only have a client-side meta-refresh (`/blog/*`, the old
-`/strategy/pass-line-and-odds/`). **Do not add a redirect rule for a path that also has a real
-page in this same build** (e.g. `/about/`) — Cloudflare applies `_redirects` before serving
-static assets, so a same-path redirect rule silently hijacks the real page. Redirects here are
-strictly for paths that no longer have their own content.
+`0stakes.com` is registered and pointed at this same Cloudflare project (confirmed, not
+hypothetical) — meaning **both the old host and 0stakes.com serve this exact same
+`_redirects` file, and rules match on path only, with no way to condition on which hostname
+the request came in on.** Learned this the hard way: an earlier version of this file had a
+rule for every URL shaped `/games/craps/ -> https://0stakes.com/games/craps/`, intended to
+migrate old-host visitors to the new domain. Once 0stakes.com started serving the same file,
+those rules matched 0stakes.com's own requests too — a request to
+`https://0stakes.com/games/craps/` matched the rule and got redirected to
+`https://0stakes.com/games/craps/`, the exact URL it was already on. Infinite redirect loop,
+on production, immediately.
+
+**The fix, and the rule going forward: only add a redirect whose destination path differs
+from its source path.** `/blog/ -> https://0stakes.com/the-pit/` is safe on any host that
+serves this file, because `/the-pit/` is never itself a redirect source — it's real content,
+so the chain always terminates in one hop regardless of which domain served the request.
+`/games/craps/ -> https://0stakes.com/games/craps/` is never safe here, on any host, because
+the moment both hostnames point at the same deployment (as they do now) it becomes a
+same-path loop on the new domain. A real cross-host "migrate every URL to the new domain"
+redirect needs to be host-conditional, which the shared `_redirects` file cannot express —
+that has to be a Cloudflare dashboard-level Redirect Rule scoped to the old hostname
+specifically, not something this repo can encode.
+
+Also: **do not add a redirect rule for a path that also has a real page in this same
+build** (e.g. `/about/`) — Cloudflare applies `_redirects` before serving static assets, so a
+same-path redirect rule silently hijacks the real page regardless of the loop question above.
 
 `base.njk`'s `redirectTo` frontmatter mechanism (client-side meta-refresh + its own canonical
 tag) still exists as a fallback on 4 stub pages (`src/blog/index.njk` and its two post stubs,
