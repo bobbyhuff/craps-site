@@ -12,6 +12,9 @@ module.exports = function (eleventyConfig) {
   // Same file Eleventy reads as the `odds` global data object, also published
   // as a plain script so craps.js can load the identical numbers in the browser.
   eleventyConfig.addPassthroughCopy({ "src/_data/odds.js": "games/craps/odds.js" });
+  eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.css");
+  eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/blackjackOdds.js": "games/blackjack/odds.js" });
   eleventyConfig.addPassthroughCopy("src/robots.txt");
 
   eleventyConfig.addCollection("strategy", (collectionApi) =>
@@ -19,6 +22,11 @@ module.exports = function (eleventyConfig) {
   );
   eleventyConfig.addCollection("pit", (collectionApi) =>
     collectionApi.getFilteredByGlob("src/the-pit/*.md").sort((a, b) => b.date - a.date)
+  );
+  eleventyConfig.addCollection("games", (collectionApi) =>
+    collectionApi.getFilteredByGlob("src/games/*/index.njk")
+      .filter(p => (p.data.tags || []).includes("game"))
+      .sort((a, b) => a.data.order - b.data.order)
   );
 
   return {

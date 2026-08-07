@@ -8,7 +8,7 @@ description: Practice table game strategy for free, no ads, no account. True odd
   <p>
     Clean, honest practice tables for learning bet strategy. True odds, correct
     payouts, no house tricks buried in the fine print, no account required. Craps
-    is live now, with more games on the way.
+    and blackjack are live now, with more games on the way.
   </p>
   <div class="btn-row">
     <a class="btn" href="/games/craps/">Play Craps</a>
@@ -17,14 +17,12 @@ description: Practice table game strategy for free, no ads, no account. True odd
 </div>
 
 <div class="card-grid">
-  <a class="card" href="/games/craps/">
-    <h3>Craps</h3>
-    <p>Full table: Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, Hardways.</p>
+  {% for game in collections.games %}
+  <a class="card" href="{{ game.url }}">
+    <h3>{{ game.data.title }}</h3>
+    <p>{{ game.data.cardBlurb }}</p>
   </a>
-  <a class="card disabled" href="#">
-    <h3>More games</h3>
-    <p>Blackjack is next.</p>
-  </a>
+  {% endfor %}
   <a class="card" href="/strategy/">
     <h3>Strategy Guides</h3>
     <p>Bet types, odds math, and bankroll management explained.</p>

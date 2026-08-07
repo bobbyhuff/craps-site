@@ -7,12 +7,10 @@ description: Free browser casino games for practicing strategy — starting with
 <p>Pick a game to practice. Everything runs in your browser — no downloads, no accounts, no ads.</p>
 
 <div class="card-grid">
-  <a class="card" href="/games/craps/">
-    <h3>Craps</h3>
-    <p>Full table with Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, and Hardways.</p>
+  {% for game in collections.games %}
+  <a class="card" href="{{ game.url }}">
+    <h3>{{ game.data.title }}</h3>
+    <p>{{ game.data.cardBlurb }}</p>
   </a>
-  <a class="card disabled" href="#">
-    <h3>More games</h3>
-    <p>Blackjack is next.</p>
-  </a>
+  {% endfor %}
 </div>

@@ -1,0 +1,554 @@
+/* ============================================================
+   Blackjack table — mobile-first.
+   Tokens come from /css/site.css, which loads first. Shared
+   components (overlay, statusbar, chip selector, buttons, legend,
+   log) are copied forward from craps.css to keep each game folder
+   self-contained.
+   ============================================================ */
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+main {
+  max-width: none;
+  padding: 0;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-4) var(--s-6);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin: 0 0 var(--s-3);
+  text-align: center;
+}
+
+.hidden { display: none !important; }
+
+/* ============================================================
+   Sticky status bar (copied forward from craps.css)
+   ============================================================ */
+
+.statusbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  margin: 0 calc(var(--s-4) * -1);
+  background: linear-gradient(180deg, rgba(10, 28, 18, 0.98), rgba(8, 24, 16, 0.98));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--edge-gold);
+  box-shadow: var(--shadow-md);
+}
+
+.sb-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.sb-k {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sb-cell b {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cream);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+#net.positive { color: var(--win); }
+#net.negative { color: var(--lose); }
+
+#notice {
+  color: var(--lose);
+  font-weight: 600;
+  font-size: 13.5px;
+  text-align: center;
+  min-height: 1.2em;
+  padding: var(--s-2) 0 0;
+}
+
+/* ============================================================
+   The felt
+   ============================================================ */
+
+.table {
+  position: relative;
+  background-color: var(--felt);
+  background-image: var(--felt-sheen);
+  border: 1px solid var(--edge-gold);
+  border-radius: var(--r-lg);
+  padding: var(--s-4) var(--s-3);
+  box-shadow: var(--shadow-lg), var(--inset-hi);
+  overflow: hidden;
+  margin: var(--s-3) 0;
+}
+
+.table::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise);
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.table > * { position: relative; }
+
+.dealer-area { margin-bottom: var(--s-5); }
+.player-area { display: flex; flex-wrap: wrap; gap: var(--s-4); justify-content: center; }
+
+.seat-label {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: var(--s-2);
+}
+
+/* ============================================================
+   Playing cards
+   ============================================================ */
+
+.pcard,
+.pcard-back {
+  --pcard-ink-black: #1a1206;
+  --pcard-ink-red: #a3231d;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 64px;
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm), inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.pcard {
+  position: relative;
+  background: linear-gradient(180deg, #fbf7ec, #ded5be);
+  color: var(--pcard-ink-black);
+}
+
+.pcard.is-red { color: var(--pcard-ink-red); }
+
+.pcard-corner {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.05;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pcard-corner-suit { font-size: 11px; }
+
+.pcard-suit-big {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.pcard-back {
+  background: linear-gradient(135deg, var(--felt-raised), var(--felt-well));
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0 6px, rgba(202, 165, 60, 0.15) 6px 7px),
+    linear-gradient(135deg, var(--felt-raised), var(--felt-well));
+  border: 1px solid var(--gold-dim);
+}
+
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  justify-content: center;
+  min-height: 64px;
+}
+
+.hand-total {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin-top: var(--s-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.hand-total.is-win { color: var(--win); }
+.hand-total.is-lose { color: var(--lose); }
+
+.hand-bet {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.hand-label {
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--s-1);
+}
+
+.hand-group {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  min-width: 130px;
+}
+
+.hand-group.is-active {
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 0 1px var(--gold-dim), 0 0 16px rgba(202, 165, 60, 0.25);
+}
+
+/* Larger cards once there's room */
+@media (min-width: 701px) {
+  .pcard, .pcard-back { width: 58px; height: 82px; }
+  .pcard-corner { font-size: 13px; top: 4px; left: 5px; }
+  .pcard-corner-suit { font-size: 12px; }
+  .pcard-suit-big { font-size: 28px; }
+}
+
+/* ============================================================
+   Bet spot + insurance prompt
+   ============================================================ */
+
+.bet-area { text-align: center; margin: var(--s-3) 0; }
+
+.bet-spot {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 80px;
+  margin: 0 auto var(--s-3);
+  background: linear-gradient(180deg, var(--felt-raised), rgba(20, 67, 43, 0.9));
+  border: 2px dashed var(--edge-gold);
+  border-radius: var(--r-md);
+  cursor: pointer;
+}
+
+.bet-spot .bet-spot-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.bet-spot .bet-spot-amt {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.bet-controls,
+.insurance-controls {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--s-2);
+}
+
+.bet-controls .btn-outline,
+.insurance-controls .btn-outline,
+.bet-controls .btn-roll,
+.insurance-controls .btn-roll {
+  min-width: 96px;
+}
+
+.insurance-prompt {
+  text-align: center;
+  background: var(--felt-well);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  margin: var(--s-3) 0;
+}
+
+.insurance-prompt p { margin: 0 0 var(--s-2); color: var(--text-muted); font-size: 13.5px; }
+.insurance-prompt b { color: var(--gold); }
+
+.new-hand-wrap { text-align: center; margin: var(--s-4) 0; }
+
+/* ============================================================
+   Action bar
+   ============================================================ */
+
+.action-bar {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--s-4) 0;
+}
+
+.action-bar button { flex: 1 1 120px; max-width: 160px; }
+
+/* ============================================================
+   Chip selector, buttons (copied forward from craps.css)
+   ============================================================ */
+
+.chip-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  justify-content: center;
+  margin-bottom: var(--s-3);
+}
+
+.chip-label {
+  color: var(--text-dim);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#chipSelector {
+  display: flex;
+  gap: var(--s-2);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding: 2px;
+  min-width: 0;
+}
+
+#chipSelector::-webkit-scrollbar { display: none; }
+
+.chip-btn {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px dashed rgba(244, 238, 224, 0.5);
+  background: radial-gradient(circle at 50% 35%, var(--felt-raised), #16311f);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease;
+}
+
+.chip-btn:active { transform: scale(0.92); }
+
+.chip-btn.selected {
+  border-style: solid;
+  border-color: var(--gold-bright);
+  background: var(--gold-grad);
+  color: #1a1206;
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--gold-faint);
+}
+
+.btn-roll {
+  background: var(--gold-grad);
+  color: #1a1206;
+  border: 1px solid var(--gold-deep);
+  padding: 0 var(--s-5);
+  min-height: 52px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.btn-roll:hover { filter: brightness(1.07); }
+.btn-roll:active { transform: translateY(1px); box-shadow: var(--shadow-sm); }
+.btn-roll:disabled,
+.btn-outline:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--edge-gold);
+  color: var(--gold);
+  padding: 0 var(--s-3);
+  min-height: 44px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-outline:hover { background: var(--gold-faint); }
+.btn-outline:active { transform: scale(0.97); }
+
+.table-actions {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--s-3);
+}
+
+/* ============================================================
+   Log + legend (copied forward from craps.css)
+   ============================================================ */
+
+.log {
+  background: var(--bg-deep);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  height: 140px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: var(--s-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.log .win { color: var(--win); }
+.log .lose { color: var(--lose); }
+.log .neutral { color: var(--text-muted); }
+
+.legend {
+  background: var(--felt);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: 0 var(--s-4);
+  font-size: 14px;
+  margin-bottom: var(--s-2);
+}
+
+.legend summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-weight: 600;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  list-style-position: outside;
+}
+
+.legend summary:hover { color: var(--gold-bright); }
+
+.legend ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); line-height: 1.65; }
+.legend li { margin-bottom: var(--s-2); color: var(--text-muted); }
+.legend li b { color: var(--text); }
+
+.strategy-link { text-align: center; margin-top: var(--s-4); }
+
+.strategy-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--s-3);
+}
+
+/* ============================================================
+   Overlay (copied forward from craps.css)
+   ============================================================ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-4);
+  z-index: 60;
+}
+
+.overlay.hidden { display: none; }
+
+.overlay-box {
+  background: linear-gradient(180deg, var(--felt-raised), var(--felt));
+  border: 1px solid var(--edge-gold);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-5);
+  width: min(340px, 100%);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.overlay-box h2 {
+  font-family: var(--font-display);
+  color: var(--gold);
+  margin: 0 0 var(--s-2);
+  font-size: 24px;
+}
+
+.overlay-box p { font-size: 13.5px; color: var(--text-muted); margin: 0 0 var(--s-4); }
+
+.overlay-box input {
+  width: 100%;
+  padding: var(--s-3);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--edge-gold);
+  background: var(--felt-well);
+  color: var(--cream);
+  text-align: center;
+  margin-bottom: var(--s-4);
+}
+
+.overlay-buttons { display: flex; gap: var(--s-2); justify-content: center; }
+.overlay-buttons .btn-roll { flex: 1 1 auto; }
+
+/* ============================================================
+   Breakpoints
+   ============================================================ */
+
+@media (min-width: 701px) {
+  .app { padding: var(--s-5) var(--s-5) var(--s-7); }
+  .page-title { font-size: 32px; }
+  .statusbar { margin: 0; border-radius: var(--r-md); border: 1px solid var(--edge-gold); }
+  .table { padding: var(--s-5); }
+  .log { height: 170px; }
+}

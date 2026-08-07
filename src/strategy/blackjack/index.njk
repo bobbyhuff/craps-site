@@ -1,8 +1,32 @@
 ---
 layout: base.njk
 title: Blackjack Strategy
-description: Blackjack strategy guides for Odds Lab, coming soon.
+description: How blackjack is dealt at Odds Lab — dealer rules, double down, split, and insurance, plus the actual payouts behind each one.
 ---
 <h1>Blackjack strategy</h1>
-<p>Blackjack strategy guides are coming soon.</p>
+<p>Blackjack rewards knowing the rules cold more than any craps bet does — every decision is a hit/stand/double/split call made against a fixed dealer procedure. Here's exactly how this table is dealt.</p>
+
+<div>
+  <a class="list-item" href="/games/blackjack/">
+    <h3>Play blackjack</h3>
+    <p>Free 6-deck shoe, no ads, no account.</p>
+  </a>
+</div>
+
+<h2>The rules</h2>
+<ul>
+  <li><b>Blackjack pays {{ blackjackOdds.blackjackPayoutStr }}.</b> A natural 21 on your first two cards, unless the dealer also has one, in which case it pushes.</li>
+  <li><b>Dealer stands on all 17s</b>, including soft 17. The dealer peeks for blackjack immediately when showing an Ace or a 10-value card, before you have to act — so you're never risking extra money into a hand the dealer's already won.</li>
+  <li><b>Double down</b> on any first two cards, including after a split: double your bet, take exactly one more card, done.</li>
+  <li><b>Split</b> a matching-rank pair into two hands of equal size. One split per hand, no resplitting. Split aces get exactly one card each and can't be hit again.</li>
+  <li><b>Insurance</b>, offered only when the dealer shows an Ace, costs half your bet and pays {{ blackjackOdds.insurancePayoutStr }} if the dealer has blackjack. It's a side bet on the dealer's hole card, not a hedge on yours — mathematically one of the worse bets you can make, same as it is at a real table.</li>
+  <li><b>Push returns your bet</b> with no win or loss.</li>
+</ul>
+
+<p>
+  Every one of these numbers comes from the same rules used to run the table itself —
+  see them in the game's own <a href="/games/blackjack/">rules &amp; payouts reference</a>
+  while you play.
+</p>
+
 <p><a href="/strategy/">Back to strategy →</a></p>
