@@ -33,8 +33,13 @@ src/
 **Adding a new game** (blackjack, roulette, etc.): copy the `src/games/craps/` pattern —
 `src/games/<name>/{index.njk, <name>.css, <name>.js}`, each asset added to
 `.eleventy.js`'s `addPassthroughCopy` calls same as craps's. If the game has its own
-payout/odds numbers, give it its own `src/_data/<name>-odds.js` following the same
+payout/odds numbers, give it its own `src/_data/<name>Odds.js` following the same
 isomorphic pattern as `odds.js` (below) — don't hardcode payouts into prose again.
+**Name it camelCase, not hyphenated** (`blackjackOdds.js`, not `blackjack-odds.js`):
+Eleventy's global data key is the literal filename with no case conversion, so a
+hyphenated filename produces a key that's silently unreachable via `{{ blackjackOdds.x }}`
+dot notation in templates (Nunjucks/Liquid just render it as empty, no build error —
+learned this the hard way wiring up blackjack's odds file).
 
 **Adding content pages**: flat `.md` file in `src/strategy/` or `src/blog/`, frontmatter
 `title` + `description` (+ `date` for blog), body is normal Markdown. Both directories are
