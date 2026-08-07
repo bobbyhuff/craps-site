@@ -1,10 +1,6 @@
-# Same-domain path fixes — real 301s replacing the old client-side soft redirects
-/blog/                                    /the-pit/                                              301
-/blog/built-by-an-llm/                    /the-pit/built-by-an-llm/                              301
-/blog/craps-house-edge-by-bet/            /the-pit/craps-house-edge-by-bet/                      301
-/strategy/pass-line-and-odds/             /strategy/craps/pass-line-and-odds/                    301
-
-# Old domain -> 0stakes.com, one hop straight to each URL's final destination
+# Every current URL, old host -> 0stakes.com, one hop straight to each URL's
+# final destination (including the 4 legacy paths that used to only have a
+# client-side meta-refresh: /blog/* and the old pass-line-and-odds URL).
 /                                         https://0stakes.com/                                              301
 /games/                                   https://0stakes.com/games/                                        301
 /games/craps/                             https://0stakes.com/games/craps/                                  301
@@ -18,7 +14,6 @@
 /the-pit/                                 https://0stakes.com/the-pit/                                       301
 /the-pit/built-by-an-llm/                 https://0stakes.com/the-pit/built-by-an-llm/                       301
 /the-pit/craps-house-edge-by-bet/         https://0stakes.com/the-pit/craps-house-edge-by-bet/               301
-/about/                                   https://0stakes.com/about/                                         301
 /blog/                                    https://0stakes.com/the-pit/                                       301
 /blog/built-by-an-llm/                    https://0stakes.com/the-pit/built-by-an-llm/                       301
 /blog/craps-house-edge-by-bet/            https://0stakes.com/the-pit/craps-house-edge-by-bet/               301

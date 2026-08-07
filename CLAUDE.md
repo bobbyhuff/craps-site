@@ -2,9 +2,9 @@
 
 A free, no-account, no-ads craps and blackjack practice site plus strategy content. Static
 site built with [Eleventy](https://www.11ty.dev/). Production domain is `0stakes.com`
-(`src/_data/site.js`); currently deployed to Cloudflare Workers at
-https://craps-site.redclayreserve.workers.dev/ pending the domain cutover — see "Redirects
-and the domain move" below before assuming the live URL matches `site.url`.
+(`src/_data/site.js`), registered and pointed at this Cloudflare project. The Workers deploy
+itself still serves from the old `craps-site.redclayreserve.workers.dev` host name — see
+"Redirects and the domain move" below.
 
 ## Stack
 
@@ -149,26 +149,35 @@ explained. No em dashes in generated copy (an explicit standing preference for t
 
 ## Redirects and the domain move
 
-`src/_redirects` (Cloudflare Pages `_redirects` syntax, one rule per line) is
-passthrough-copied to `_site/_redirects`. It covers two things: same-domain path fixes (old
-`/blog/*` URLs and the old `/strategy/pass-line-and-odds/` path, now real 301s replacing what
-used to be a client-side meta-refresh) and every current URL mapped from the old
-`craps-site.redclayreserve.workers.dev` host to `0stakes.com`. **Whether this file is actually
-honored depends on the live deploy setup, which lives outside this repo** (no `wrangler.toml`
-or other Cloudflare config exists here) — a Cloudflare Pages deployment reads `_redirects`
-natively, a raw Workers deployment needs the Worker script itself to read and apply it. Verify
-in production after deploying; if 301s aren't firing, the fix is on the infra side, not here.
+`src/_redirects` (Cloudflare `_redirects` syntax, one rule per line) is passthrough-copied to
+`_site/_redirects`. **Confirmed working**: this deploys as a Cloudflare Workers project (via
+Wrangler, `workers/scripts/craps-site`) with static assets, and Wrangler validates
+`_redirects` at deploy time — strictly. It hard-fails the whole deploy on any duplicate source
+path (learned this shipping the domain-migration rules: had intentionally overlapping
+same-host and cross-host rules for the same 4 paths as "harmless," which isn't true — deploy
+just rejects it outright with `code: 100324`). **Every source path in this file must be
+unique**, no exceptions, no "first rule wins" leniency to lean on.
+
+Every current URL redirects straight to `0stakes.com` (0stakes.com is registered and pointed
+at this same Cloudflare project — confirmed, not hypothetical), including the 4 legacy paths
+that used to only have a client-side meta-refresh (`/blog/*`, the old
+`/strategy/pass-line-and-odds/`). **Do not add a redirect rule for a path that also has a real
+page in this same build** (e.g. `/about/`) — Cloudflare applies `_redirects` before serving
+static assets, so a same-path redirect rule silently hijacks the real page. Redirects here are
+strictly for paths that no longer have their own content.
 
 `base.njk`'s `redirectTo` frontmatter mechanism (client-side meta-refresh + its own canonical
 tag) still exists as a fallback on 4 stub pages (`src/blog/index.njk` and its two post stubs,
-`src/strategy/pass-line-and-odds.njk`) in case `_redirects` isn't honored. Once real 301s are
-confirmed working in production, delete those 4 stub files and the `redirectTo` conditional in
-`base.njk` — don't leave both mechanisms running indefinitely.
+`src/strategy/pass-line-and-odds.njk`) in case `_redirects` ever stops being honored. Now that
+`_redirects` is confirmed live and correct, these are redundant — safe to delete along with
+the `redirectTo` conditional in `base.njk` in a follow-up pass; not urgent since they don't
+conflict with anything.
 
 ## Deployment
 
-Cloudflare Workers, deployed from `main`, currently serving from the old
-`craps-site.redclayreserve.workers.dev` host pending the `0stakes.com` cutover. `npm run
-build` output (`_site/`) is what ships; `_site/` and `node_modules/` are gitignored, not
-committed. No CI/test step currently — verify changes locally (`npm run serve` + a manual
-playtest) before pushing.
+Cloudflare Workers (`workers/scripts/craps-site`), deployed from `main` via Wrangler, with
+`0stakes.com` registered and pointed at the same project. `npm run build` output (`_site/`)
+is what ships, including `_redirects` — Wrangler validates it strictly at deploy time (see
+"Redirects and the domain move"), so a bad `_redirects` line fails the whole deploy, not just
+the redirect. `_site/` and `node_modules/` are gitignored, not committed. No CI/test step
+currently — verify changes locally (`npm run serve` + a manual playtest) before pushing.
