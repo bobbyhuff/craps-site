@@ -1,14 +1,15 @@
 ---
 layout: base.njk
 title: The Pit
-description: Notes on building a free table game practice site, strategy deep-dives, and what's new at Odds Lab.
+seoTitle: "Craps Blog: House Edge, Bet Math, and Table Notes | 0stakes"
+description: Notes on building a free craps and blackjack practice site, strategy deep-dives, and what's new at 0stakes.
 ---
 <h1>The Pit</h1>
 <div>
   {% for post in collections.pit %}
-  <a class="list-item" href="{{ post.url }}">
-    <h3>{{ post.data.title }}</h3>
+  <div class="list-item">
+    <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
     <p>{{ post.data.description }}</p>
-  </a>
+  </div>
   {% endfor %}
 </div>

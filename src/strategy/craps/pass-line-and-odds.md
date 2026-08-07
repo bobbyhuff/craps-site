@@ -1,6 +1,14 @@
 ---
 title: The Pass Line and Why Odds Bets Matter
+seoTitle: "Pass Line and Odds Bets: How Craps Odds Work | 0stakes"
 description: Why the Pass Line is craps' foundation bet, and how stacking Odds behind it lowers the house edge closer to zero than any other bet on the table.
+breadcrumb:
+  - name: Strategy
+    url: /strategy/
+  - name: Craps
+    url: /strategy/craps/
+  - name: Pass Line and Odds
+    url: /strategy/craps/pass-line-and-odds/
 ---
 
 The Pass Line is the bet almost everyone at a craps table has action on, and it's a good default for a reason: it's simple, it pays even money, and the house edge is a modest {{ odds.houseEdge.passLine }}% — low compared to most casino games.

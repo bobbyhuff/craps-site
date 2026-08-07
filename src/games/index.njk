@@ -1,16 +1,17 @@
 ---
 layout: base.njk
 title: Games
-description: Free browser casino games for practicing strategy — starting with a full-featured craps table.
+seoTitle: "Free Casino Games Online: Craps and Blackjack, No Download | 0stakes"
+description: Browse every free casino game at 0stakes — a full craps table and a 6-deck blackjack shoe, both playable instantly with no download or account.
 ---
 <h1>Games</h1>
-<p>Pick a game to practice. Everything runs in your browser — no downloads, no accounts, no ads.</p>
+<p>Pick a game to practice. Everything runs in your browser — no downloads, no accounts, no ads, no real money.</p>
 
 <div class="card-grid">
   {% for game in collections.games %}
-  <a class="card" href="{{ game.url }}">
-    <h3>{{ game.data.title }}</h3>
+  <div class="card">
+    <h3><a href="{{ game.url }}">{{ game.data.title }}</a></h3>
     <p>{{ game.data.cardBlurb }}</p>
-  </a>
+  </div>
   {% endfor %}
 </div>

@@ -1,6 +1,12 @@
 ---
 title: Bankroll Management for Craps
+seoTitle: "Craps Bankroll Management: Bet Sizing and Limits | 0stakes"
 description: How to size your bets and set limits so a cold shooter doesn't end your session — the strategy layer that has nothing to do with the dice.
+breadcrumb:
+  - name: Strategy
+    url: /strategy/
+  - name: Bankroll Management
+    url: /strategy/bankroll-management/
 ---
 
 Craps strategy isn't only about which bets to make — it's also about surviving the variance long enough for good bets to pay off. Even the best bet on the table (Pass Line with max Odds) still loses plenty of individual rolls. Bankroll management is what keeps a losing streak from becoming a wipeout.

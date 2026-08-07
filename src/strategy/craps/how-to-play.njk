@@ -1,9 +1,37 @@
 ---
 layout: base.njk
 title: How to Play Craps
+seoTitle: "How to Play Craps: Rules Explained Step by Step | 0stakes"
 description: How to play craps step by step — the come-out roll, the point, reading the table, and every bet ranked best to worst, with diagrams and a full worked example round.
 extraCss: /games/craps/craps.css
+breadcrumb:
+  - name: Strategy
+    url: /strategy/
+  - name: Craps
+    url: /strategy/craps/
+  - name: How to Play
+    url: /strategy/craps/how-to-play/
+howToSteps:
+  - name: What craps actually is
+    text: One shooter rolls two dice and everyone at the table bets on the outcome. Every bet has a fixed, published payout.
+  - name: "The loop: come-out roll, then the point"
+    text: The come-out roll wins on 7 or 11, loses on 2, 3, or 12, or sets a point on any other total. Once a point is set, the shooter needs it again before a 7.
+  - name: Why 7 decides everything
+    text: Two dice make 7 the most common total, which is why it wins the come-out instantly and why it is the number every point is racing against.
+  - name: Reading the table
+    text: The layout is symmetrical. Pass Line and Don't Pass sit on the outer band, number bets run along the top, and hardways and one-roll props sit in the center.
+  - name: The bets, best to worst
+    text: Pass Line and Odds carry the lowest house edge, Place 6 and 8 are close behind, and one-roll proposition bets like Any Seven carry the highest.
+  - name: A full round, step by step
+    text: A worked example with a $300 bankroll shows a Pass Line bet, Odds, a Place bet, and a point winning for a combined $84 in winnings.
+  - name: Where to go next
+    text: Read the Pass Line and Odds strategy guide, bankroll management, or the full house-edge ranking, then practice on the free craps table.
 ---
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"How to Play Craps","description":{{ description | dump | safe }},"step":[
+{% for step in howToSteps %}{"@type":"HowToStep","name":{{ step.name | dump | safe }},"text":{{ step.text | dump | safe }}}{% if not loop.last %},{% endif %}
+{% endfor %}]}
+</script>
 <section class="learn">
   <h1 class="learn-title">How to play craps</h1>
   <p class="learn-intro">

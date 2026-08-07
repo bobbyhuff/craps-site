@@ -1,7 +1,14 @@
 ---
 title: "Craps House Edge by Bet, Ranked (Best to Worst)"
+seoTitle: "Craps House Edge by Bet, Ranked Best to Worst | 0stakes"
 description: Every craps bet ranked by house edge, from Pass Line with full odds (0.37%) down to Any Seven (16.67%) — the numbers that should actually drive your strategy.
 date: 2026-08-05
+ogType: article
+breadcrumb:
+  - name: The Pit
+    url: /the-pit/
+  - name: Craps House Edge by Bet
+    url: /the-pit/craps-house-edge-by-bet/
 ---
 
 Every bet on a craps table has a fixed, published house edge — none of it is hidden or negotiable. Knowing the actual numbers is the fastest way to tell a good bet from a bad one, regardless of how it "feels" at the table.

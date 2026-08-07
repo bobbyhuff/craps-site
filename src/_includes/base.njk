@@ -3,8 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{{ title }} — Odds Lab</title>
-<meta name="description" content="{{ description or "Practice table game strategy for free, no ads, no account. True odds, real payouts, starting with craps." }}">
+<title>{{ seoTitle }}</title>
+<meta name="description" content="{{ description }}">
+{% if not redirectTo %}<link rel="canonical" href="{{ site.url }}{{ page.url }}">{% endif %}
+
+<meta property="og:title" content="{{ seoTitle }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}/og-image.png">
+<meta property="og:site_name" content="0stakes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seoTitle }}">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:image" content="{{ site.url }}/og-image.png">
+
+{% if page.url == "/" %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"0stakes","url":"{{ site.url }}/"}
+</script>
+{% endif %}
+
+{% if breadcrumb %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"{{ site.url }}/"}{% for crumb in breadcrumb %},
+{"@type":"ListItem","position":{{ loop.index + 1 }},"name":"{{ crumb.name }}","item":"{{ site.url }}{{ crumb.url }}"}{% endfor %}
+]}
+</script>
+{% endif %}
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon-64.png">
+<link rel="apple-touch-icon" href="/icon-512.png">
 <meta name="google-site-verification" content="uRxmMD7wGvgqilHl-WR63r0rWE-aJ87MsJVzC-rw1MQ" />
 <meta name="theme-color" content="#081810">
 <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -16,7 +47,13 @@
 <body>
 
 <nav class="site-nav">
-  <a class="brand" href="/">Odds Lab</a>
+  <a class="brand" href="/">
+    <svg viewBox="0 0 100 100" width="24" height="24" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#35D07A" stroke-width="11" stroke-dasharray="19.97 26.11" stroke-dashoffset="9.99"></circle>
+      <circle cx="50" cy="50" r="28" fill="none" stroke="#35D07A" stroke-width="11"></circle>
+    </svg>
+    <span>STAKES</span>
+  </a>
   <div class="nav-links">
     <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
     <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
@@ -29,7 +66,9 @@
 </main>
 
 <footer class="site-footer">
+  <a href="/about/">About</a>
   <a href="/the-pit/">The Pit</a>
+  <span class="footer-help">Gambling problem? Call 1-800-GAMBLER or visit <a href="https://www.ncpgambling.org" rel="noopener">ncpgambling.org</a>.</span>
 </footer>
 
 {% if extraJs %}<script src="{{ extraJs }}"></script>{% endif %}

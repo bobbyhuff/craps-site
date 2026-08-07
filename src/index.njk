@@ -1,14 +1,15 @@
 ---
 layout: base.njk
 title: Home
-description: Practice table game strategy for free, no ads, no account. True odds and real payouts, starting with a full craps table.
+seoTitle: "Free Craps Simulator: Practice Craps Online, No Download | 0stakes"
+description: 0stakes is a free craps and blackjack simulator, no downloads, no account, no real money. Practice true odds and real payouts on a full craps table right in your browser.
 ---
 <div class="hero">
-  <h1>PRACTICE TABLE GAMES. FREE. NO ADS.</h1>
+  <h1>ZERO STAKES. TRUE ODDS.</h1>
   <p>
-    Clean, honest practice tables for learning bet strategy. True odds, correct
-    payouts, no house tricks buried in the fine print, no account required. Craps
-    and blackjack are live now, with more games on the way.
+    0stakes is a free practice table for learning bet strategy — no real money, ever.
+    True odds, correct payouts, no house tricks buried in the fine print, no account
+    required. Craps and blackjack are live now, with more games on the way.
   </p>
   <div class="btn-row">
     <a class="btn" href="/games/craps/">Play Craps</a>
@@ -18,13 +19,13 @@ description: Practice table game strategy for free, no ads, no account. True odd
 
 <div class="card-grid">
   {% for game in collections.games %}
-  <a class="card" href="{{ game.url }}">
-    <h3>{{ game.data.title }}</h3>
+  <div class="card">
+    <h3><a href="{{ game.url }}">{{ game.data.title }}</a></h3>
     <p>{{ game.data.cardBlurb }}</p>
-  </a>
+  </div>
   {% endfor %}
-  <a class="card" href="/strategy/">
-    <h3>Strategy Guides</h3>
+  <div class="card">
+    <h3><a href="/strategy/">Strategy Guides</a></h3>
     <p>Bet types, odds math, and bankroll management explained.</p>
-  </a>
+  </div>
 </div>

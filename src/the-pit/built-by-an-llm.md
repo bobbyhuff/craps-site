@@ -1,7 +1,14 @@
 ---
 title: This Whole Site Was Built by a Large Language Model
+seoTitle: "Built by AI: How This Craps Site Was Made | 0stakes"
 description: Why this craps table exists, and what it means that every line of it was written by an AI through plain conversation.
 date: 2026-08-04
+ogType: article
+breadcrumb:
+  - name: The Pit
+    url: /the-pit/
+  - name: Built by an LLM
+    url: /the-pit/built-by-an-llm/
 ---
 
 This craps table exists because practicing bet strategy shouldn't require a casino, an account, or a wall of ads — just a clean, honest simulation of the real rules: true odds, correct payouts, no house tricks buried in the fine print.
