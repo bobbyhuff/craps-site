@@ -1,3 +1,3 @@
 module.exports = {
-  url: "https://craps-site.redclayreserve.workers.dev",
+  url: "https://0stakes.com",
 };

@@ -33,36 +33,36 @@
   --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 
-  /* Greens, deepest to lightest */
-  --bg: #0d2117;
+  /* Greens, deepest to lightest — Felt / Felt Raised converge to the same value on
+     purpose (see CLAUDE.md); every gradient built from them renders flat automatically. */
+  --bg: #081810;
   --bg-deep: #081810;
-  --felt: #14432b;
-  --felt-raised: #1b4d31;
-  --felt-well: #0f3320;
+  --felt: #0e2419;
+  --felt-raised: #0e2419;
+  --felt-well: #081810;
 
-  /* Gold */
-  --gold: #caa53c;
-  --gold-bright: #e6c76b;
-  --gold-deep: #a8862b;
-  --gold-grad: linear-gradient(180deg, #ddb85a 0%, #c8a24a 48%, #a8862b 100%);
-  --gold-dim: rgba(202, 165, 60, 0.30);
-  --gold-faint: rgba(202, 165, 60, 0.12);
+  /* Mint — the one accent color. Bright/deep are lightness steps for hover/structural
+     use, not a second hue. */
+  --mint: #35d07a;
+  --mint-bright: #56db92;
+  --mint-deep: #279c5f;
+  --mint-dim: rgba(53, 208, 122, 0.30);
+  --mint-faint: rgba(53, 208, 122, 0.12);
 
-  /* Text */
-  --cream: #f4eee0;
-  --text: #e8e2d2;
-  --text-muted: #a8b5a8;
-  --text-dim: #7f8f80;
+  /* Bone */
+  --bone: #edf2ee;
+  --text: #dce6df;
+  --text-muted: #9fb0a6;
+  --text-dim: #77887e;
 
-  /* Semantic */
-  --win: #6fdc8c;
+  /* Semantic — win reuses Mint directly (one accent color, not a second green) */
+  --win: #35d07a;
   --lose: #ff8a80;
-  --dont: #d98c5f;
 
-  /* Edges — calmer than the old bright mint */
+  /* Edges */
   --edge: rgba(255, 255, 255, 0.09);
-  --edge-felt: #2c5c3d;
-  --edge-gold: rgba(202, 165, 60, 0.30);
+  --rail: #1c4a30;
+  --edge-mint: rgba(53, 208, 122, 0.30);
 
   /* Elevation */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
@@ -115,13 +115,13 @@ body {
 /* Money and any figure that updates in place must not reflow as digits change */
 .tabular, #bankroll, #net { font-variant-numeric: tabular-nums; }
 
-a { color: var(--gold); }
+a { color: var(--mint); }
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
-h1 { color: var(--gold); line-height: 1.12; }
+h1 { color: var(--mint); line-height: 1.12; }
 
 :focus-visible {
-  outline: 2px solid var(--gold-bright);
+  outline: 2px solid var(--mint-bright);
   outline-offset: 2px;
   border-radius: 3px;
 }
@@ -136,7 +136,7 @@ h1 { color: var(--gold); line-height: 1.12; }
   align-items: center;
   padding: var(--s-3) var(--s-5);
   background: linear-gradient(180deg, #0c1f14, var(--bg-deep));
-  border-bottom: 1px solid var(--edge-gold);
+  border-bottom: 1px solid var(--edge-mint);
   box-shadow: var(--shadow-sm);
   flex-wrap: wrap;
   gap: var(--s-3);
@@ -145,16 +145,23 @@ h1 { color: var(--gold); line-height: 1.12; }
 .site-nav .brand {
   display: flex;
   align-items: center;
+  gap: 8px;
   min-height: 44px;
-  font-family: var(--font-display);
-  font-size: 21px;
-  letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--bone);
   text-decoration: none;
   white-space: nowrap;
 }
 
-.site-nav .brand:hover { color: var(--gold-bright); }
+.site-nav .brand svg { flex: 0 0 auto; }
+
+.site-nav .brand span {
+  font-family: var(--font-ui);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.site-nav .brand:hover { color: var(--mint-bright); }
 
 .nav-links {
   display: flex;
@@ -172,8 +179,8 @@ h1 { color: var(--gold); line-height: 1.12; }
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.nav-links a:hover { color: var(--cream); }
-.nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-links a:hover { color: var(--bone); }
+.nav-links a.active { color: var(--mint); border-bottom-color: var(--mint); }
 
 /* ============================================================
    Layout
@@ -205,7 +212,9 @@ main {
   color: var(--text-dim);
   text-decoration: none;
 }
-.site-footer a:hover { color: var(--gold); }
+.site-footer a:hover { color: var(--mint); }
+
+.footer-help { flex-basis: 100%; line-height: 1.6; }
 
 /* ============================================================
    Hero
@@ -220,7 +229,7 @@ main {
   font-size: clamp(2rem, 7vw, 3.25rem);
   letter-spacing: 0.015em;
   margin: 0 0 var(--s-4);
-  color: var(--cream);
+  color: var(--bone);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
 }
 
@@ -239,7 +248,7 @@ main {
   width: min(340px, 60%);
   height: 1px;
   margin: var(--s-6) auto 0;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  background: linear-gradient(90deg, transparent, var(--mint-dim), transparent);
 }
 
 /* ============================================================
@@ -258,15 +267,15 @@ main {
   align-items: center;
   justify-content: center;
   min-height: 46px;
-  background: var(--gold-grad);
-  color: #1a1206;
+  background: var(--mint);
+  color: #081810;
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0.02em;
   padding: var(--s-3) var(--s-6);
   border-radius: var(--r-sm);
-  border: 1px solid var(--gold-deep);
+  border: 1px solid var(--mint-deep);
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.32);
   transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
@@ -276,14 +285,14 @@ main {
 
 .btn.secondary {
   background: transparent;
-  border: 1px solid var(--edge-gold);
-  color: var(--gold);
+  border: 1px solid var(--edge-mint);
+  color: var(--mint);
   box-shadow: none;
 }
 
 .btn.secondary:hover {
-  background: var(--gold-faint);
-  border-color: var(--gold);
+  background: var(--mint-faint);
+  border-color: var(--mint);
   filter: none;
   box-shadow: none;
 }
@@ -302,10 +311,9 @@ main {
 .card {
   position: relative;
   background: linear-gradient(180deg, var(--felt-raised), var(--felt));
-  border: 1px solid var(--edge-felt);
+  border: 1px solid var(--rail);
   border-radius: var(--r-md);
   padding: var(--s-5);
-  text-decoration: none;
   color: var(--text);
   display: block;
   box-shadow: var(--shadow-sm), var(--inset-hi);
@@ -314,15 +322,33 @@ main {
 
 .card:hover {
   transform: translateY(-2px);
-  border-color: var(--edge-gold);
+  border-color: var(--edge-mint);
   box-shadow: var(--shadow-md), var(--inset-hi);
+}
+
+.card:has(a:focus-visible) {
+  outline: 2px solid var(--mint-bright);
+  outline-offset: 2px;
+  border-radius: var(--r-md);
 }
 
 .card h3 {
   margin: 0 0 var(--s-2);
-  color: var(--gold);
   font-size: 20px;
   letter-spacing: 0.01em;
+}
+
+/* The heading link is the only real anchor text; a stretched ::after keeps the
+   whole card clickable without wrapping the description in the link too. */
+.card h3 a {
+  color: var(--mint);
+  text-decoration: none;
+}
+
+.card h3 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 
 .card p { margin: 0; font-size: 13.5px; color: var(--text-muted); line-height: 1.55; }
@@ -335,7 +361,7 @@ main {
 
 .post-date { color: var(--text-muted); font-size: 13px; margin-bottom: var(--s-5); }
 .post-body { line-height: 1.75; font-size: 16px; color: var(--text); }
-.post-body h2 { color: var(--gold); margin-top: var(--s-6); font-size: 25px; }
+.post-body h2 { color: var(--mint); margin-top: var(--s-6); font-size: 25px; }
 .post-body ul { padding-left: var(--s-5); }
 
 .post-body code {
@@ -361,9 +387,9 @@ main {
 }
 
 .post-body th {
-  color: var(--gold);
+  color: var(--mint);
   font-weight: 600;
-  border-bottom: 1px solid var(--edge-gold);
+  border-bottom: 1px solid var(--edge-mint);
 }
 
 /* Wide tables scroll inside themselves rather than pushing the page sideways */
@@ -372,16 +398,19 @@ main {
 }
 
 .list-item {
+  position: relative;
   display: block;
   padding: var(--s-4) 0;
   border-bottom: 1px solid var(--edge);
-  text-decoration: none;
   color: var(--text);
   transition: border-color 0.15s ease;
 }
 
-.list-item:hover { border-bottom-color: var(--edge-gold); }
-.list-item h3 { margin: 0 0 var(--s-1); color: var(--gold); font-size: 19px; }
+.list-item:hover { border-bottom-color: var(--edge-mint); }
+.list-item:has(a:focus-visible) { outline: 2px solid var(--mint-bright); outline-offset: 2px; }
+.list-item h3 { margin: 0 0 var(--s-1); font-size: 19px; }
+.list-item h3 a { color: var(--mint); text-decoration: none; }
+.list-item h3 a::after { content: ''; position: absolute; inset: 0; }
 .list-item p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
 
 /* ============================================================

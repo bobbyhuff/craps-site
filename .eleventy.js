@@ -5,6 +5,12 @@ module.exports = function (eleventyConfig) {
     return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
   });
 
+  // ISO 8601 date for structured data (schema.org datePublished).
+  eleventyConfig.addFilter("dateToISO", (dateObj) => {
+    if (!dateObj) return "";
+    return new Date(dateObj).toISOString().slice(0, 10);
+  });
+
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.css");
@@ -15,7 +21,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.css");
   eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.js");
   eleventyConfig.addPassthroughCopy({ "src/_data/blackjackOdds.js": "games/blackjack/odds.js" });
-  eleventyConfig.addPassthroughCopy("src/robots.txt");
+  eleventyConfig.addPassthroughCopy("src/favicon.svg");
+  eleventyConfig.addPassthroughCopy("src/favicon-64.png");
+  eleventyConfig.addPassthroughCopy("src/icon-512.png");
+  eleventyConfig.addPassthroughCopy("src/og-image.png");
+  eleventyConfig.addPassthroughCopy("src/_redirects");
 
   eleventyConfig.addCollection("strategy", (collectionApi) =>
     collectionApi.getFilteredByGlob("src/strategy/**/*.md")

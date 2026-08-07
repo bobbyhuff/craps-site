@@ -29,9 +29,16 @@ main {
   font-family: var(--font-display);
   font-size: 26px;
   letter-spacing: 0.18em;
-  color: var(--gold);
+  color: var(--mint);
   margin: 0 0 var(--s-3);
   text-align: center;
+}
+
+.no-real-money {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: calc(var(--s-3) * -1) 0 var(--s-3);
 }
 
 /* ============================================================
@@ -50,7 +57,7 @@ main {
   background: linear-gradient(180deg, rgba(10, 28, 18, 0.98), rgba(8, 24, 16, 0.98));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--edge-gold);
+  border-bottom: 1px solid var(--edge-mint);
   box-shadow: var(--shadow-md);
 }
 
@@ -72,7 +79,7 @@ main {
 .sb-cell b {
   font-size: 17px;
   font-weight: 600;
-  color: var(--cream);
+  color: var(--bone);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -80,7 +87,7 @@ main {
 /* "OFF (come-out)" is the longest value here — let it wrap rather than
    push the status bar wider than the viewport on small phones. */
 .sb-point b {
-  color: var(--gold);
+  color: var(--mint);
   white-space: normal;
   font-size: 14px;
   line-height: 1.2;
@@ -150,7 +157,7 @@ main {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid var(--edge-felt);
+  border: 1px solid var(--rail);
   background: var(--felt-well);
   display: flex;
   align-items: center;
@@ -208,7 +215,7 @@ main {
 .let-it-ride input {
   width: 18px;
   height: 18px;
-  accent-color: var(--gold);
+  accent-color: var(--mint);
 }
 
 .let-it-ride .hint { color: var(--text-dim); font-size: 12px; }
@@ -221,7 +228,7 @@ main {
   position: relative;
   background-color: var(--felt);
   background-image: var(--felt-sheen);
-  border: 1px solid var(--edge-gold);
+  border: 1px solid var(--edge-mint);
   border-radius: var(--r-lg);
   padding: var(--s-3);
   box-shadow: var(--shadow-lg), var(--inset-hi);
@@ -258,7 +265,7 @@ main {
 .num-box,
 .bet-box {
   background: linear-gradient(180deg, var(--felt-raised), rgba(20, 67, 43, 0.9));
-  border: 1px solid var(--edge-felt);
+  border: 1px solid var(--rail);
   border-radius: var(--r-sm);
   box-shadow: var(--inset-hi);
   transition: border-color 0.15s ease, transform 0.1s ease;
@@ -267,13 +274,13 @@ main {
 .bet-strip { padding: var(--s-2) var(--s-3); cursor: pointer; min-width: 0; }
 .bet-strip.dont { border-color: rgba(217, 140, 95, 0.45); }
 .bet-strip:active,
-.bet-box:active { transform: scale(0.985); border-color: var(--gold); }
+.bet-box:active { transform: scale(0.985); border-color: var(--mint); }
 
 .bet-strip .title {
   font-weight: 600;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: var(--gold);
+  color: var(--mint);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -307,7 +314,7 @@ main {
   text-align: center;
   font-size: 24px;
   font-weight: 700;
-  color: var(--cream);
+  color: var(--bone);
   cursor: pointer;
   font-variant-numeric: tabular-nums;
   border-radius: var(--r-sm);
@@ -318,24 +325,24 @@ main {
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.num-box .num-head:hover { color: var(--gold); }
-.num-box .num-head:active { background: var(--gold-faint); }
+.num-box .num-head:hover { color: var(--mint); }
+.num-box .num-head:active { background: var(--mint-faint); }
 
 .num-box.is-point {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 1px var(--gold-dim), 0 0 16px rgba(202, 165, 60, 0.25), var(--inset-hi);
+  border-color: var(--mint);
+  box-shadow: 0 0 0 1px var(--mint-dim), 0 0 16px rgba(53, 208, 122, 0.25), var(--inset-hi);
 }
 
 .num-box.is-point .num-head {
-  color: #1a1206;
-  background: var(--gold-grad);
+  color: #081810;
+  background: var(--mint);
 }
 
 .point-tag {
   text-align: center;
   font-size: 9px;
   letter-spacing: 0.16em;
-  color: var(--gold);
+  color: var(--mint);
   font-weight: 700;
   margin-top: 2px;
 }
@@ -361,7 +368,7 @@ main {
 }
 
 .bet-line .label { color: var(--text-muted); }
-.bet-line .val { color: var(--cream); font-weight: 600; }
+.bet-line .val { color: var(--bone); font-weight: 600; }
 .bet-line.is-off { opacity: 0.5; }
 .bet-line.is-off .val { text-decoration: line-through; }
 
@@ -377,8 +384,8 @@ main {
   width: 100%;
   min-height: 44px;
   background: transparent;
-  border: 1px solid var(--edge-gold);
-  color: var(--gold);
+  border: 1px solid var(--edge-mint);
+  color: var(--mint);
   border-radius: 4px;
   font-family: inherit;
   font-size: 11px;
@@ -387,7 +394,7 @@ main {
   cursor: pointer;
 }
 
-.num-edit:hover { background: var(--gold-faint); }
+.num-edit:hover { background: var(--mint-faint); }
 
 /* ---- One-roll + hardway boxes ---- */
 
@@ -404,7 +411,7 @@ main {
 
 .bet-box .title {
   font-weight: 600;
-  color: var(--gold);
+  color: var(--mint);
   font-size: 11.5px;
   letter-spacing: 0.04em;
 }
@@ -425,7 +432,7 @@ main {
   min-width: 44px;
   min-height: 44px;
   padding: 0 var(--s-2);
-  border: 1px solid var(--edge-gold);
+  border: 1px solid var(--edge-mint);
   background: var(--felt-well);
   color: var(--text);
   border-radius: var(--r-sm);
@@ -510,17 +517,17 @@ main {
 
 .chip-btn.selected {
   border-style: solid;
-  border-color: var(--gold-bright);
-  background: var(--gold-grad);
-  color: #1a1206;
-  box-shadow: var(--shadow-md), 0 0 0 3px var(--gold-faint);
+  border-color: var(--mint-bright);
+  background: var(--mint);
+  color: #081810;
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--mint-faint);
 }
 
 .btn-roll {
   flex: 0 0 auto;
-  background: var(--gold-grad);
-  color: #1a1206;
-  border: 1px solid var(--gold-deep);
+  background: var(--mint);
+  color: #081810;
+  border: 1px solid var(--mint-deep);
   padding: 0 var(--s-5);
   min-height: 52px;
   font-family: inherit;
@@ -537,8 +544,8 @@ main {
 
 .btn-outline {
   background: transparent;
-  border: 1px solid var(--edge-gold);
-  color: var(--gold);
+  border: 1px solid var(--edge-mint);
+  color: var(--mint);
   padding: 0 var(--s-3);
   min-height: 44px;
   border-radius: var(--r-sm);
@@ -548,7 +555,7 @@ main {
   font-weight: 500;
 }
 
-.btn-outline:hover { background: var(--gold-faint); }
+.btn-outline:hover { background: var(--mint-faint); }
 .btn-outline:active { transform: scale(0.97); }
 
 .table-actions {
@@ -578,7 +585,7 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-.log .roll-header { color: var(--gold); font-weight: 600; margin-top: var(--s-2); }
+.log .roll-header { color: var(--mint); font-weight: 600; margin-top: var(--s-2); }
 .log .win { color: var(--win); }
 .log .lose { color: var(--lose); }
 .log .neutral { color: var(--text-muted); }
@@ -597,7 +604,7 @@ main {
 .legend summary,
 .accordion summary {
   cursor: pointer;
-  color: var(--gold);
+  color: var(--mint);
   font-weight: 600;
   min-height: 44px;
   display: flex;
@@ -607,7 +614,7 @@ main {
 }
 
 .legend summary:hover,
-.accordion summary:hover { color: var(--gold-bright); }
+.accordion summary:hover { color: var(--mint-bright); }
 
 .legend ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); line-height: 1.65; }
 .legend li { margin-bottom: var(--s-2); color: var(--text-muted); }
@@ -621,7 +628,7 @@ main {
 
 .learn-title {
   font-family: var(--font-display);
-  color: var(--gold);
+  color: var(--mint);
   font-size: 26px;
   margin: 0 0 var(--s-2);
 }
@@ -642,7 +649,7 @@ main {
 .accordion-body p { margin: 0 0 var(--s-3); }
 .accordion-body b { color: var(--text); }
 .accordion-body i { color: var(--text); font-style: italic; }
-.accordion-body a { color: var(--gold); }
+.accordion-body a { color: var(--mint); }
 
 .accordion-body ul,
 .learn-steps {
@@ -653,7 +660,7 @@ main {
 .accordion-body li { margin-bottom: var(--s-2); }
 
 .learn-steps li { margin-bottom: var(--s-3); }
-.learn-steps li::marker { color: var(--gold); font-weight: 700; }
+.learn-steps li::marker { color: var(--mint); font-weight: 700; }
 
 .learn-h3 {
   font-family: var(--font-ui);
@@ -661,13 +668,13 @@ main {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--mint);
   margin: var(--s-4) 0 var(--s-2);
 }
 
 .learn-note {
   background: var(--felt-well);
-  border-left: 2px solid var(--gold-dim);
+  border-left: 2px solid var(--mint-dim);
   border-radius: 0 var(--r-sm) var(--r-sm) 0;
   padding: var(--s-3);
   font-size: 13.5px;
@@ -676,7 +683,7 @@ main {
 
 /* Unicode dice glyphs, matching the ones the game renders */
 .pips {
-  color: var(--cream);
+  color: var(--bone);
   font-size: 1.25em;
   line-height: 1;
   letter-spacing: 0.04em;
@@ -721,22 +728,22 @@ main {
 .dgm text { font-family: var(--font-ui); fill: var(--text-muted); }
 
 .dgm-phase { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; fill: var(--text-dim); }
-.dgm-lede { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; fill: var(--cream); }
+.dgm-lede { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; fill: var(--bone); }
 .dgm-sub { font-size: 12px; fill: var(--text-muted); }
-.dgm-num { font-size: 14px; font-weight: 600; fill: var(--cream); }
-.dgm-num-sm { font-size: 13px; font-weight: 600; fill: var(--cream); }
-.dgm-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; fill: var(--gold); }
+.dgm-num { font-size: 14px; font-weight: 600; fill: var(--bone); }
+.dgm-num-sm { font-size: 13px; font-weight: 600; fill: var(--bone); }
+.dgm-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; fill: var(--mint); }
 .dgm-win { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; fill: var(--win); }
 .dgm-lose { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; fill: var(--lose); }
 
-.dgm-box { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; }
-.dgm-box-gold { fill: var(--felt-raised); stroke: var(--gold); stroke-width: 1.5; }
+.dgm-box { fill: var(--felt-raised); stroke: var(--rail); stroke-width: 1; }
+.dgm-box-gold { fill: var(--felt-raised); stroke: var(--mint); stroke-width: 1.5; }
 .dgm-box-win { fill: rgba(111, 220, 140, 0.10); stroke: rgba(111, 220, 140, 0.45); stroke-width: 1; }
 .dgm-box-lose { fill: rgba(255, 138, 128, 0.10); stroke: rgba(255, 138, 128, 0.45); stroke-width: 1; }
 
-.dgm-line { stroke: var(--edge-felt); stroke-width: 2; fill: none; }
-.dgm-line-dash { stroke: var(--edge-felt); stroke-width: 2; fill: none; stroke-dasharray: 4 4; }
-.dgm-arrow { fill: var(--edge-felt); }
+.dgm-line { stroke: var(--rail); stroke-width: 2; fill: none; }
+.dgm-line-dash { stroke: var(--rail); stroke-width: 2; fill: none; stroke-dasharray: 4 4; }
+.dgm-arrow { fill: var(--rail); }
 .dgm-rule { stroke: var(--edge); stroke-width: 1; fill: none; }
 
 /* Frequency chart. Cream bars carry no identity — length is the data and the
@@ -744,23 +751,23 @@ main {
    contrast 8.70:1 and 4.80:1. */
 .dgm-axis { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; fill: var(--text-dim); }
 .dgm-rowlab { font-size: 14px; font-weight: 600; fill: var(--text-muted); }
-.dgm-rowlab-hi { font-size: 14px; font-weight: 700; fill: var(--gold); }
+.dgm-rowlab-hi { font-size: 14px; font-weight: 700; fill: var(--mint); }
 .dgm-val { font-size: 13px; font-weight: 600; fill: var(--text-muted); }
-.dgm-val-hi { font-size: 13px; font-weight: 700; fill: var(--gold); }
+.dgm-val-hi { font-size: 13px; font-weight: 700; fill: var(--mint); }
 .dgm-foot { font-size: 12px; fill: var(--text-dim); }
 
 .bar { fill: var(--text); }
-.bar-hi { fill: var(--gold); }
+.bar-hi { fill: var(--mint); }
 
 /* Table layout map */
-.map-felt { fill: var(--felt-well); stroke: var(--edge-gold); stroke-width: 1; }
-.map-box { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; }
+.map-felt { fill: var(--felt-well); stroke: var(--edge-mint); stroke-width: 1; }
+.map-box { fill: var(--felt-raised); stroke: var(--rail); stroke-width: 1; }
 .map-box-dont { fill: rgba(217, 140, 95, 0.14); stroke: rgba(217, 140, 95, 0.5); stroke-width: 1; }
-.map-box-pass { fill: var(--gold); stroke: var(--gold-deep); stroke-width: 1; }
-.map-box-prop { fill: var(--felt-raised); stroke: var(--edge-felt); stroke-width: 1; stroke-dasharray: 3 3; }
-.map-num { font-size: 17px; font-weight: 700; fill: var(--cream); }
-.map-label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: var(--gold); }
-.map-label-dark { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: #1a1206; }
+.map-box-pass { fill: var(--mint); stroke: var(--mint-deep); stroke-width: 1; }
+.map-box-prop { fill: var(--felt-raised); stroke: var(--rail); stroke-width: 1; stroke-dasharray: 3 3; }
+.map-num { font-size: 17px; font-weight: 700; fill: var(--bone); }
+.map-label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: var(--mint); }
+.map-label-dark { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; fill: #081810; }
 .map-fine { font-size: 12px; fill: var(--text-dim); }
 .map-fine-warn { font-size: 12px; font-style: italic; fill: var(--lose); }
 
@@ -794,7 +801,7 @@ main {
 
 .overlay-box {
   background: linear-gradient(180deg, var(--felt-raised), var(--felt));
-  border: 1px solid var(--edge-gold);
+  border: 1px solid var(--edge-mint);
   border-radius: var(--r-lg);
   padding: var(--s-6) var(--s-5);
   width: min(340px, 100%);
@@ -804,7 +811,7 @@ main {
 
 .overlay-box h2 {
   font-family: var(--font-display);
-  color: var(--gold);
+  color: var(--mint);
   margin: 0 0 var(--s-2);
   font-size: 24px;
 }
@@ -819,9 +826,9 @@ main {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   border-radius: var(--r-sm);
-  border: 1px solid var(--edge-gold);
+  border: 1px solid var(--edge-mint);
   background: var(--felt-well);
-  color: var(--cream);
+  color: var(--bone);
   text-align: center;
   margin-bottom: var(--s-4);
 }
@@ -853,7 +860,7 @@ body.sheet-open { overflow: hidden; }
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, var(--felt-raised), var(--felt));
-  border-top: 1px solid var(--edge-gold);
+  border-top: 1px solid var(--edge-mint);
   border-radius: var(--r-lg) var(--r-lg) 0 0;
   box-shadow: var(--shadow-lg);
   padding-bottom: env(safe-area-inset-bottom);
@@ -885,7 +892,7 @@ body.sheet-open { overflow: hidden; }
 .sheet-head h3 {
   margin: 0;
   font-family: var(--font-display);
-  color: var(--gold);
+  color: var(--mint);
   font-size: 21px;
 }
 
@@ -902,7 +909,7 @@ body.sheet-open { overflow: hidden; }
   cursor: pointer;
 }
 
-.sheet-close:hover { color: var(--cream); border-color: var(--edge-gold); }
+.sheet-close:hover { color: var(--bone); border-color: var(--edge-mint); }
 
 .sheet-body {
   padding: var(--s-4);
@@ -929,14 +936,14 @@ body.sheet-open { overflow: hidden; }
 .sheet-bet-name {
   font-weight: 600;
   font-size: 15px;
-  color: var(--cream);
+  color: var(--bone);
   letter-spacing: 0.03em;
 }
 
 .sheet-bet-amt {
   font-size: 17px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--mint);
   font-variant-numeric: tabular-nums;
 }
 
@@ -953,7 +960,7 @@ body.sheet-open { overflow: hidden; }
   justify-content: center;
   gap: 4px;
   padding: 0 var(--s-2);
-  border: 1px solid var(--edge-gold);
+  border: 1px solid var(--edge-mint);
   background: var(--felt-raised);
   color: var(--text);
   border-radius: var(--r-sm);
@@ -976,7 +983,7 @@ body.sheet-open { overflow: hidden; }
   margin-top: var(--s-2);
 }
 
-.sheet-add .sheet-btn { background: var(--gold-grad); color: #1a1206; border-color: var(--gold-deep); }
+.sheet-add .sheet-btn { background: var(--mint); color: #081810; border-color: var(--mint-deep); }
 
 .sheet-empty {
   color: var(--text-muted);
@@ -1004,7 +1011,7 @@ body.sheet-open { overflow: hidden; }
     background: linear-gradient(180deg, rgba(10, 28, 18, 0.97), rgba(8, 24, 16, 0.99));
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid var(--edge-gold);
+    border-top: 1px solid var(--edge-mint);
     box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.4);
   }
 
@@ -1036,7 +1043,7 @@ body.sheet-open { overflow: hidden; }
 @media (min-width: 701px) {
   .app { padding: var(--s-5) var(--s-5) var(--s-7); }
   .page-title { font-size: 32px; }
-  .statusbar { margin: 0; border-radius: var(--r-md); border: 1px solid var(--edge-gold); }
+  .statusbar { margin: 0; border-radius: var(--r-md); border: 1px solid var(--edge-mint); }
   .bet-opts { flex-direction: row; align-items: center; gap: var(--s-5); }
   .table { padding: var(--s-4); }
   .row.numbers { grid-template-columns: repeat(6, 1fr); }
@@ -1058,7 +1065,7 @@ body.sheet-open { overflow: hidden; }
     width: min(460px, calc(100vw - 48px));
     max-height: 80vh;
     border-radius: var(--r-lg);
-    border: 1px solid var(--edge-gold);
+    border: 1px solid var(--edge-mint);
     animation: fade-in 0.18s ease;
   }
 

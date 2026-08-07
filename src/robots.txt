@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://craps-site.redclayreserve.workers.dev/sitemap.xml
