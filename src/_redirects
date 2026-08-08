@@ -6,5 +6,6 @@
 # actually changes, so they're safe to serve from any host that points here.
 /blog/                                    https://0stakes.com/the-pit/                                       301
 /blog/built-by-an-llm/                    https://0stakes.com/the-pit/built-by-an-llm/                       301
-/blog/craps-house-edge-by-bet/            https://0stakes.com/the-pit/craps-house-edge-by-bet/               301
+/blog/craps-house-edge-by-bet/            https://0stakes.com/strategy/craps/house-edge/                     301
+/the-pit/craps-house-edge-by-bet/         https://0stakes.com/strategy/craps/house-edge/                     301
 /strategy/pass-line-and-odds/             https://0stakes.com/strategy/craps/pass-line-and-odds/            301
