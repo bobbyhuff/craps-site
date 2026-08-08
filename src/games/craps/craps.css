@@ -590,9 +590,8 @@ main {
 .log .lose { color: var(--lose); }
 .log .neutral { color: var(--text-muted); }
 
-/* Shared accordion — used by both the bet reference and the how-to-play guide */
-.legend,
-.accordion {
+/* Bet reference disclosure widget on the game page itself */
+.legend {
   background: var(--felt);
   border: 1px solid var(--edge);
   border-radius: var(--r-md);
@@ -601,8 +600,7 @@ main {
   margin-bottom: var(--s-2);
 }
 
-.legend summary,
-.accordion summary {
+.legend summary {
   cursor: pointer;
   color: var(--mint);
   font-weight: 600;
@@ -613,8 +611,7 @@ main {
   list-style-position: outside;
 }
 
-.legend summary:hover,
-.accordion summary:hover { color: var(--mint-bright); }
+.legend summary:hover { color: var(--mint-bright); }
 
 .legend ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); line-height: 1.65; }
 .legend li { margin-bottom: var(--s-2); color: var(--text-muted); }
@@ -638,6 +635,37 @@ main {
   font-size: 14.5px;
   line-height: 1.65;
   margin: 0 0 var(--s-4);
+}
+
+.learn-toc { margin: 0 0 var(--s-4); }
+
+.learn-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13.5px;
+}
+
+.learn-toc a {
+  color: var(--mint);
+  text-decoration: none;
+}
+
+.learn-toc a:hover {
+  color: var(--mint-bright);
+  text-decoration: underline;
+}
+
+.learn h2 {
+  font-family: var(--font-display);
+  color: var(--mint);
+  font-size: 20px;
+  margin: var(--s-6) 0 var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--edge);
 }
 
 .accordion-body {
