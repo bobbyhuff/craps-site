@@ -54,7 +54,7 @@ const ODDS = {
     place5or9: 4.00,
     buy4or10: 4.76,
     place4or10: 6.67,
-    field: 5.56,
+    field: 2.78,
     anyCraps: 11.11,
     hard6or8: 9.09,
     hard4or10: 11.11,
@@ -77,6 +77,20 @@ ODDS.placeOddsStr = mapRatios(ODDS.placeOdds);
 ODDS.fieldPayStr = mapRatios(ODDS.fieldPay);
 ODDS.anySevenPayStr = ratioStr(ODDS.anySevenPay);
 ODDS.anyCrapsPayStr = ratioStr(ODDS.anyCrapsPay);
+
+// Fixed 2-decimal display strings, so every row of the house-edge ranking
+// table formats consistently regardless of whether the underlying number
+// happens to be a whole percentage (e.g. 4 vs 4.00).
+ODDS.houseEdgeStr = {};
+for (const k in ODDS.houseEdge) ODDS.houseEdgeStr[k] = ODDS.houseEdge[k].toFixed(2);
+
+// Lay-odds payout strings (laying odds behind Don't Pass/Don't Come): the
+// inverse of taking odds, so derived from trueOdds rather than typed twice.
+ODDS.layOddsStr = {};
+for (const k in ODDS.trueOdds) {
+  const [n, d] = ODDS.trueOdds[k];
+  ODDS.layOddsStr[k] = `${d}:${n}`;
+}
 
 if (typeof module !== 'undefined') module.exports = ODDS;
 if (typeof window !== 'undefined') window.ODDS = ODDS;
