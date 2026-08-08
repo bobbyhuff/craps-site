@@ -66,18 +66,15 @@ is smaller than either of the other two.
       <path d="M44,50 L50,60 L56,50 Z" style="fill:var(--mint);stroke:none"/>
       <text x="50" y="90" class="map-label" text-anchor="middle">HIT</text>
       <text x="50" y="104" class="map-fine" text-anchor="middle">tap the felt</text>
-
       <path d="M143,70 H183" class="dgm-rule"/>
       <path d="M143,40 Q153,25 163,40 T183,40" class="dgm-line"/>
       <text x="163" y="90" class="map-label" text-anchor="middle">STAND</text>
       <text x="163" y="104" class="map-fine" text-anchor="middle">wave, palm down</text>
-
       <path d="M257,70 H297" class="dgm-rule"/>
       <path d="M270,20 V55" class="dgm-line"/>
       <circle cx="288" cy="50" r="7" style="fill:var(--mint-dim);stroke:var(--mint);stroke-width:1.5"/>
       <text x="277" y="90" class="map-label" text-anchor="middle">DOUBLE</text>
       <text x="277" y="104" class="map-fine" text-anchor="middle">1 finger + a chip</text>
-
       <path d="M370,70 H410" class="dgm-rule"/>
       <path d="M390,58 L378,20" class="dgm-line"/>
       <path d="M390,58 L402,20" class="dgm-line"/>

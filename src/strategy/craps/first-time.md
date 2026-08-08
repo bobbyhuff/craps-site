@@ -57,25 +57,19 @@ the more crowded center where the loudest, most complicated action happens.
       dice and proposition bets. Directly opposite, the boxman sits at the center of the
       other long side, flanked by two base dealers who each handle one half of the layout.
       Players stand around the remaining rail on both ends and along the stickman's side.</desc>
-
     <rect x="10" y="10" width="440" height="190" rx="55" class="map-felt"/>
-
     <rect x="170" y="18" width="120" height="34" rx="4" class="map-box"/>
     <text x="230" y="34" class="map-label" text-anchor="middle">STICKMAN</text>
     <text x="230" y="47" class="map-fine" text-anchor="middle">runs the stick &amp; props</text>
-
     <rect x="30" y="168" width="120" height="34" rx="4" class="map-box"/>
     <text x="90" y="184" class="map-label" text-anchor="middle">BASE DEALER</text>
     <text x="90" y="197" class="map-fine" text-anchor="middle">handles this half</text>
-
     <rect x="170" y="168" width="120" height="34" rx="4" class="map-box-pass"/>
     <text x="230" y="184" class="map-label-dark" text-anchor="middle">BOXMAN</text>
     <text x="230" y="197" class="map-fine" text-anchor="middle">supervises, seated</text>
-
     <rect x="310" y="168" width="120" height="34" rx="4" class="map-box"/>
     <text x="370" y="184" class="map-label" text-anchor="middle">BASE DEALER</text>
     <text x="370" y="197" class="map-fine" text-anchor="middle">handles this half</text>
-
     <text x="90" y="115" class="map-fine" text-anchor="middle">PLAYERS</text>
     <text x="90" y="128" class="map-fine" text-anchor="middle">(either end)</text>
     <text x="370" y="115" class="map-fine" text-anchor="middle">PLAYERS</text>
