@@ -19,20 +19,21 @@ breadcrumb:
      uses — see src/_data/blackjackOdds.js. Must load before blackjack.js. -->
 <script src="/games/blackjack/odds.js"></script>
 
-<div class="overlay" id="setupOverlay">
-  <div class="overlay-box">
-    <h2 id="overlayTitle">Welcome to Blackjack</h2>
-    <p id="overlayText">Set your starting bankroll to begin.</p>
-    <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
-    <div class="overlay-buttons">
-      <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
-      <button class="btn-roll" id="overlayConfirm">Start</button>
+<div class="app">
+  <h1 class="page-title">Free Blackjack Table</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Blackjack</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="app">
-  <h1 class="page-title">BLACKJACK</h1>
   <p class="no-real-money">Practice only — no real money, ever.</p>
 
   <div class="statusbar">

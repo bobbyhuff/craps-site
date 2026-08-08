@@ -19,18 +19,6 @@ breadcrumb:
      see src/_data/odds.js. Must load before craps.js. -->
 <script src="/games/craps/odds.js"></script>
 
-<div class="overlay" id="setupOverlay">
-  <div class="overlay-box">
-    <h2 id="overlayTitle">Welcome to Craps</h2>
-    <p id="overlayText">Set your starting bankroll to begin.</p>
-    <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
-    <div class="overlay-buttons">
-      <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
-      <button class="btn-roll" id="overlayConfirm">Start</button>
-    </div>
-  </div>
-</div>
-
 <div class="sheet-wrap hidden" id="betSheet">
   <div class="sheet-backdrop" id="sheetBackdrop"></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
@@ -44,7 +32,20 @@ breadcrumb:
 </div>
 
 <div class="app">
-  <h1 class="page-title">CRAPS</h1>
+  <h1 class="page-title">Free Craps Table</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Craps</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
   <p class="no-real-money">Practice only — no real money, ever.</p>
 
   <div class="statusbar">
