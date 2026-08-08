@@ -2,6 +2,7 @@
 title: Your First Time at a Craps Table
 seoTitle: "Craps Etiquette: Your First Time at a Real Table | 0stakes"
 description: What to actually do the first time you walk up to a craps table, from buying in to tipping to what gets you scolded, so nothing here surprises you.
+extraCss: /games/craps/craps.css
 breadcrumb:
   - name: Strategy
     url: /strategy/
