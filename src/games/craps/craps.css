@@ -13,8 +13,13 @@ input, textarea {
   -webkit-user-select: text;
 }
 
-/* The game owns its own gutters — site.css's <main> padding would double up */
-main {
+/* The game owns its own gutters — site.css's <main> padding would double up.
+   Scoped to :has(.app) because this file is also loaded as extraCss on
+   plain post.njk pages (first-time.md, iron-cross-simulated.md) just for
+   the .dgm diagram styles — those pages have no .app wrapper and need
+   site.css's normal <main> padding/max-width, not the game's full-bleed
+   reset. */
+main:has(.app) {
   max-width: none;
   padding: 0;
 }
