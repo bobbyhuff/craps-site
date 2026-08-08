@@ -621,7 +621,15 @@ main {
    How-to-play guide
    ============================================================ */
 
-.learn { margin-top: var(--s-5); }
+/* This page shares craps.css (for the .pips/.dgm diagram styles), which
+   resets <main> to full-bleed for the game's own .app container above.
+   .learn is a reading page, not the game UI, so it needs its own copy of
+   site.css's <main> constraint rather than inheriting the reset. */
+.learn {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-5) var(--s-7);
+}
 
 .learn-title {
   font-family: var(--font-display);
