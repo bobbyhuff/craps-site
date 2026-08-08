@@ -20,11 +20,35 @@ function newState(bankroll) {
     lastBet: 0,
     hands: [],
     activeHandIndex: 0,
-    dealer: { cards: [], holeRevealed: false },
+    dealer: { cards: [], holeRevealed: false, shownCount: 0, flipIndex: null },
     insuranceBet: 0,
     insuranceOffered: false,
+    isDealing: false,
     log: [],
   };
+}
+
+const DEAL_DELAY_MS = 450;
+const FLIP_PAUSE_MS = 600;
+
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+async function dealCardTo(target, card) {
+  target.cards.push(card);
+  render();
+  target.shownCount = target.cards.length;
+  await sleep(DEAL_DELAY_MS);
+}
+
+async function flipHoleCard() {
+  state.isDealing = true;
+  render();
+  await sleep(FLIP_PAUSE_MS);
+  state.dealer.holeRevealed = true;
+  state.dealer.flipIndex = 1;
+  render();
+  state.dealer.flipIndex = null;
+  await sleep(FLIP_PAUSE_MS);
 }
 
 function fmt(n) {
@@ -83,6 +107,7 @@ function showOverlay({ title, text, defaultValue, showCancel, confirmLabel, onCo
 }
 
 function resetBankroll() {
+  if (state.isDealing) { notice('Please wait for the current deal to finish.'); return; }
   showOverlay({
     title: "Reset Bankroll?",
     text: "This clears the current hand and starts a fresh session.",
@@ -144,39 +169,51 @@ function isBlackjack(cards) { return cards.length === 2 && handValue(cards).tota
 function activeHand() { return state.hands[state.activeHandIndex] || null; }
 
 function clickBetSpot() {
-  if (state.phase !== 'betting') return;
+  if (state.phase !== 'betting' || state.isDealing) return;
   if (!spend(state.chip)) return;
   state.currentBet = Math.round((state.currentBet + state.chip) * 100) / 100;
   render();
 }
 
 function removeBet() {
-  if (state.phase !== 'betting' || state.currentBet <= 0) return;
+  if (state.phase !== 'betting' || state.isDealing || state.currentBet <= 0) return;
   credit(state.currentBet); state.currentBet = 0; render();
 }
 
-function rebet() {
-  if (state.phase !== 'betting' || !state.lastBet || state.currentBet > 0) return;
-  if (!spend(state.lastBet)) return;
+function tryRebet() {
+  if (!state.lastBet || state.currentBet > 0) return false;
+  if (!spend(state.lastBet)) return false;
   state.currentBet = state.lastBet;
+  return true;
+}
+
+function rebet() {
+  if (state.phase !== 'betting' || state.isDealing) return;
+  tryRebet();
   render();
 }
 
-function dealClick() {
+function maybeAutoRebet() {
   if (state.phase !== 'betting') return;
+  const chk = document.getElementById('autoRebetChk');
+  if (chk && chk.checked) tryRebet();
+}
+
+function dealClick() {
+  if (state.phase !== 'betting' || state.isDealing) return;
   if (state.currentBet <= 0) { notice('Place a bet first.'); return; }
   dealInitial();
 }
 
-function dealInitial() {
+async function dealInitial() {
   notice('');
   if (needsReshuffle()) buildShoe();
 
-  state.dealer = { cards: [drawCard(), drawCard()], holeRevealed: false };
+  state.dealer = { cards: [], holeRevealed: false, shownCount: 0, flipIndex: null };
   state.hands = [{
-    cards: [drawCard(), drawCard()], bet: state.currentBet,
+    cards: [], bet: state.currentBet,
     status: 'active', fromSplit: false, isSplitAces: false, doubled: false,
-    resolved: false, outcome: null,
+    resolved: false, outcome: null, shownCount: 0,
   }];
   state.lastBet = state.currentBet;
   state.currentBet = 0;
@@ -184,38 +221,55 @@ function dealInitial() {
   state.insuranceBet = 0;
   state.insuranceOffered = false;
 
+  state.isDealing = true;
+  render();
+
+  const hand = state.hands[0];
+  await dealCardTo(hand, drawCard());
+  await dealCardTo(state.dealer, drawCard());
+  await dealCardTo(hand, drawCard());
+  await dealCardTo(state.dealer, drawCard());
+
   const up = state.dealer.cards[0];
   if (up.rank === 'A') {
     state.phase = 'insurance';
     state.insuranceOffered = true;
+    state.isDealing = false;
   } else {
-    dealerPeek();
+    await dealerPeek();
+    state.isDealing = false;
   }
   render();
 }
 
-function takeInsurance() {
-  if (state.phase !== 'insurance') return;
+async function takeInsurance() {
+  if (state.phase !== 'insurance' || state.isDealing) return;
   const amt = Math.round(state.hands[0].bet * ODDS.insuranceMaxFraction * 100) / 100;
   if (!spend(amt)) return;
   state.insuranceBet = amt;
   log(`Insurance taken for ${fmt(amt)}.`, 'neutral');
-  dealerPeek();
+  state.isDealing = true;
+  render();
+  await dealerPeek();
+  state.isDealing = false;
   render();
 }
 
-function declineInsurance() {
-  if (state.phase !== 'insurance') return;
-  dealerPeek();
+async function declineInsurance() {
+  if (state.phase !== 'insurance' || state.isDealing) return;
+  state.isDealing = true;
+  render();
+  await dealerPeek();
+  state.isDealing = false;
   render();
 }
 
-function dealerPeek() {
+async function dealerPeek() {
   const up = state.dealer.cards[0];
   const dealerCouldHaveBlackjack = up.rank === 'A' || cardValue(up) === 10;
 
   if (dealerCouldHaveBlackjack && isBlackjack(state.dealer.cards)) {
-    state.dealer.holeRevealed = true;
+    await flipHoleCard();
     if (state.insuranceBet > 0) {
       const w = payout(state.insuranceBet, ODDS.insurancePayout);
       credit(state.insuranceBet + w);
@@ -275,41 +329,52 @@ function canSplit(hand) {
     && state.bankroll + 1e-9 >= hand.bet;
 }
 
-function advanceHand() {
+async function advanceHand() {
   for (let i = state.activeHandIndex + 1; i < state.hands.length; i++) {
     if (state.hands[i].status === 'active') { state.activeHandIndex = i; return; }
   }
-  if (!state.hands.some(h => h.status === 'active')) startDealerPhase();
+  if (!state.hands.some(h => h.status === 'active')) await startDealerPhase();
 }
 
-function hit() {
+async function hit() {
+  if (state.isDealing) return;
   const hand = activeHand();
   if (!canHit(hand)) return;
-  hand.cards.push(drawCard());
+  state.isDealing = true;
+  render();
+  await dealCardTo(hand, drawCard());
   const { total } = handValue(hand.cards);
   if (total > 21) {
     hand.status = 'bust'; hand.resolved = true; hand.outcome = 'lose';
     log(`Hand busts at ${total}.`, 'lose');
-    advanceHand();
+    await advanceHand();
   }
+  state.isDealing = false;
   render();
 }
 
-function stand() {
+async function stand() {
+  if (state.isDealing) return;
   const hand = activeHand();
   if (!canStand(hand)) return;
   hand.status = 'stood';
-  advanceHand();
+  state.isDealing = true;
+  render();
+  await advanceHand();
+  state.isDealing = false;
   render();
 }
 
-function doubleDown() {
+async function doubleDown() {
+  if (state.isDealing) return;
   const hand = activeHand();
   if (!canDouble(hand)) return;
   if (!spend(hand.bet)) return;
   hand.bet = Math.round(hand.bet * 2 * 100) / 100;
   hand.doubled = true;
-  hand.cards.push(drawCard());
+  state.isDealing = true;
+  render();
+  await dealCardTo(hand, drawCard());
   const { total } = handValue(hand.cards);
   if (total > 21) {
     hand.status = 'bust'; hand.resolved = true; hand.outcome = 'lose';
@@ -317,50 +382,61 @@ function doubleDown() {
   } else {
     hand.status = 'stood';
   }
-  advanceHand();
+  await advanceHand();
+  state.isDealing = false;
   render();
 }
 
-function split() {
+async function split() {
+  if (state.isDealing) return;
   const hand = activeHand();
   if (!canSplit(hand)) return;
   if (!spend(hand.bet)) return;
   const [c1, c2] = hand.cards;
   const isAces = c1.rank === 'A';
   const hand1 = {
-    cards: [c1, drawCard()], bet: hand.bet, status: isAces ? 'stood' : 'active',
-    fromSplit: true, isSplitAces: isAces, doubled: false, resolved: false, outcome: null,
+    cards: [c1], bet: hand.bet, status: isAces ? 'stood' : 'active',
+    fromSplit: true, isSplitAces: isAces, doubled: false, resolved: false, outcome: null, shownCount: 1,
   };
   const hand2 = {
-    cards: [c2, drawCard()], bet: hand.bet, status: isAces ? 'stood' : 'active',
-    fromSplit: true, isSplitAces: isAces, doubled: false, resolved: false, outcome: null,
+    cards: [c2], bet: hand.bet, status: isAces ? 'stood' : 'active',
+    fromSplit: true, isSplitAces: isAces, doubled: false, resolved: false, outcome: null, shownCount: 1,
   };
   state.hands.splice(state.activeHandIndex, 1, hand1, hand2);
   log(isAces ? 'Split aces — one card each, no further action.' : 'Hand split.', 'neutral');
-  if (isAces) advanceHand();
+
+  state.isDealing = true;
+  render();
+  await dealCardTo(hand1, drawCard());
+  await dealCardTo(hand2, drawCard());
+  if (isAces) await advanceHand();
+  state.isDealing = false;
   render();
 }
 
 // ---------- dealer ----------
-function playDealerHand() {
+async function playDealerHand() {
   while (true) {
     const { total, soft } = handValue(state.dealer.cards);
     if (total > 21 || total > 17) break;
     if (total === 17) {
-      if (soft && ODDS.dealerHitSoft17) { state.dealer.cards.push(drawCard()); continue; }
+      if (soft && ODDS.dealerHitSoft17) { await dealCardTo(state.dealer, drawCard()); continue; }
       break;
     }
-    state.dealer.cards.push(drawCard());
+    await dealCardTo(state.dealer, drawCard());
   }
 }
 
-function startDealerPhase() {
+async function startDealerPhase() {
+  state.isDealing = true;
   state.phase = 'dealer';
-  state.dealer.holeRevealed = true;
+  render();
+  await flipHoleCard();
   const anyLive = state.hands.some(h => h.status === 'stood');
-  if (anyLive) playDealerHand();
+  if (anyLive) await playDealerHand();
   settleRound();
   state.phase = 'payout';
+  state.isDealing = false;
   render();
 }
 
@@ -393,21 +469,25 @@ function settleRound() {
 }
 
 function nextRound() {
+  if (state.isDealing) return;
   state.phase = 'betting';
   state.hands = [];
-  state.dealer = { cards: [], holeRevealed: false };
+  state.dealer = { cards: [], holeRevealed: false, shownCount: 0, flipIndex: null };
   state.activeHandIndex = 0;
   state.insuranceBet = 0;
   state.insuranceOffered = false;
   notice('');
+  maybeAutoRebet();
   render();
 }
 
 // ---------- rendering ----------
-function cardHtml(card, faceUp) {
-  if (!faceUp) return `<div class="pcard-back"></div>`;
+function cardHtml(card, faceUp, opts) {
+  opts = opts || {};
+  if (!faceUp) return `<div class="pcard-back${opts.isNew ? ' pcard-deal-in' : ''}"></div>`;
   const red = card.suit === '♥' || card.suit === '♦';
-  return `<div class="pcard ${red ? 'is-red' : ''}">
+  const animCls = opts.isFlip ? ' pcard-flip-in' : (opts.isNew ? ' pcard-deal-in' : '');
+  return `<div class="pcard ${red ? 'is-red' : ''}${animCls}">
     <div class="pcard-corner">${card.rank}<span class="pcard-corner-suit">${card.suit}</span></div>
     <div class="pcard-suit-big">${card.suit}</div>
   </div>`;
@@ -431,20 +511,23 @@ function render() {
   document.getElementById('newHandWrap').classList.toggle('hidden', state.phase !== 'payout');
 
   document.getElementById('betAmt').textContent = fmt(state.currentBet);
-  document.getElementById('clearBetBtn').disabled = state.currentBet <= 0;
-  document.getElementById('rebetBtn').disabled = !state.lastBet || state.currentBet > 0;
-  document.getElementById('dealBtn').disabled = state.currentBet <= 0;
+  document.getElementById('clearBetBtn').disabled = state.currentBet <= 0 || state.isDealing;
+  document.getElementById('rebetBtn').disabled = !state.lastBet || state.currentBet > 0 || state.isDealing;
+  document.getElementById('dealBtn').disabled = state.currentBet <= 0 || state.isDealing;
 
   if (state.phase === 'insurance') {
     const amt = Math.round(state.hands[0].bet * ODDS.insuranceMaxFraction * 100) / 100;
     document.getElementById('insuranceAmt').textContent = fmt(amt);
   }
+  document.getElementById('insuranceYesBtn').disabled = state.isDealing;
+  document.getElementById('insuranceNoBtn').disabled = state.isDealing;
+  document.getElementById('newHandBtn').disabled = state.isDealing;
 
   const hand = activeHand();
-  document.getElementById('hitBtn').disabled = !canHit(hand);
-  document.getElementById('standBtn').disabled = !canStand(hand);
-  document.getElementById('doubleBtn').disabled = !canDouble(hand);
-  document.getElementById('splitBtn').disabled = !canSplit(hand);
+  document.getElementById('hitBtn').disabled = !canHit(hand) || state.isDealing;
+  document.getElementById('standBtn').disabled = !canStand(hand) || state.isDealing;
+  document.getElementById('doubleBtn').disabled = !canDouble(hand) || state.isDealing;
+  document.getElementById('splitBtn').disabled = !canSplit(hand) || state.isDealing;
 
   renderLog();
 }
@@ -465,7 +548,11 @@ function renderDealerHand() {
 
   if (!cards.length) { wrap.innerHTML = ''; totalEl.textContent = ''; totalEl.className = 'hand-total'; return; }
 
-  wrap.innerHTML = cards.map((c, i) => cardHtml(c, !(i === 1 && !state.dealer.holeRevealed))).join('');
+  const shown = state.dealer.shownCount || 0;
+  wrap.innerHTML = cards.map((c, i) => cardHtml(c, !(i === 1 && !state.dealer.holeRevealed), {
+    isNew: i >= shown,
+    isFlip: state.dealer.flipIndex === i,
+  })).join('');
 
   if (!state.dealer.holeRevealed) {
     const upVal = cardValue(cards[0]);
@@ -499,7 +586,8 @@ function renderPlayerHands() {
 
     const active = state.phase === 'playing' && i === state.activeHandIndex;
     const tag = hand.doubled ? ' · Doubled' : '';
-    const cardsHtml = hand.cards.map(c => cardHtml(c, true)).join('');
+    const shown = hand.shownCount || 0;
+    const cardsHtml = hand.cards.map((c, ci) => cardHtml(c, true, { isNew: ci >= shown })).join('');
 
     return `<div class="hand-group ${active ? 'is-active' : ''}">
       ${state.hands.length > 1 ? `<div class="hand-label">Hand ${i + 1}${tag}</div>` : (hand.doubled ? `<div class="hand-label">Doubled</div>` : '')}

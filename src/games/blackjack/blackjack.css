@@ -194,12 +194,39 @@ main {
   border: 1px solid var(--mint-dim);
 }
 
+@keyframes pcard-deal-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pcard-flip-in {
+  from { opacity: 0.4; transform: rotateY(-90deg); }
+  to   { opacity: 1; transform: rotateY(0deg); }
+}
+
+.pcard-deal-in {
+  animation: pcard-deal-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.pcard-flip-in {
+  animation: pcard-flip-in 0.42s ease-out both;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard-deal-in,
+  .pcard-flip-in {
+    animation: none;
+  }
+}
+
 .hand {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-2);
   justify-content: center;
   min-height: 64px;
+  perspective: 500px;
 }
 
 .hand-total {
@@ -298,6 +325,24 @@ main {
 .bet-controls .btn-roll,
 .insurance-controls .btn-roll {
   min-width: 96px;
+}
+
+.auto-rebet-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--s-2);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.auto-rebet-toggle input[type="checkbox"] {
+  accent-color: var(--mint);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 .insurance-prompt {
