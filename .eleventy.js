@@ -26,6 +26,9 @@ module.exports = function (eleventyConfig) {
   // (basic-strategy.njk), also published as a plain script so the trainer's
   // client-side JS reads the identical decision table -- one source of truth.
   eleventyConfig.addPassthroughCopy({ "src/_data/blackjackStrategy.js": "games/blackjack/strategy.js" });
+  eleventyConfig.addPassthroughCopy("src/games/roulette/roulette.css");
+  eleventyConfig.addPassthroughCopy("src/games/roulette/roulette.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/rouletteOdds.js": "games/roulette/odds.js" });
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
   eleventyConfig.addPassthroughCopy("src/favicon-64.png");
   eleventyConfig.addPassthroughCopy("src/icon-512.png");

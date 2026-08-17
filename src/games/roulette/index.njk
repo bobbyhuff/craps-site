@@ -1,0 +1,124 @@
+---
+layout: base.njk
+title: Roulette
+seoTitle: "Play Free Roulette Online: American Wheel, True Payouts | 0stakes"
+description: Play free American roulette in your browser. Straight, split, street, corner, six line, column, dozen, and outside bets, all at real payouts. No ads, no account.
+extraCss: /games/roulette/roulette.css
+extraJs: /games/roulette/roulette.js
+tags: ["game"]
+order: 3
+cardBlurb: A full American wheel — inside and outside bets, real payouts, no house tricks.
+status: "live"
+breadcrumb:
+  - name: Games
+    url: /games/
+  - name: Roulette
+    url: /games/roulette/
+---
+<!-- Single source of truth for every payout/odds/rule number roulette.js
+     uses -- see src/_data/rouletteOdds.js. Must load before roulette.js. -->
+<script src="/games/roulette/odds.js"></script>
+
+<div class="app">
+  <h1 class="page-title">Free Roulette Table</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Roulette</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-real-money">Practice only — no real money, ever.</p>
+
+  <div class="statusbar">
+    <div class="sb-cell">
+      <span class="sb-k">Bankroll</span>
+      <b id="bankroll">$0.00</b>
+    </div>
+    <div class="sb-cell">
+      <span class="sb-k">Net</span>
+      <b id="net">$0.00</b>
+    </div>
+    <div class="sb-cell">
+      <span class="sb-k">Last Spin</span>
+      <b id="lastSpin">—</b>
+    </div>
+  </div>
+
+  <div id="notice"></div>
+
+  <div class="rl-wheel-wrap">
+    <div class="rl-wheel-pointer"></div>
+    <div class="rl-wheel" id="rlWheel"></div>
+    <div class="rl-result" id="rlResult">Place a bet and spin</div>
+    <div class="rl-history" id="rlHistory"></div>
+  </div>
+
+  <div class="mode-toggle">
+    <label><input type="radio" name="betMode" value="straight" checked> Straight up</label>
+    <label><input type="radio" name="betMode" value="combo"> Split / Street / Corner / Six Line</label>
+  </div>
+
+  <div class="rl-combo-panel hidden" id="rlComboPanel"></div>
+
+  <div class="rl-table" id="rlTable">
+    <div class="rl-zero-row" id="rlZeroRow"></div>
+    <div class="rl-grid" id="rlGrid"></div>
+    <div class="rl-dozens" id="rlDozens"></div>
+    <div class="rl-columns" id="rlColumns"></div>
+    <div class="rl-evens" id="rlEvens"></div>
+    <div class="rl-topline-wrap" id="rlTopLine"></div>
+  </div>
+
+  <div class="rl-bets">
+    <div class="rl-bets-head"><span>Active Bets</span><b id="rlBetsTotal">$0.00</b></div>
+    <div id="rlBetsList"></div>
+  </div>
+
+  <div class="chip-strip">
+    <span class="chip-label">Chip</span>
+    <div id="chipSelector"></div>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="clearBetsBtn">Clear Bets</button>
+    <button class="btn-outline" id="rebetBtn">Rebet</button>
+    <button class="btn-roll" id="spinBtn">Spin</button>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Rules &amp; payouts</summary>
+    <ul>
+      <li><b>Wheel</b> — American double-zero: 38 pockets, numbers 1-36 plus 0 and 00.</li>
+      <li><b>Straight up</b> (1 number) — pays {{ rouletteOdds.payouts.straightUp[0] }}:{{ rouletteOdds.payouts.straightUp[1] }}.</li>
+      <li><b>Split</b> (2 adjacent numbers) — pays {{ rouletteOdds.payouts.split[0] }}:{{ rouletteOdds.payouts.split[1] }}.</li>
+      <li><b>Street</b> (a full row of 3) — pays {{ rouletteOdds.payouts.street[0] }}:{{ rouletteOdds.payouts.street[1] }}.</li>
+      <li><b>Corner</b> (4 numbers in a 2&times;2 block) — pays {{ rouletteOdds.payouts.corner[0] }}:{{ rouletteOdds.payouts.corner[1] }}.</li>
+      <li><b>Six line</b> (two adjacent rows, 6 numbers) — pays {{ rouletteOdds.payouts.sixLine[0] }}:{{ rouletteOdds.payouts.sixLine[1] }}.</li>
+      <li><b>Top line</b> (0, 00, 1, 2, 3) — pays {{ rouletteOdds.payouts.topLine[0] }}:{{ rouletteOdds.payouts.topLine[1] }}. The worst bet on the table at a {{ rouletteOdds.houseEdge.topLine }}% house edge.</li>
+      <li><b>Column / Dozen</b> (12 numbers) — pays {{ rouletteOdds.payouts.column[0] }}:{{ rouletteOdds.payouts.column[1] }}.</li>
+      <li><b>Red / Black / Odd / Even / 1-18 / 19-36</b> (18 numbers) — pays {{ rouletteOdds.payouts.outside[0] }}:{{ rouletteOdds.payouts.outside[1] }}.</li>
+      <li><b>House edge</b> — {{ rouletteOdds.houseEdge.standard }}% on every bet except the top line, which is {{ rouletteOdds.houseEdge.topLine }}%. 0 and 00 lose every outside, column, and dozen bet — that's the entire source of the house edge on an American wheel.</li>
+      <li><b>0 and 00</b> — can be bet straight up or as part of the top line only. Real tables vary on which splits touch the zeros, so this table keeps it simple and unambiguous rather than guessing at a house-specific rule.</li>
+    </ul>
+  </details>
+
+  <p>
+    Every spin is an independent, uniformly random draw across all 38 pockets —
+    nothing about a past spin changes the odds of the next one, on this table or a real one.
+  </p>
+
+  <p class="strategy-link"><a href="/strategy/">Read strategy guides for every game →</a></p>
+</div>
