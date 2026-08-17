@@ -21,6 +21,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.css");
   eleventyConfig.addPassthroughCopy("src/games/blackjack/blackjack.js");
   eleventyConfig.addPassthroughCopy({ "src/_data/blackjackOdds.js": "games/blackjack/odds.js" });
+  eleventyConfig.addPassthroughCopy("src/games/blackjack/trainer.js");
+  // Same file Eleventy reads as the `blackjackStrategy` global data object
+  // (basic-strategy.njk), also published as a plain script so the trainer's
+  // client-side JS reads the identical decision table -- one source of truth.
+  eleventyConfig.addPassthroughCopy({ "src/_data/blackjackStrategy.js": "games/blackjack/strategy.js" });
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
   eleventyConfig.addPassthroughCopy("src/favicon-64.png");
   eleventyConfig.addPassthroughCopy("src/icon-512.png");

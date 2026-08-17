@@ -594,6 +594,27 @@ main {
 .overlay-buttons .btn-roll { flex: 1 1 auto; }
 
 /* ============================================================
+   Strategy trainer feedback (games/blackjack/trainer.njk)
+   ============================================================ */
+
+.trainer-feedback {
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  margin: var(--s-4) 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.trainer-feedback strong { display: block; margin-bottom: 4px; font-size: 15px; }
+.trainer-feedback p { margin: 0; color: var(--text-muted); }
+
+.trainer-feedback.correct { background: var(--mint-faint); border: 1px solid var(--mint-dim); }
+.trainer-feedback.correct strong { color: var(--win); }
+
+.trainer-feedback.incorrect { background: rgba(255, 138, 128, 0.10); border: 1px solid rgba(255, 138, 128, 0.35); }
+.trainer-feedback.incorrect strong { color: var(--lose); }
+
+/* ============================================================
    Breakpoints
    ============================================================ */
 
