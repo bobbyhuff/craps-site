@@ -29,6 +29,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/games/roulette/roulette.css");
   eleventyConfig.addPassthroughCopy("src/games/roulette/roulette.js");
   eleventyConfig.addPassthroughCopy({ "src/_data/rouletteOdds.js": "games/roulette/odds.js" });
+  eleventyConfig.addPassthroughCopy("src/games/baccarat/baccarat.css");
+  eleventyConfig.addPassthroughCopy("src/games/baccarat/baccarat.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/baccaratOdds.js": "games/baccarat/odds.js" });
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
   eleventyConfig.addPassthroughCopy("src/favicon-64.png");
   eleventyConfig.addPassthroughCopy("src/icon-512.png");

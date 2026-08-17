@@ -1,0 +1,574 @@
+/* ============================================================
+   Baccarat table — mobile-first.
+   Tokens come from /css/site.css, which loads first. Shared
+   components (overlay, statusbar, chip selector, buttons, legend,
+   log, playing cards) are copied forward from blackjack.css to
+   keep each game folder self-contained.
+   ============================================================ */
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+main {
+  max-width: none;
+  padding: 0;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-4) var(--s-6);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.18em;
+  color: var(--mint);
+  margin: 0 0 var(--s-3);
+  text-align: center;
+}
+
+.no-real-money {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: calc(var(--s-3) * -1) 0 var(--s-3);
+}
+
+.hidden { display: none !important; }
+
+/* ============================================================
+   Sticky status bar (copied forward from blackjack.css)
+   ============================================================ */
+
+.statusbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  margin: 0 calc(var(--s-4) * -1);
+  background: linear-gradient(180deg, rgba(10, 28, 18, 0.98), rgba(8, 24, 16, 0.98));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--edge-mint);
+  box-shadow: var(--shadow-md);
+}
+
+.sb-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.sb-k {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sb-cell b {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--bone);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+#net.positive { color: var(--win); }
+#net.negative { color: var(--lose); }
+
+#notice {
+  color: var(--lose);
+  font-weight: 600;
+  font-size: 13.5px;
+  text-align: center;
+  min-height: 1.2em;
+  padding: var(--s-2) 0 0;
+}
+
+/* ============================================================
+   The felt
+   ============================================================ */
+
+.table {
+  position: relative;
+  background-color: var(--felt);
+  background-image: var(--felt-sheen);
+  border: 1px solid var(--edge-mint);
+  border-radius: var(--r-lg);
+  padding: var(--s-4) var(--s-3);
+  box-shadow: var(--shadow-lg), var(--inset-hi);
+  overflow: hidden;
+  margin: var(--s-3) 0;
+}
+
+.table::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--noise);
+  opacity: 0.035;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.table > * { position: relative; }
+
+.seat-label {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: var(--s-2);
+}
+
+/* ============================================================
+   Baccarat hands — Player and Banker side by side
+   ============================================================ */
+
+.bacc-hands {
+  display: flex;
+  gap: var(--s-4);
+  justify-content: center;
+}
+
+.bacc-hand-area {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.bacc-result {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  min-height: 1.4em;
+  margin-top: var(--s-4);
+}
+
+.bacc-result.is-player,
+.bacc-result.is-banker { color: var(--mint); }
+.bacc-result.is-tie { color: var(--win); }
+
+/* ============================================================
+   Playing cards (copied forward from blackjack.css)
+   ============================================================ */
+
+.pcard,
+.pcard-back {
+  --pcard-ink-black: #1a1206;
+  --pcard-ink-red: #a3231d;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 64px;
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm), inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.pcard {
+  position: relative;
+  background: linear-gradient(180deg, #fbf7ec, #ded5be);
+  color: var(--pcard-ink-black);
+}
+
+.pcard.is-red { color: var(--pcard-ink-red); }
+
+.pcard-corner {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.05;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pcard-corner-suit { font-size: 11px; }
+
+.pcard-suit-big {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+@keyframes pcard-deal-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pcard-deal-in {
+  animation: pcard-deal-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard-deal-in {
+    animation: none;
+  }
+}
+
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  justify-content: center;
+  min-height: 64px;
+}
+
+.hand-total {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--mint);
+  margin-top: var(--s-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.hand-total.is-win { color: var(--win); }
+.hand-total.is-lose { color: var(--lose); }
+
+/* Larger cards once there's room */
+@media (min-width: 701px) {
+  .pcard, .pcard-back { width: 58px; height: 82px; }
+  .pcard-corner { font-size: 13px; top: 4px; left: 5px; }
+  .pcard-corner-suit { font-size: 12px; }
+  .pcard-suit-big { font-size: 28px; }
+}
+
+/* ============================================================
+   Bet spots
+   ============================================================ */
+
+.bet-area { text-align: center; margin: var(--s-3) 0; }
+
+.bacc-bet-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  margin: 0 auto;
+}
+
+.bacc-bet-spot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 76px;
+  padding: var(--s-2);
+  background: linear-gradient(180deg, var(--felt-raised), rgba(20, 67, 43, 0.9));
+  border: 2px dashed var(--edge-mint);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+.bacc-bet-spot.is-selected {
+  border-style: solid;
+  border-color: var(--mint);
+  box-shadow: 0 0 0 1px var(--mint-dim), 0 0 16px rgba(53, 208, 122, 0.25);
+}
+
+.bacc-bet-spot-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--bone);
+}
+
+.bacc-bet-spot-pay {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.bacc-bet-spot-amt {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mint);
+  font-variant-numeric: tabular-nums;
+}
+
+.bacc-commission-note {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  margin: var(--s-2) 0 0;
+}
+
+.bet-controls {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--s-3);
+}
+
+.bet-controls .btn-outline,
+.bet-controls .btn-roll {
+  min-width: 96px;
+}
+
+.auto-rebet-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--s-2);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.auto-rebet-toggle input[type="checkbox"] {
+  accent-color: var(--mint);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.new-hand-wrap { text-align: center; margin: var(--s-4) 0; }
+
+/* ============================================================
+   Chip selector, buttons (copied forward from blackjack.css)
+   ============================================================ */
+
+.chip-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  justify-content: center;
+  margin-bottom: var(--s-3);
+}
+
+.chip-label {
+  color: var(--text-dim);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#chipSelector {
+  display: flex;
+  gap: var(--s-2);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding: 2px;
+  min-width: 0;
+}
+
+#chipSelector::-webkit-scrollbar { display: none; }
+
+.chip-btn {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px dashed rgba(244, 238, 224, 0.5);
+  background: radial-gradient(circle at 50% 35%, var(--felt-raised), #16311f);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease;
+}
+
+.chip-btn:active { transform: scale(0.92); }
+
+.chip-btn.selected {
+  border-style: solid;
+  border-color: var(--mint-bright);
+  background: var(--mint);
+  color: #081810;
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--mint-faint);
+}
+
+.btn-roll {
+  background: var(--mint);
+  color: #081810;
+  border: 1px solid var(--mint-deep);
+  padding: 0 var(--s-5);
+  min-height: 52px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.btn-roll:hover { filter: brightness(1.07); }
+.btn-roll:active { transform: translateY(1px); box-shadow: var(--shadow-sm); }
+.btn-roll:disabled,
+.btn-outline:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--edge-mint);
+  color: var(--mint);
+  padding: 0 var(--s-3);
+  min-height: 44px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-outline:hover { background: var(--mint-faint); }
+.btn-outline:active { transform: scale(0.97); }
+
+.table-actions {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--s-3);
+}
+
+/* ============================================================
+   Log + legend (copied forward from blackjack.css)
+   ============================================================ */
+
+.log {
+  background: var(--bg-deep);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  height: 140px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: var(--s-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.log .win { color: var(--win); }
+.log .lose { color: var(--lose); }
+.log .neutral { color: var(--text-muted); }
+
+.legend {
+  background: var(--felt);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: 0 var(--s-4);
+  font-size: 14px;
+  margin-bottom: var(--s-2);
+}
+
+.legend summary {
+  cursor: pointer;
+  color: var(--mint);
+  font-weight: 600;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  list-style-position: outside;
+}
+
+.legend summary:hover { color: var(--mint-bright); }
+
+.legend ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); line-height: 1.65; }
+.legend li { margin-bottom: var(--s-2); color: var(--text-muted); }
+.legend li b { color: var(--text); }
+
+/* ============================================================
+   Overlay (copied forward from blackjack.css)
+   ============================================================ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-4);
+  z-index: 60;
+}
+
+.overlay.hidden { display: none; }
+
+.overlay-box {
+  background: linear-gradient(180deg, var(--felt-raised), var(--felt));
+  border: 1px solid var(--edge-mint);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-5);
+  width: min(340px, 100%);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.overlay-box h2 {
+  font-family: var(--font-display);
+  color: var(--mint);
+  margin: 0 0 var(--s-2);
+  font-size: 24px;
+}
+
+.overlay-box p { font-size: 13.5px; color: var(--text-muted); margin: 0 0 var(--s-4); }
+
+.overlay-box input {
+  width: 100%;
+  padding: var(--s-3);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--edge-mint);
+  background: var(--felt-well);
+  color: var(--bone);
+  text-align: center;
+  margin-bottom: var(--s-4);
+}
+
+.overlay-buttons { display: flex; gap: var(--s-2); justify-content: center; }
+.overlay-buttons .btn-roll { flex: 1 1 auto; }
+
+/* ============================================================
+   Breakpoints
+   ============================================================ */
+
+@media (min-width: 701px) {
+  .app { padding: var(--s-5) var(--s-5) var(--s-7); }
+  .page-title { font-size: 32px; }
+  .statusbar { margin: 0; border-radius: var(--r-md); border: 1px solid var(--edge-mint); }
+  .table { padding: var(--s-5); }
+  .log { height: 170px; }
+}

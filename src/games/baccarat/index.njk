@@ -1,0 +1,137 @@
+---
+layout: base.njk
+title: Baccarat
+seoTitle: "Play Free Baccarat Online: Punto Banco, True Payouts | 0stakes"
+description: Play free baccarat in your browser. Standard Punto Banco rules, Player/Banker/Tie betting, real 8-deck shoe, 5% commission on Banker wins. No ads, no account.
+extraCss: /games/baccarat/baccarat.css
+extraJs: /games/baccarat/baccarat.js
+tags: ["game"]
+order: 4
+cardBlurb: Bet Player, Banker, or Tie against a real 8-deck shoe. No decisions once the bet's down -- just watch it resolve.
+status: "live"
+breadcrumb:
+  - name: Games
+    url: /games/
+  - name: Baccarat
+    url: /games/baccarat/
+---
+<!-- Single source of truth for every payout/odds/rule number baccarat.js
+     uses -- see src/_data/baccaratOdds.js. Must load before baccarat.js. -->
+<script src="/games/baccarat/odds.js"></script>
+
+<div class="app">
+  <h1 class="page-title">Free Baccarat Table</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Baccarat</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-real-money">Practice only -- no real money, ever.</p>
+
+  <div class="statusbar">
+    <div class="sb-cell">
+      <span class="sb-k">Bankroll</span>
+      <b id="bankroll">$0.00</b>
+    </div>
+    <div class="sb-cell">
+      <span class="sb-k">Net</span>
+      <b id="net">$0.00</b>
+    </div>
+    <div class="sb-cell">
+      <span class="sb-k">Shoe</span>
+      <b id="shoeCount">—</b>
+    </div>
+  </div>
+
+  <div id="notice"></div>
+
+  <div class="table bacc-table">
+    <div class="bacc-hands">
+      <div class="bacc-hand-area">
+        <div class="seat-label">Player</div>
+        <div class="hand" id="playerHand"></div>
+        <div class="hand-total" id="playerTotal"></div>
+      </div>
+      <div class="bacc-hand-area">
+        <div class="seat-label">Banker</div>
+        <div class="hand" id="bankerHand"></div>
+        <div class="hand-total" id="bankerTotal"></div>
+      </div>
+    </div>
+    <div class="bacc-result" id="bacResult"></div>
+  </div>
+
+  <div class="bet-area" id="betArea">
+    <div class="bacc-bet-row" id="betRow">
+      <button class="bacc-bet-spot" id="spotPlayer" data-type="player">
+        <span class="bacc-bet-spot-label">Player</span>
+        <span class="bacc-bet-spot-pay">{{ baccaratOdds.payoutStr.player }}</span>
+        <span class="bacc-bet-spot-amt" id="amtPlayer">—</span>
+      </button>
+      <button class="bacc-bet-spot" id="spotTie" data-type="tie">
+        <span class="bacc-bet-spot-label">Tie</span>
+        <span class="bacc-bet-spot-pay">{{ baccaratOdds.payoutStr.tie }}</span>
+        <span class="bacc-bet-spot-amt" id="amtTie">—</span>
+      </button>
+      <button class="bacc-bet-spot" id="spotBanker" data-type="banker">
+        <span class="bacc-bet-spot-label">Banker</span>
+        <span class="bacc-bet-spot-pay">{{ baccaratOdds.payoutStr.banker }}<sup>*</sup></span>
+        <span class="bacc-bet-spot-amt" id="amtBanker">—</span>
+      </button>
+    </div>
+    <p class="bacc-commission-note">*Banker wins pay {{ baccaratOdds.payoutStr.banker }} minus a {{ baccaratOdds.bankerCommissionPct }}% commission.</p>
+    <div class="bet-controls">
+      <button class="btn-outline" id="clearBetBtn">Clear Bet</button>
+      <button class="btn-outline" id="rebetBtn">Rebet</button>
+      <button class="btn-roll" id="dealBtn">Deal</button>
+    </div>
+    <label class="auto-rebet-toggle" for="autoRebetChk">
+      <input type="checkbox" id="autoRebetChk">
+      Auto-rebet
+    </label>
+  </div>
+
+  <div class="new-hand-wrap hidden" id="newHandWrap">
+    <button class="btn-roll" id="newHandBtn">New Hand</button>
+  </div>
+
+  <div class="chip-strip">
+    <span class="chip-label">Chip</span>
+    <div id="chipSelector"></div>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Rules &amp; payouts</summary>
+    <ul>
+      <li><b>Object</b> — bet on which hand, Player or Banker, will score closer to 9, or bet Tie. Cards 2-9 are face value, 10/J/Q/K count as 0, Aces count as 1. Hand value is the sum of both cards' values, keeping only the last digit (a 7 and an 8 make 15, which counts as 5).</li>
+      <li><b>No decisions</b> — once your bet is down, the hand plays itself. Player and Banker each draw a third card automatically under a fixed set of rules; you just watch it resolve.</li>
+      <li><b>Natural</b> — an 8 or 9 on the first two cards, for either hand, ends the round immediately with no third cards.</li>
+      <li><b>Player bet</b> — pays {{ baccaratOdds.payoutStr.player }}. Pushes (bet returned) if the hands tie.</li>
+      <li><b>Banker bet</b> — pays {{ baccaratOdds.payoutStr.banker }} minus a {{ baccaratOdds.bankerCommissionPct }}% commission on the win, charged only when Banker wins. Pushes if the hands tie.</li>
+      <li><b>Tie bet</b> — pays {{ baccaratOdds.payoutStr.tie }}. Only a Tie bet wins on a tie; it's a separate bet from Player or Banker.</li>
+      <li><b>Shoe</b> — dealt from a real 8-deck shoe, reshuffled between hands once it runs low.</li>
+    </ul>
+  </details>
+
+  <p>
+    Baccarat is a comparing game between two hands, Player and Banker — the names
+    don't refer to you or the house, they're just the two hands' labels. There are
+    no strategic decisions once you've placed your bet: every third-card draw
+    follows a fixed rule, so the entire game comes down to picking which of the
+    three bets to make.
+  </p>
+</div>
