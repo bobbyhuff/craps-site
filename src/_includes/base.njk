@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{ seoTitle }}</title>
 <meta name="description" content="{{ description }}">
-{% if not redirectTo %}<link rel="canonical" href="{{ site.url }}{{ page.url }}">{% endif %}
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
 
 <meta property="og:title" content="{{ seoTitle }}">
 <meta property="og:description" content="{{ description }}">
@@ -42,7 +42,6 @@
 <link rel="preload" href="/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/site.css">
 {% if extraCss %}<link rel="stylesheet" href="{{ extraCss }}">{% endif %}
-{% if redirectTo %}<meta http-equiv="refresh" content="0; url={{ redirectTo }}"><link rel="canonical" href="{{ site.url }}{{ redirectTo }}">{% endif %}
 </head>
 <body>
 
