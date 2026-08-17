@@ -336,7 +336,29 @@ main {
   margin: 0 0 var(--s-2);
   font-size: 20px;
   letter-spacing: 0.01em;
+  color: var(--mint);
 }
+
+/* Two-CTA card footer (a primary .btn plus a secondary text link), used where a
+   card needs both a "Play" and a "Learn" action instead of one stretched link. */
+.card-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.card-link {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.card-link:hover { color: var(--mint); }
 
 /* The heading link is the only real anchor text; a stretched ::after keeps the
    whole card clickable without wrapping the description in the link too. */

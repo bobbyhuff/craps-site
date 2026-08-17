@@ -1,31 +1,155 @@
 ---
 layout: base.njk
 title: Home
-seoTitle: "Free Craps Simulator: Practice Craps Online, No Download | 0stakes"
-description: 0stakes is a free craps and blackjack simulator, no downloads, no account, no real money. Practice true odds and real payouts on a full craps table right in your browser.
+seoTitle: "Free Casino Games: Craps, Blackjack, Roulette & Baccarat | 0stakes"
+description: Practice craps, blackjack, roulette and baccarat free with true odds and real payouts. Learn strategy, compare house edges and test casino betting systems.
 ---
 <div class="hero">
   <h1>ZERO STAKES. TRUE ODDS.</h1>
   <p>
-    0stakes is a free practice table for learning bet strategy — no real money, ever.
-    True odds, correct payouts, no house tricks buried in the fine print, no account
-    required. Craps, blackjack, roulette, and baccarat are live now, with more games on the way.
+    Practice real casino table games without risking a dollar. Learn the rules,
+    understand the odds, test strategies, and play as much as you want. No account.
+    No ads. No real money.
   </p>
   <div class="btn-row">
-    <a class="btn" href="/games/craps/">Play Craps</a>
-    <a class="btn secondary" href="/strategy/">Learn Strategy</a>
+    <a class="btn" href="#games">Play a Game</a>
+    <a class="btn secondary" href="/strategy/">Learn the Math</a>
   </div>
 </div>
 
+<div class="post-body">
+
+<h2 id="games">CHOOSE YOUR TABLE</h2>
+
 <div class="card-grid">
-  {% for game in collections.games %}
   <div class="card">
-    <h3><a href="{{ game.url }}">{{ game.data.title }}</a></h3>
-    <p>{{ game.data.cardBlurb }}</p>
+    <h3>Craps</h3>
+    <p>Full table. True odds. Every major bet.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/craps/">Play Craps →</a>
+      <a class="card-link" href="/strategy/craps/">Learn Craps</a>
+    </div>
   </div>
-  {% endfor %}
   <div class="card">
-    <h3><a href="/strategy/">Strategy Guides</a></h3>
-    <p>Bet types, odds math, and bankroll management explained.</p>
+    <h3>Blackjack</h3>
+    <p>6-deck blackjack with real decisions, payouts, splits, doubles, and insurance.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/blackjack/">Play Blackjack →</a>
+      <a class="card-link" href="/strategy/blackjack/">Learn Blackjack</a>
+    </div>
   </div>
+  <div class="card">
+    <h3>Roulette</h3>
+    <p>American roulette with inside and outside betting.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/roulette/">Play Roulette →</a>
+      <a class="card-link" href="/strategy/roulette/">Learn Roulette</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Baccarat</h3>
+    <p>Player, Banker, and Tie with realistic dealing and payouts.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/baccarat/">Play Baccarat →</a>
+      <a class="card-link" href="/strategy/baccarat/">Learn Baccarat</a>
+    </div>
+  </div>
+</div>
+
+<h2>THE CASINO MATH, WITHOUT THE CASINO.</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>Play It</h3>
+    <p>Practice the actual game with realistic rules and payouts.</p>
+  </div>
+  <div class="card">
+    <h3>Learn It</h3>
+    <p>Understand the odds, house edge, payouts, and correct strategy.</p>
+  </div>
+  <div class="card">
+    <h3>Test It</h3>
+    <p>See popular casino strategies tested over huge numbers of hands, rolls, and spins.</p>
+  </div>
+</div>
+
+<h2>KNOW WHAT YOUR BET ACTUALLY COSTS</h2>
+
+<table>
+<thead>
+<tr><th>Bet</th><th>House Edge</th></tr>
+</thead>
+<tbody>
+<tr><td>Craps Odds</td><td>0.00%</td></tr>
+<tr><td>Baccarat Banker</td><td>{{ baccaratOdds.houseEdge.banker }}%</td></tr>
+<tr><td>Craps Pass Line</td><td>{{ odds.houseEdgeStr.passLine }}%</td></tr>
+<tr><td>European Roulette</td><td>2.70%</td></tr>
+<tr><td>American Roulette</td><td>{{ rouletteOdds.houseEdge.standard }}%</td></tr>
+<tr><td>Baccarat Tie</td><td>{{ baccaratOdds.houseEdge.tie }}%</td></tr>
+</tbody>
+</table>
+
+<div class="btn-row"><a class="btn secondary" href="/strategy/house-edge/">See Every Casino Bet Ranked →</a></div>
+
+<h2 id="tools-pit">TESTED, NOT GUESSED.</h2>
+
+<p>Betting systems sound a lot different after a million hands, rolls, or spins.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h3><a href="/the-pit/martingale-roulette-simulated/">Martingale Roulette</a></h3>
+    <p>We simulated 1,000,000 spins. Did doubling after every loss actually work?</p>
+  </div>
+  <div class="card">
+    <h3><a href="/the-pit/blackjack-3-2-vs-6-5/">3:2 vs 6:5 Blackjack</a></h3>
+    <p>That tiny payout difference gets expensive fast.</p>
+  </div>
+  <div class="card">
+    <h3><a href="/the-pit/iron-cross-simulated/">The Iron Cross</a></h3>
+    <p>It wins often. So why can it still lose money?</p>
+  </div>
+</div>
+
+<div class="btn-row"><a class="btn secondary" href="/the-pit/">Enter the Pit →</a></div>
+
+<h2 id="tools">PRACTICE WITH A PURPOSE</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3><a href="/games/blackjack/trainer/">Blackjack Strategy Trainer</a></h3>
+    <p>Practice hit, stand, split, and double decisions.</p>
+  </div>
+  <div class="card">
+    <h3><a href="/strategy/craps/house-edge/#craps-payout-calculator">Craps Payout Calculator</a></h3>
+    <p>See what common craps wagers actually pay.</p>
+  </div>
+  <div class="card">
+    <h3><a href="/strategy/house-edge/">Casino House Edge Rankings</a></h3>
+    <p>Compare the mathematical cost of different casino bets.</p>
+  </div>
+</div>
+
+<h2>NEVER SAT AT A CASINO TABLE?</h2>
+
+<p>Start here. Learn how the game works before you ever put real money on the table.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h3><a href="/strategy/craps/first-time/">Your First Craps Table</a></h3>
+  </div>
+  <div class="card">
+    <h3><a href="/strategy/blackjack/first-time/">Your First Blackjack Table</a></h3>
+  </div>
+  <div class="card">
+    <h3><a href="/strategy/roulette/how-to-play/">How to Play Roulette</a></h3>
+  </div>
+  <div class="card">
+    <h3><a href="/strategy/baccarat/how-to-play/">How to Play Baccarat</a></h3>
+  </div>
+</div>
+
+<h2>LEARN WITH FAKE MONEY.<br>UNDERSTAND THE REAL MATH.</h2>
+
+<div class="btn-row"><a class="btn" href="#games">Choose a Game →</a></div>
+
 </div>
