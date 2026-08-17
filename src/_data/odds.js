@@ -36,6 +36,22 @@ const ODDS = {
   anySevenPay: [4, 1],
   anyCrapsPay: [7, 1],
 
+  // Fair (zero-edge) payout ratios for the one-roll and hardway props above,
+  // i.e. what anySevenPay/anyCrapsPay/hardPay would need to be to break even.
+  // Derived from the fixed 36-combination dice distribution: e.g. Any Seven
+  // resolves win-or-lose on every roll (6 of 36 win), so true odds against
+  // are (36-6):6 = 5:1 against a 4:1 casino payout. Hardways only resolve on
+  // the number itself or a 7 (other rolls don't affect the bet), so their
+  // true odds are computed over that narrower resolving space instead of all
+  // 36 rolls. Cross-checked against houseEdge.* below: edge = (trueAgainst -
+  // casinoPay) / (trueAgainst + 1), and it matches in every case.
+  trueOddsAgainst: {
+    anySeven: [5, 1],
+    anyCraps: [8, 1],
+    hard4or10: [8, 1],
+    hard6or8: [10, 1],
+  },
+
   // Buy bets pay true odds (trueOdds above) minus this commission, charged
   // up front on the flat bet amount.
   buyCommissionPct: 5,
@@ -77,6 +93,7 @@ ODDS.placeOddsStr = mapRatios(ODDS.placeOdds);
 ODDS.fieldPayStr = mapRatios(ODDS.fieldPay);
 ODDS.anySevenPayStr = ratioStr(ODDS.anySevenPay);
 ODDS.anyCrapsPayStr = ratioStr(ODDS.anyCrapsPay);
+ODDS.trueOddsAgainstStr = mapRatios(ODDS.trueOddsAgainst);
 
 // Fixed 2-decimal display strings, so every row of the house-edge ranking
 // table formats consistently regardless of whether the underlying number

@@ -821,6 +821,73 @@ main:has(.app) {
   padding: 0 var(--s-3);
 }
 
+/* ---- Payout calculator (content pages) ---- */
+
+.calc-card {
+  background: linear-gradient(180deg, var(--felt-raised), var(--felt));
+  border: 1px solid var(--rail);
+  border-radius: var(--r-md);
+  padding: var(--s-5);
+  margin: var(--s-4) 0;
+  box-shadow: var(--shadow-sm), var(--inset-hi);
+}
+
+.calc-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  margin-bottom: var(--s-3);
+}
+
+.calc-row label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.calc-row select,
+.calc-row input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--s-2) var(--s-3);
+  font-family: inherit;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--edge-mint);
+  background: var(--felt-well);
+  color: var(--bone);
+}
+
+.calc-row select:focus,
+.calc-row input:focus { outline: 2px solid var(--mint-bright); outline-offset: 1px; }
+
+.calc-result {
+  border-top: 1px solid var(--edge);
+  padding-top: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+.calc-line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: 6px 0;
+  font-size: 14.5px;
+}
+
+.calc-line span { color: var(--text-muted); }
+.calc-line b { color: var(--mint); font-variant-numeric: tabular-nums; }
+
+.calc-note {
+  margin: var(--s-3) 0 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
 /* ============================================================
    Overlay
    ============================================================ */
