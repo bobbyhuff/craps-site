@@ -3,6 +3,7 @@ title: "3 Point Molly Craps Strategy: What the Math Actually Says"
 seoTitle: "3 Point Molly Craps Strategy: What the Math Actually Says | 0stakes"
 description: What the 3 Point Molly craps strategy actually is, how to play it step by step, and what the math says about a strategy built from mostly low-house-edge bets.
 date: 2026-08-16
+game: craps
 ogType: article
 breadcrumb:
   - name: The Pit

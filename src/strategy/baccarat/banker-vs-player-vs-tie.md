@@ -25,6 +25,8 @@ Baccarat only has three bets. Here's how they actually stack up.
 | Payout | {{ baccaratOdds.payoutStr.banker }} (minus {{ baccaratOdds.bankerCommissionPct }}% commission) | {{ baccaratOdds.payoutStr.player }} | {{ baccaratOdds.payoutStr.tie }} |
 | Verdict | Best bet on the table | Close second | Avoid |
 
+See the numbers play out over real hands: [Banker vs Player vs Tie, 1 Million Hands Simulated](/the-pit/baccarat-banker-player-tie-simulated/).
+
 ## Banker: pros and cons
 
 **Pros** — lowest house edge of the three bets, by a wide margin over Tie and a real (if smaller) margin over Player.

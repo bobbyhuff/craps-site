@@ -3,6 +3,7 @@ title: "Blackjack Insurance: We Simulated 1,000,000 Hands"
 seoTitle: "Blackjack Insurance Simulated: Is It Ever Worth It? | 0stakes"
 description: Insurance pays 2:1 and feels like free protection. One million simulated opportunities show why it's a losing bet for anyone who isn't counting cards.
 date: 2026-08-17T15:00:00
+game: blackjack
 ogType: article
 breadcrumb:
   - name: The Pit

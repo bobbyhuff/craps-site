@@ -119,4 +119,6 @@ S17 means the dealer stands on soft 17 (like Ace-6), the more player-favorable r
 **Does basic strategy guarantee you win?**
 No. It's the mathematically optimal decision for the house edge that already exists, not a way to erase that edge. It minimizes losses over time; it doesn't guarantee any individual hand or session comes out ahead.
 
+See basic strategy tested over [1 million hands against a deliberately bad strategy](/the-pit/basic-strategy-vs-bad-blackjack/) to see exactly what following this chart is worth in dollars.
+
 Think you've got it? [Practice on the free blackjack simulator](/games/blackjack/), or drill every hand until it's automatic on the [strategy trainer](/games/blackjack/trainer/).

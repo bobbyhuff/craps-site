@@ -3,6 +3,7 @@ title: "The Iron Cross, Simulated: What It Actually Costs"
 seoTitle: "Iron Cross Craps Strategy Simulated: Does It Work? | 0stakes"
 description: The Iron Cross wins on almost every roll and still loses money faster than any other common craps strategy. One million simulated rounds show exactly why.
 date: 2026-08-09
+game: craps
 ogType: article
 breadcrumb:
   - name: The Pit

@@ -3,6 +3,7 @@ title: "3:2 vs 6:5 Blackjack: What It Actually Costs"
 seoTitle: "3:2 vs 6:5 Blackjack: What It Costs | 0stakes"
 description: A 6:5 blackjack payout instead of 3:2 looks like a small print difference. Here's the actual dollar cost, from a single hand up to $100,000 in total action.
 date: 2026-08-17T09:00:00
+game: blackjack
 ogType: article
 breadcrumb:
   - name: The Pit

@@ -67,7 +67,7 @@ That's the whole reason a house-edge chart is more useful than a payout chart al
 
 Pass Line, Don't Pass, Come, and Don't Come sit at the top of the chart for a reason: they're the bets closest to true odds before you even add Odds behind them. Stack max Odds on top and the blended edge drops to {{ odds.houseEdgeStr.passLineFullOdds }}% (Pass Line/Come) or {{ odds.houseEdgeStr.dontPass }}%-adjacent territory (Don't Pass/Don't Come with lay odds) — about as close to a fair coin flip as a casino game gets.
 
-Place 6 and Place 8 belong in the same conversation. At {{ odds.houseEdgeStr.place6or8 }}%, they're barely worse than a bare Pass Line bet, and unlike Pass Line you can make them any time, not just on a come-out roll. For players who want a bet with low edge but more flexibility than Pass Line, Place 6/8 is the closest thing craps has to a second foundation bet.
+Place 6 and Place 8 belong in the same conversation. At {{ odds.houseEdgeStr.place6or8 }}%, they're barely worse than a bare Pass Line bet, and unlike Pass Line you can make them any time, not just on a come-out roll. For players who want a bet with low edge but more flexibility than Pass Line, Place 6/8 is the closest thing craps has to a second foundation bet — see it run over [1 million simulated rolls](/the-pit/craps-place-6-8-simulated/).
 
 Read more on the [Pass Line and Odds](/strategy/craps/pass-line-and-odds/) specifically, or see how a strategy built around several of these bets at once plays out in [3 Point Molly, explained](/the-pit/3-point-molly-craps-strategy/).
 
@@ -207,6 +207,6 @@ It depends entirely on which bet — see the full [chart](#craps-odds-and-payout
 
 If you're optimizing purely for the lowest cost of play: Pass Line or Come with max Odds, Don't Pass or Don't Come, and Place bets on 6 and 8 are the low-cost side of this chart. Everything below about 4% is paying for excitement, not value — that's a fine trade to make on purpose, just not one to make by accident.
 
-For the mechanics behind any of these, see [how to play craps](/strategy/craps/how-to-play/) or the [craps glossary](/strategy/craps/glossary/). For a full strategy built from several of the low-edge bets above running at once, read [3 Point Molly: what the math actually says](/the-pit/3-point-molly-craps-strategy/).
+For the mechanics behind any of these, see [how to play craps](/strategy/craps/how-to-play/) or the [craps glossary](/strategy/craps/glossary/). For a full strategy built from several of the low-edge bets above running at once, read [3 Point Molly: what the math actually says](/the-pit/3-point-molly-craps-strategy/), or see whether waiting out a shooter's early rolls actually helps in [Does the Craps 5-Count Strategy Work?](/the-pit/craps-5-count-simulated/)
 
 <p class="strategy-link"><a class="btn" href="/games/craps/">Practice free on the craps simulator →</a></p>

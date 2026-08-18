@@ -5,12 +5,60 @@ seoTitle: "Casino Strategy Simulations & Betting Systems Tested | 0stakes"
 description: See popular casino strategies tested with real math and large-scale simulations across blackjack, roulette, craps and more. No hype, just the numbers.
 ---
 <h1>The Pit</h1>
-<p>We test casino strategies with real math and large-scale simulations. No systems, no hype — just what actually happens when you run the numbers.</p>
-<div>
-  {% for post in collections.pit %}
-  <div class="list-item">
-    <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
-    <p>{{ post.data.description }}</p>
-  </div>
-  {% endfor %}
+<p>We test casino strategies with real math and large-scale simulations. No systems, no hype — just what actually happens when you run the numbers. Every simulation follows the same <a href="/methodology/">documented methodology</a>.</p>
+
+<div class="btn-row" id="pitFilters">
+  <button type="button" class="btn" data-filter="all">All</button>
+  <button type="button" class="btn secondary" data-filter="blackjack">Blackjack</button>
+  <button type="button" class="btn secondary" data-filter="roulette">Roulette</button>
+  <button type="button" class="btn secondary" data-filter="craps">Craps</button>
+  <button type="button" class="btn secondary" data-filter="baccarat">Baccarat</button>
 </div>
+
+{% for game in ["blackjack", "roulette", "craps", "baccarat"] %}
+<div class="pit-group" data-group="{{ game }}">
+  <h2>{{ game | capitalize }}</h2>
+  <div class="card-grid">
+    {% for post in collections.pit %}
+      {% if post.data.game == game %}
+      <div class="card">
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+        <p>{{ post.data.description }}</p>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<div class="pit-group" data-group="other">
+  <h2>More From The Pit</h2>
+  <div class="card-grid">
+    {% for post in collections.pit %}
+      {% if not post.data.game %}
+      <div class="card">
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+        <p>{{ post.data.description }}</p>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function () {
+  var groups = document.querySelectorAll('.pit-group');
+  document.getElementById('pitFilters').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+    document.querySelectorAll('#pitFilters .btn').forEach(function (b) {
+      b.className = 'btn secondary';
+    });
+    btn.className = 'btn';
+    var f = btn.getAttribute('data-filter');
+    groups.forEach(function (g) {
+      g.style.display = (f === 'all' || g.getAttribute('data-group') === f) ? '' : 'none';
+    });
+  });
+})();
+</script>
