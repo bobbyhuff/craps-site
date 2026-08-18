@@ -1,0 +1,87 @@
+---
+layout: base.njk
+title: Casino Cost Calculator
+seoTitle: "Casino House Edge Calculator: Estimate Your Expected Cost | 0stakes"
+description: Estimate the theoretical cost of casino bets based on house edge, wager size, playing speed and time played.
+extraCss: /games/craps/craps.css
+---
+<h1>Casino Cost Calculator</h1>
+
+<p>House edge sounds small until you apply it to the amount of money actually moving across the table. Enter your bet size, pace, and playing time to estimate the long-run mathematical cost of a casino wager.</p>
+
+<div class="calc-card" id="costCalc">
+  <div class="calc-row">
+    <label for="calcGame">Game / bet</label>
+    <select id="calcGame">
+      <option value="crapsOdds" data-edge="0.00">Craps Odds — 0%</option>
+      <option value="crapsDontPass" data-edge="{{ odds.houseEdgeStr.dontPass }}">Craps Don't Pass — {{ odds.houseEdgeStr.dontPass }}%</option>
+      <option value="crapsPassLine" data-edge="{{ odds.houseEdgeStr.passLine }}">Craps Pass Line — {{ odds.houseEdgeStr.passLine }}%</option>
+      <option value="baccaratBanker" data-edge="{{ baccaratOdds.houseEdge.banker }}">Baccarat Banker — {{ baccaratOdds.houseEdge.banker }}%</option>
+      <option value="baccaratPlayer" data-edge="{{ baccaratOdds.houseEdge.player }}">Baccarat Player — {{ baccaratOdds.houseEdge.player }}%</option>
+      <option value="baccaratTie" data-edge="{{ baccaratOdds.houseEdge.tie }}">Baccarat Tie — {{ baccaratOdds.houseEdge.tie }}%</option>
+      <option value="europeanRoulette" data-edge="2.70">European Roulette — 2.70%</option>
+      <option value="americanRoulette" data-edge="{{ rouletteOdds.houseEdge.standard }}" selected>American Roulette — {{ rouletteOdds.houseEdge.standard }}%</option>
+      <option value="americanRouletteFiveNumber" data-edge="{{ rouletteOdds.houseEdge.topLine }}">American Roulette Five-Number Bet — {{ rouletteOdds.houseEdge.topLine }}%</option>
+      <option value="blackjack" data-edge="0.5">Blackjack — ~0.5% with good rules/basic strategy</option>
+    </select>
+  </div>
+  <div class="calc-row">
+    <label for="calcBetAmt">Average bet ($)</label>
+    <input id="calcBetAmt" type="number" min="1" step="1" value="25" inputmode="numeric">
+  </div>
+  <div class="calc-row">
+    <label for="calcBetsHr">Bets / hands / spins per hour</label>
+    <input id="calcBetsHr" type="number" min="1" step="1" value="50" inputmode="numeric">
+  </div>
+  <div class="calc-row">
+    <label for="calcHours">Hours played</label>
+    <input id="calcHours" type="number" min="0.5" step="0.5" value="3" inputmode="decimal">
+  </div>
+  <div class="calc-result" id="costResult" aria-live="polite"></div>
+</div>
+
+<p>Blackjack's house edge depends entirely on the specific table rules and whether you're playing correct basic strategy — 0.5% is a commonly cited approximate figure for good rules, not a universal constant the way it is for the other bets above.</p>
+
+<script>
+(function () {
+  function fmt(n) { return '$' + n.toFixed(2); }
+
+  function render() {
+    var select = document.getElementById('calcGame');
+    var edge = parseFloat(select.selectedOptions[0].getAttribute('data-edge'));
+    var bet = parseFloat(document.getElementById('calcBetAmt').value);
+    var betsHr = parseFloat(document.getElementById('calcBetsHr').value);
+    var hours = parseFloat(document.getElementById('calcHours').value);
+    var out = document.getElementById('costResult');
+
+    if (!bet || bet <= 0 || !betsHr || betsHr <= 0 || !hours || hours <= 0 || isNaN(edge)) {
+      out.innerHTML = '<p class="calc-note">Enter a bet size, pace, and hours played, all above 0.</p>';
+      return;
+    }
+
+    var totalAction = bet * betsHr * hours;
+    var expectedCost = totalAction * edge / 100;
+    var perHour = bet * betsHr * edge / 100;
+
+    var lines = [];
+    lines.push('<div class="calc-line"><span>Total action</span><b>' + fmt(totalAction) + '</b></div>');
+    lines.push('<div class="calc-line"><span>House edge</span><b>' + edge.toFixed(2) + '%</b></div>');
+    lines.push('<div class="calc-line calc-line-lg"><span>Theoretical expected cost</span><b>' + fmt(expectedCost) + '</b></div>');
+    lines.push('<div class="calc-line"><span>Expected cost per hour</span><b>' + fmt(perHour) + '</b></div>');
+
+    out.innerHTML = lines.join('') + '<p class="calc-note">This is a long-run mathematical expectation, not a prediction of what you will lose in one session. Short-term results can vary dramatically.</p>';
+  }
+
+  document.getElementById('calcGame').addEventListener('change', render);
+  document.getElementById('calcBetAmt').addEventListener('input', render);
+  document.getElementById('calcBetsHr').addEventListener('input', render);
+  document.getElementById('calcHours').addEventListener('input', render);
+  render();
+})();
+</script>
+
+<h2>What does "expected cost" mean?</h2>
+
+<p>Expected cost is total amount wagered × house edge. A 5.26% house edge does not mean you will lose 5.26% of your bankroll every session. It means that over a very large number of wagers, the casino theoretically retains about $5.26 for every $100 of total action.</p>
+
+<div class="btn-row"><a class="btn secondary" href="/strategy/house-edge/">See Every Casino Bet Ranked →</a></div>

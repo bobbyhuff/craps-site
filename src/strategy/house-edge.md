@@ -60,6 +60,8 @@ Scaled down, the same American roulette bet over $100 wagered comes out to about
 
 **This is long-run expected value, not a prediction of any one session.** A single night at any of these games can land well above or below its expected cost purely from variance — the house edge is what the math converges toward over enough repetitions, not a guarantee for tonight.
 
+Plug in your own bet size and pace on the [casino cost calculator](/tools/casino-cost-calculator/) to see what a specific session's total action theoretically costs.
+
 ## Try it yourself
 
 Every bet in the chart above is playable for free, with the same odds data driving both the games and this page:

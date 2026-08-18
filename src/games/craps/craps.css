@@ -881,6 +881,11 @@ main:has(.app) {
 .calc-line span { color: var(--text-muted); }
 .calc-line b { color: var(--mint); font-variant-numeric: tabular-nums; }
 
+/* Main-result emphasis, e.g. the cost calculator's headline figure */
+.calc-line-lg { padding: var(--s-2) 0; border-top: 1px solid var(--edge); border-bottom: 1px solid var(--edge); }
+.calc-line-lg span { color: var(--text); font-weight: 600; }
+.calc-line-lg b { font-size: 22px; }
+
 .calc-note {
   margin: var(--s-3) 0 0;
   font-size: 13px;
