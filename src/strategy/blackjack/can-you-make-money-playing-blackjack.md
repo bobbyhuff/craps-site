@@ -103,7 +103,7 @@ You cannot estimate a reliable session profit from just your starting bankroll. 
 
 Consider a **hypothetical** player who makes 100 initial wagers of $10 in a game with a 0.5% edge. The initial wagering volume is $1,000 and the theoretical expected loss is about $5. The actual outcome might be well above or below that figure. A player could even go broke before completing 100 rounds. The estimate does not account for an adaptive bet plan, and should not be mistaken for the result of a fresh simulation.
 
-Want to explore bankroll outcomes instead of only an average? Start with the [bankroll management guide](/strategy/bankroll-management/).
+Want to explore bankroll outcomes instead of only an average? Read [How Long Will $100 Last Playing Blackjack?](/the-pit/how-long-will-100-last-playing-blackjack/). For limits and sizing, see the [bankroll management guide](/strategy/bankroll-management/).
 
 ## What actually helps you play a better blackjack game?
 
