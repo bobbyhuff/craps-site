@@ -1,0 +1,146 @@
+{
+  "experiment": "How long will $100 last playing blackjack?",
+  "model": "six-deck blackjack with S17, 3:2, one split, DAS, no surrender or insurance; basic strategy per published 0stakes chart with affordability fallbacks; reshuffle at >75% penetration between rounds; full 100 rounds or balance below wager",
+  "caveats": [
+    "Finite simulation, not a promise or a precise house-edge estimate",
+    "Affordability changes doubling and splitting near bankruptcy",
+    "Shoe is reshuffled between rounds once over 75% dealt",
+    "Splitting aces receives one card only",
+    "Session end at 100 rounds is not literal bankroll exhaustion",
+    "Simulation uses self-contained model; not a verified replay of website production game engine"
+  ],
+  "results": [
+    {
+      "bet_usd": 5,
+      "sessions": 10000,
+      "max_rounds": 100,
+      "seed": 20261017,
+      "ruined_before_100_count": 894,
+      "ruined_before_100_pct": 8.94,
+      "finished_ahead_count": 4701,
+      "finished_ahead_pct": 47.01,
+      "finished_even_count": 165,
+      "finished_even_pct": 1.65,
+      "mean_ending_bankroll_usd": 97.41,
+      "median_ending_bankroll_usd": 97.5,
+      "p10_ending_bankroll_usd": 12.5,
+      "p90_ending_bankroll_usd": 172.5,
+      "mean_rounds": 97.39,
+      "median_rounds": 100.0,
+      "median_rounds_if_ruined": 73.0,
+      "histogram": [
+        {
+          "min_usd": 0,
+          "max_usd_exclusive": 25,
+          "sessions": 1169
+        },
+        {
+          "min_usd": 25,
+          "max_usd_exclusive": 50,
+          "sessions": 865
+        },
+        {
+          "min_usd": 50,
+          "max_usd_exclusive": 75,
+          "sessions": 1399
+        },
+        {
+          "min_usd": 75,
+          "max_usd_exclusive": 100,
+          "sessions": 1701
+        },
+        {
+          "min_usd": 100,
+          "max_usd_exclusive": 125,
+          "sessions": 1647
+        },
+        {
+          "min_usd": 125,
+          "max_usd_exclusive": 150,
+          "sessions": 1391
+        },
+        {
+          "min_usd": 150,
+          "max_usd_exclusive": 200,
+          "sessions": 1434
+        },
+        {
+          "min_usd": 200,
+          "max_usd_exclusive": 1000000,
+          "sessions": 394
+        }
+      ],
+      "example_session_counts": {
+        "doubles": 103938,
+        "splits": 24125
+      },
+      "definition": "ruined before 100 means balance fell below base wager, not necessarily zero"
+    },
+    {
+      "bet_usd": 10,
+      "sessions": 10000,
+      "max_rounds": 100,
+      "seed": 20261022,
+      "ruined_before_100_count": 4125,
+      "ruined_before_100_pct": 41.25,
+      "finished_ahead_count": 4290,
+      "finished_ahead_pct": 42.9,
+      "finished_even_count": 121,
+      "finished_even_pct": 1.21,
+      "mean_ending_bankroll_usd": 95.9,
+      "median_ending_bankroll_usd": 75.0,
+      "p10_ending_bankroll_usd": 0.0,
+      "p90_ending_bankroll_usd": 245.0,
+      "mean_rounds": 78.62,
+      "median_rounds": 100.0,
+      "median_rounds_if_ruined": 45,
+      "histogram": [
+        {
+          "min_usd": 0,
+          "max_usd_exclusive": 25,
+          "sessions": 4226
+        },
+        {
+          "min_usd": 25,
+          "max_usd_exclusive": 50,
+          "sessions": 296
+        },
+        {
+          "min_usd": 50,
+          "max_usd_exclusive": 75,
+          "sessions": 475
+        },
+        {
+          "min_usd": 75,
+          "max_usd_exclusive": 100,
+          "sessions": 592
+        },
+        {
+          "min_usd": 100,
+          "max_usd_exclusive": 125,
+          "sessions": 676
+        },
+        {
+          "min_usd": 125,
+          "max_usd_exclusive": 150,
+          "sessions": 699
+        },
+        {
+          "min_usd": 150,
+          "max_usd_exclusive": 200,
+          "sessions": 1183
+        },
+        {
+          "min_usd": 200,
+          "max_usd_exclusive": 1000000,
+          "sessions": 1853
+        }
+      ],
+      "example_session_counts": {
+        "doubles": 82829,
+        "splits": 19395
+      },
+      "definition": "ruined before 100 means balance fell below base wager, not necessarily zero"
+    }
+  ]
+}

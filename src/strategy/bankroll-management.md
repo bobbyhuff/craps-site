@@ -25,7 +25,7 @@ If a game gives you a lever with little or no house edge, that's where extra act
 
 ## How this changes for blackjack
 
-Blackjack doesn't have a zero-edge lever like Odds — basic strategy just keeps the built-in edge small. That makes plain bet sizing carry more of the weight. The bigger risk is variance from doubling down and splitting: both commit more money to a single hand than your flat bet suggests, and a stretch of good double-down and split opportunities can multiply your exposure fast. Size your base unit assuming a run of hands where several of them get doubled or split, not just your average hand.
+Blackjack doesn't have a zero-edge lever like Odds — basic strategy just keeps the built-in edge small. That makes plain bet sizing carry more of the weight. The bigger risk is variance from doubling down and splitting: both commit more money to a single hand than your flat bet suggests, and a stretch of good double-down and split opportunities can multiply your exposure fast. Size your base unit assuming a run of hands where several of them get doubled or split, not just your average hand. For a worked example, see [how long $100 lasts at blackjack](/the-pit/how-long-will-100-last-playing-blackjack/) at $5 and $10 bets.
 
 ## Know your stop-loss and your walk-away win
 
