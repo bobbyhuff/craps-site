@@ -117,7 +117,7 @@ Yes, against every dealer upcard. Two aces played together are only a soft 12; s
 S17 means the dealer stands on soft 17 (like Ace-6), the more player-favorable rule. 0stakes deals S17, and this chart is built for that rule specifically -- an H17 chart (dealer hits soft 17) differs on a handful of cells.
 
 **Does basic strategy guarantee you win?**
-No. It's the mathematically optimal decision for the house edge that already exists, not a way to erase that edge. It minimizes losses over time; it doesn't guarantee any individual hand or session comes out ahead.
+No. It's the mathematically optimal decision for the house edge that already exists, not a way to erase that edge. It minimizes losses over time; it doesn't guarantee any individual hand or session comes out ahead. For the full math, see [can you make money playing blackjack](/strategy/blackjack/can-you-make-money-playing-blackjack/).
 
 See basic strategy tested over [1 million hands against a deliberately bad strategy](/the-pit/basic-strategy-vs-bad-blackjack/) to see exactly what following this chart is worth in dollars.
 
