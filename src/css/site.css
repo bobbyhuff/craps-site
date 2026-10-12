@@ -419,6 +419,28 @@ main {
   .post-body table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 
+/* Simple HTML bar charts in Pit articles (bars are decorative; every value is also printed as text) */
+.bj-chart { margin: var(--s-5) 0; }
+.bj-chart-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: var(--s-3); }
+.bj-chart figcaption { font-size: 12.5px; color: var(--text-dim); line-height: 1.55; margin-top: var(--s-2); }
+.bj-row { display: grid; grid-template-columns: 64px 1fr 56px; align-items: center; gap: var(--s-2); margin: 4px 0; font-variant-numeric: tabular-nums; }
+.bj-row-label { font-size: 13px; color: var(--text-muted); }
+.bj-row-val { font-size: 13px; font-weight: 600; color: var(--bone); text-align: right; }
+.bj-track { background: var(--bg-deep); border: 1px solid var(--edge); border-radius: var(--r-sm); height: 18px; overflow: hidden; }
+.bj-bar { height: 100%; }
+.bj-bar-5 { background: var(--mint); }
+.bj-bar-10 { background: var(--text); }
+.bj-axis-row { margin-top: 0; }
+.bj-axis { background: none; border: 0; height: auto; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); }
+.bj-axis-title { font-size: 12px; color: var(--text-dim); text-align: center; margin-top: 2px; }
+.bj-legend { display: flex; gap: var(--s-4); font-size: 12.5px; color: var(--text-muted); margin-bottom: var(--s-3); }
+.bj-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+.bj-bin { margin: var(--s-3) 0; }
+.bj-bin-label { font-size: 13px; font-weight: 600; color: var(--bone); }
+@media (max-width: 480px) {
+  .bj-row { grid-template-columns: 52px 1fr 48px; }
+}
+
 .list-item {
   position: relative;
   display: block;
