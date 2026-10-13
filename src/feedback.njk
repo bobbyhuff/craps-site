@@ -1,0 +1,143 @@
+---
+layout: base.njk
+title: Feedback
+seoTitle: "Feedback, Suggestions & Bug Reports | 0stakes"
+description: Found a bug or have an idea for a game, strategy, or simulation? Send feedback to 0stakes.
+permalink: /feedback/
+---
+{% set _live = forms.formspreeEndpoint %}
+<div class="feedback">
+  <h1>Help Improve 0Stakes</h1>
+  <p class="feedback-lede">Found a bug? Have an idea for a game, strategy, or simulation? We'd love to hear from you. Your feedback helps make 0Stakes better.</p>
+
+  {% if not _live %}
+  <p class="form-notice" role="status">The feedback form isn't connected yet, so it can't send anything right now.</p>
+  {% endif %}
+
+  <form id="feedbackForm" class="form-card" action="{{ forms.formspreeEndpoint }}" method="POST" novalidate>
+    <div class="field">
+      <label for="fb-topic">What are you contacting us about? <span class="req">(required)</span></label>
+      <select id="fb-topic" name="topic" required aria-describedby="fb-topic-err">
+        <option value="">Choose one...</option>
+        <option value="Report a Bug">Report a Bug</option>
+        <option value="Suggest a Feature or Game">Suggest a Feature or Game</option>
+        <option value="Request a Strategy or Article">Request a Strategy or Article</option>
+        <option value="General Feedback">General Feedback</option>
+        <option value="Other">Other</option>
+      </select>
+      <p class="field-error" id="fb-topic-err" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="fb-message">Your message <span class="req">(required)</span></label>
+      <textarea id="fb-message" name="message" rows="7" maxlength="5000" required placeholder="Tell us what's on your mind..." aria-describedby="fb-message-hint fb-message-err"></textarea>
+      <p class="field-hint" id="fb-message-hint"><span id="fb-count">0</span> / 5000. For bugs, include your device, browser, and what you were doing.</p>
+      <p class="field-error" id="fb-message-err" hidden></p>
+    </div>
+
+    <div class="field">
+      <label for="fb-email">Your email address <span class="opt">(optional)</span></label>
+      <input id="fb-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="you@example.com" aria-describedby="fb-email-hint fb-email-err">
+      <p class="field-hint" id="fb-email-hint">Add it if you'd like a reply or we may need to ask a follow-up question. This does not subscribe you to anything.</p>
+      <p class="field-error" id="fb-email-err" hidden></p>
+    </div>
+
+    <input type="hidden" name="page_url" id="fb-page" value="">
+    <p class="field-hint" id="fb-page-note">Sending from: <span id="fb-page-label">Opened directly (no originating page)</span></p>
+
+    {# Honeypot for bots: hidden from people and assistive tech. Formspree discards submissions where _gotcha is filled. #}
+    <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+
+    <div class="form-status" id="fb-status" role="status" aria-live="polite" tabindex="-1"></div>
+
+    <button class="btn" type="submit" id="fb-submit" {% if not _live %}disabled{% endif %}>Send Feedback</button>
+  </form>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('feedbackForm');
+  var topic = document.getElementById('fb-topic');
+  var msg = document.getElementById('fb-message');
+  var email = document.getElementById('fb-email');
+  var pageInput = document.getElementById('fb-page');
+  var pageLabel = document.getElementById('fb-page-label');
+  var statusEl = document.getElementById('fb-status');
+  var submit = document.getElementById('fb-submit');
+  var count = document.getElementById('fb-count');
+  var origin = location.origin;
+  var sending = false;
+
+  // Originating page: ?from=/path/ (footer and game links), else a same-site referrer.
+  // Anything else is left as "direct visit" rather than guessed.
+  function originatingUrl() {
+    var from = new URLSearchParams(location.search).get('from');
+    if (from && from.charAt(0) === '/' && from.charAt(1) !== '/' && from.indexOf('\\') < 0 && from.length <= 300 && from.indexOf('/feedback') !== 0) {
+      return origin + from;
+    }
+    try {
+      var r = new URL(document.referrer);
+      if (r.origin === origin && r.pathname.indexOf('/feedback') !== 0) return r.origin + r.pathname;
+    } catch (e) {}
+    return '';
+  }
+  var from = originatingUrl();
+  pageInput.value = from || 'Direct visit (no originating page)';
+  pageLabel.textContent = from ? from.replace(origin, '') : 'Opened directly (no originating page)';
+
+  // ?topic=bug preselects Report a Bug.
+  if (new URLSearchParams(location.search).get('topic') === 'bug') topic.value = 'Report a Bug';
+
+  msg.addEventListener('input', function () { count.textContent = msg.value.length; });
+
+  function setError(field, text) {
+    var err = document.getElementById(field.id + '-err');
+    err.hidden = !text;
+    err.textContent = text || '';
+    if (text) field.setAttribute('aria-invalid', 'true'); else field.removeAttribute('aria-invalid');
+  }
+
+  function validate() {
+    var first = null;
+    function check(field, text) { setError(field, text); if (text && !first) first = field; }
+    check(topic, topic.value ? '' : 'Choose what this is about.');
+    check(msg, msg.value.trim() ? '' : 'Write a message before sending.');
+    check(email, !email.value || email.validity.valid ? '' : 'Enter a valid email address, or leave this blank.');
+    if (first) first.focus();
+    return !first;
+  }
+
+  function show(text, kind) {
+    statusEl.className = 'form-status ' + kind;
+    statusEl.textContent = text;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending || submit.disabled) return;
+    if (!validate()) return;
+    sending = true;
+    submit.disabled = true;
+    submit.textContent = 'Sending...';
+    show('', '');
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('status ' + res.status);
+        form.reset();
+        count.textContent = '0';
+        show('Thanks, your feedback was sent.', 'ok');
+        statusEl.focus();
+        submit.textContent = 'Sent';
+        // Stays disabled after success so a double-click can't send twice; re-enabled on next edit.
+        form.addEventListener('input', function re() { sending = false; submit.disabled = false; submit.textContent = 'Send Feedback'; form.removeEventListener('input', re); });
+      })
+      .catch(function () {
+        sending = false;
+        submit.disabled = false;
+        submit.textContent = 'Send Feedback';
+        show("Your message couldn't be sent. Check your connection and try again. Your text is still here.", 'err');
+        statusEl.focus();
+      });
+  });
+})();
+</script>

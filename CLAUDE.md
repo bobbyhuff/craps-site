@@ -191,6 +191,10 @@ tag) still exists as a fallback on 4 stub pages (`src/blog/index.njk` and its tw
 the `redirectTo` conditional in `base.njk` in a follow-up pass; not urgent since they don't
 conflict with anything.
 
+## Feedback form and newsletter
+
+`/feedback/` (Formspree) and the Insider signup (`_includes/newsletter.njk`, MailerLite embed) read their IDs from `src/_data/forms.js`; empty values render an honest not-live state. Setup steps and the welcome-email draft are in `docs/feedback-and-newsletter-setup.md`. The newsletter shows on the homepage (`#insider`) and, in compact form, on every `post.njk` page under `/strategy/` (opt out with `noNewsletter: true`).
+
 ## Deployment
 
 Cloudflare Workers (`workers/scripts/craps-site`), deployed from `main` via Wrangler, with

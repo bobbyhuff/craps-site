@@ -497,3 +497,97 @@ main {
   * { transition: none !important; animation: none !important; }
   .card:hover { transform: none; }
 }
+
+/* ============================================================
+   Feedback page, forms, and newsletter signup
+   ============================================================ */
+
+.bug-link { text-align: center; margin: var(--s-3) 0 0; font-size: 12.5px; }
+.bug-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.bug-link a:hover { color: var(--mint); }
+
+.feedback h1 { color: var(--bone); }
+.feedback-lede { color: var(--text-muted); line-height: 1.65; max-width: 36rem; }
+
+.form-card {
+  margin-top: var(--s-5);
+  padding: var(--s-5);
+  background: linear-gradient(180deg, var(--felt-raised), var(--felt));
+  border: 1px solid var(--rail);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm), var(--inset-hi);
+}
+
+.field { margin-bottom: var(--s-5); }
+.field label { display: block; margin-bottom: var(--s-2); color: var(--bone); font-weight: 600; font-size: 14px; }
+.field .req, .field .opt { color: var(--text-dim); font-weight: 400; font-size: 12.5px; }
+
+.field select, .field textarea, .field input[type="email"] {
+  width: 100%;
+  min-height: 46px;
+  padding: var(--s-3);
+  font: inherit;
+  font-size: 16px; /* 16px stops iOS Safari zooming on focus */
+  color: var(--text);
+  background: var(--felt-well);
+  border: 1px solid var(--rail);
+  border-radius: var(--r-sm);
+}
+.field textarea { resize: vertical; line-height: 1.55; }
+.field select:focus, .field textarea:focus, .field input:focus {
+  outline: 2px solid var(--mint-bright);
+  outline-offset: 1px;
+  border-color: var(--mint);
+}
+.field [aria-invalid="true"] { border-color: var(--lose); }
+
+.field-hint { margin: var(--s-2) 0 0; color: var(--text-dim); font-size: 12.5px; line-height: 1.5; }
+#fb-page-note { margin: 0 0 var(--s-5); word-break: break-all; }
+.field-error { margin: var(--s-2) 0 0; color: var(--lose); font-size: 13px; }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-status { margin-bottom: var(--s-4); font-size: 14px; line-height: 1.5; }
+.form-status:empty { display: none; }
+.form-status.ok { color: var(--win); padding: var(--s-3); border: 1px solid var(--edge-mint); border-radius: var(--r-sm); background: var(--mint-faint); }
+.form-status.err { color: var(--lose); padding: var(--s-3); border: 1px solid var(--lose); border-radius: var(--r-sm); }
+.form-status:focus { outline: none; }
+
+.form-notice { padding: var(--s-3); border: 1px dashed var(--edge-mint); border-radius: var(--r-sm); color: var(--text-muted); font-size: 14px; }
+.form-card .btn { cursor: pointer; font-family: inherit; }
+.form-card .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: none; }
+
+/* Newsletter */
+.newsletter {
+  margin: var(--s-7) 0 0;
+  padding: var(--s-6) var(--s-5);
+  text-align: center;
+  background: linear-gradient(180deg, var(--felt-raised), var(--felt));
+  border: 1px solid var(--rail);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm), var(--inset-hi);
+}
+.newsletter-eyebrow { margin: 0 0 var(--s-2); color: var(--mint); font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.newsletter-title { margin: 0 0 var(--s-3); color: var(--bone); font-size: clamp(1.6rem, 5vw, 2.1rem); }
+.newsletter-desc { max-width: 34rem; margin: 0 auto var(--s-4); color: var(--text-muted); line-height: 1.65; }
+.newsletter-benefits { list-style: none; max-width: 30rem; margin: 0 auto var(--s-5); padding: 0; text-align: left; color: var(--text); line-height: 1.55; font-size: 15px; }
+.newsletter-benefits li { position: relative; padding: var(--s-1) 0 var(--s-1) var(--s-5); }
+.newsletter-benefits li::before { content: ''; position: absolute; left: 4px; top: 0.85em; width: 8px; height: 8px; border-radius: 50%; background: var(--mint); }
+.newsletter-form { max-width: 28rem; margin: 0 auto; min-height: 60px; }
+.newsletter-fine { margin: var(--s-3) 0 0; color: var(--text-dim); font-size: 12.5px; }
+.newsletter-soon { margin: 0; color: var(--text-muted); font-size: 14px; }
+.newsletter--compact { margin-top: var(--s-6); padding: var(--s-5) var(--s-4); }
+.newsletter--compact .newsletter-title { font-size: 1.35rem; }
+.newsletter--compact .newsletter-desc { font-size: 14px; margin-bottom: var(--s-4); }
+
+@media (max-width: 600px) {
+  .form-card { padding: var(--s-4); }
+  .newsletter { padding: var(--s-5) var(--s-4); }
+}
