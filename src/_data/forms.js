@@ -7,7 +7,7 @@
 // MailerLite API key anywhere in this repo.
 const forms = {
   // Formspree form endpoint, e.g. "https://formspree.io/f/abcdwxyz"
-  formspreeEndpoint: "",
+  formspreeEndpoint: "https://formspree.io/f/mgaonzrq",
 
   // MailerLite embedded form (Forms > Embedded forms > "Copy universal script")
   mailerliteAccountId: "", // the number in ml('account', '1234567')
