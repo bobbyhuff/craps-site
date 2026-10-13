@@ -1,6 +1,6 @@
 # Feedback form and 0Stakes Insider newsletter: setup
 
-Both features read their settings from `src/_data/forms.js`. The Formspree endpoint is set; MailerLite is still empty. While a value is empty:
+Both features read their settings from `src/_data/forms.js` (Formspree and MailerLite are both configured). If a value is ever emptied:
 
 - `/feedback/` renders with a notice and a disabled Send button.
 - Newsletter sections render "The Insider signup opens soon."

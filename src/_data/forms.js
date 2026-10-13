@@ -10,8 +10,8 @@ const forms = {
   formspreeEndpoint: "https://formspree.io/f/mgaonzrq",
 
   // MailerLite embedded form (Forms > Embedded forms > "Copy universal script")
-  mailerliteAccountId: "", // the number in ml('account', '1234567')
-  mailerliteFormId: "",    // the code in data-form="aBc1De"
+  mailerliteAccountId: "2709585", // the number in ml('account', '1234567')
+  mailerliteFormId: "5kYV2B",    // the code in data-form="aBc1De"
 };
 
 if (!forms.formspreeEndpoint) {
