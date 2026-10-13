@@ -13,3 +13,7 @@ layout: base.njk
     {{ content | safe }}
   </div>
 </article>
+{% if page.url.startsWith("/strategy/") and not noNewsletter %}
+{% set newsletterVariant = "compact" %}
+{% include "newsletter.njk" %}
+{% endif %}
