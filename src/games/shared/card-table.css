@@ -624,3 +624,9 @@ main {
 }
 
 .log .roll-header { color: var(--mint); font-weight: 600; margin-top: var(--s-2); }
+
+/* Keyboard shortcuts are irrelevant on phones. */
+@media (max-width: 700px), (hover: none) { .kbd-hint { display: none; } }
+
+/* Faint placeholders on an empty table, before the first deal. */
+.pcard-back.is-ghost { opacity: 0.22; box-shadow: none; }

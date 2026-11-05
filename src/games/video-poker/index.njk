@@ -53,7 +53,7 @@ breadcrumb:
   <div class="table-scroll vp-paytable-wrap">
     <table class="paytable vp-paytable" id="paytable">
       <thead>
-        <tr><th scope="col">Hand</th>{% for c in [1, 2, 3, 4, 5] %}<th scope="col" data-col="{{ c }}">{{ c }} coin{% if c > 1 %}s{% endif %}</th>{% endfor %}</tr>
+        <tr><th scope="col">Hand <span class="vp-coins-label">· coins bet</span></th>{% for c in [1, 2, 3, 4, 5] %}<th scope="col" data-col="{{ c }}">{{ c }}<span class="vp-coin-word"> coin{% if c > 1 %}s{% endif %}</span></th>{% endfor %}</tr>
       </thead>
       <tbody>
         {%- for row in vp.paytable %}

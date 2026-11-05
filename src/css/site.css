@@ -351,6 +351,13 @@ main {
   z-index: 1;
 }
 
+/* Cards with a CTA footer: stack the content and pin the footer to the bottom
+   so buttons line up across a row even when descriptions differ in length.
+   The Play button fills the card so longer game names stay on one line. */
+.card:has(.card-cta) { display: flex; flex-direction: column; }
+.card:has(.card-cta) .card-cta { margin-top: auto; padding-top: var(--s-4); }
+.card-cta .btn { flex: 1 1 100%; padding-left: var(--s-4); padding-right: var(--s-4); }
+
 .card-link {
   color: var(--text-muted);
   font-size: 13.5px;
@@ -417,6 +424,9 @@ main {
 /* Wide tables scroll inside themselves rather than pushing the page sideways */
 @media (max-width: 640px) {
   .post-body table { display: block; overflow-x: auto; white-space: nowrap; }
+  /* The label column may wrap, so number columns stay on screen instead of
+     hiding behind a sideways scroll. */
+  .post-body td:first-child, .post-body th:first-child { white-space: normal; min-width: 8.5em; }
 }
 
 /* Simple HTML bar charts in Pit articles (bars are decorative; every value is also printed as text) */
