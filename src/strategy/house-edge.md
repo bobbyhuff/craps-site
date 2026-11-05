@@ -34,13 +34,18 @@ House edge is a long-run average, computed over a huge number of bets — it say
 | Game / Bet | House Edge |
 |---|---|
 | [Craps Odds Bet](/strategy/craps/pass-line-and-odds/) | 0% |
+| [Video Poker, 9/6 Jacks or Better, perfect play](/games/video-poker/) | {{ videoPokerOdds.houseEdge }}% |
 | [Baccarat Banker](/strategy/baccarat/odds-house-edge/) | ~{{ baccaratOdds.houseEdge.banker }}% |
 | [Baccarat Player](/strategy/baccarat/odds-house-edge/) | ~{{ baccaratOdds.houseEdge.player }}% |
 | [Craps Don't Pass](/strategy/craps/house-edge/) | ~{{ odds.houseEdgeStr.dontPass }}% |
 | [Craps Pass Line](/strategy/craps/house-edge/) | ~{{ odds.houseEdgeStr.passLine }}% |
 | [Blackjack, correct basic strategy](/strategy/blackjack/basic-strategy/) | ~0.5% (rule-dependent — see below) |
 | [European Roulette](/strategy/roulette/american-vs-european/) | 2.70% |
+| [Pai Gow Poker, house way](/games/pai-gow-poker/) | ~{{ paiGowOdds.houseEdge }}% |
+| [Three Card Poker Ante/Play, Q-6-4 strategy](/games/three-card-poker/) | {{ threeCardPokerOdds.houseEdge.ante }}% |
 | [American Roulette](/strategy/roulette/odds-payouts/) | {{ rouletteOdds.houseEdge.standard }}% |
+| [Crapless Craps Pass Line](/games/crapless-craps/) | {{ craplessOdds.houseEdgeStr.passLine }}% |
+| [Three Card Poker Pair Plus ({{ threeCardPokerOdds.pairPlus.label }})](/games/three-card-poker/) | {{ threeCardPokerOdds.houseEdge.pairPlus }}% |
 | [American Roulette Five-Number Bet](/strategy/roulette/odds-payouts/) | {{ rouletteOdds.houseEdge.topLine }}% |
 | [Baccarat Tie](/strategy/baccarat/odds-house-edge/) | ~{{ baccaratOdds.houseEdge.tie }}% |
 

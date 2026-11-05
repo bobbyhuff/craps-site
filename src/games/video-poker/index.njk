@@ -1,0 +1,170 @@
+---
+layout: base.njk
+title: Video Poker
+seoTitle: "Play Free Video Poker Online: 9/6 Jacks or Better | 0stakes"
+description: Play free 9/6 Jacks or Better video poker with the full-pay table, 1 to 5 coins, and an exact best-hold advisor that shows the expected return of every hold. No ads, no account.
+sharedCss: /games/shared/card-table.css
+extraCss: /games/video-poker/video-poker.css
+extraJs: /games/video-poker/video-poker.js
+tags: ["game"]
+order: 5
+cardBlurb: Full-pay 9/6 Jacks or Better, with an advisor that computes the mathematically best hold for every hand you're dealt.
+status: "live"
+breadcrumb:
+  - name: Games
+    url: /games/
+  - name: Video Poker
+    url: /games/video-poker/
+---
+<!-- Paytable and return figures: src/_data/videoPokerOdds.js. Rules and
+     the exact hold advisor: vp-engine.js. Both load before the game. -->
+<script src="/games/video-poker/odds.js"></script>
+<script src="/games/shared/cards.js"></script>
+<script src="/games/shared/table-kit.js"></script>
+<script src="/games/video-poker/vp-engine.js"></script>
+
+{%- set vp = videoPokerOdds %}
+<div class="app">
+  <h1 class="page-title">Free Video Poker</h1>
+  <p class="vp-sub">{{ vp.version }} {{ vp.game }} · {{ vp.returnPct }}% return with perfect play</p>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Video Poker</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-real-money">Practice only. No real money, ever.</p>
+
+  <div class="statusbar">
+    <div class="sb-cell"><span class="sb-k">Bankroll</span><b id="bankroll">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">Net</span><b id="net">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">Last win</span><b id="lastWin">—</b></div>
+  </div>
+
+  <div id="notice" role="status" aria-live="polite"></div>
+
+  <div class="table-scroll vp-paytable-wrap">
+    <table class="paytable vp-paytable" id="paytable">
+      <thead>
+        <tr><th scope="col">Hand</th>{% for c in [1, 2, 3, 4, 5] %}<th scope="col" data-col="{{ c }}">{{ c }} coin{% if c > 1 %}s{% endif %}</th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+        {%- for row in vp.paytable %}
+        <tr data-key="{{ row.key }}"><td>{{ row.name }}</td>{% for p in row.pays %}<td data-col="{{ loop.index }}">{{ p }}</td>{% endfor %}</tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table vp-table">
+    <div class="vp-hand" id="vpHand"></div>
+    <div class="round-result" id="vpResult" aria-live="polite">Pick your bet and deal</div>
+    <div class="vp-advice hidden" id="vpAdvice"></div>
+  </div>
+
+  <div class="vp-bet-line">
+    <span>Bet <b id="coinsLabel">5 coins</b> × <b id="denomLabel">$1.00</b> = <b id="betTotal">$5.00</b></span>
+  </div>
+
+  <div class="bet-controls vp-controls">
+    <button class="btn-outline" id="betOneBtn">Bet One</button>
+    <button class="btn-outline" id="betMaxBtn">Bet Max</button>
+    <button class="btn-outline" id="adviseBtn">Best Hold</button>
+    <button class="btn-roll" id="dealBtn">Deal</button>
+  </div>
+  <p class="kbd-hint">Keys: <kbd>1</kbd>–<kbd>5</kbd> hold/unhold · <kbd>Enter</kbd> deal/draw · <kbd>H</kbd> best hold</p>
+
+  <div class="chip-strip">
+    <span class="chip-label">Coin</span>
+    <div id="chipSelector"></div>
+  </div>
+
+  <div class="toggle-row">
+    <label><input type="checkbox" id="coachChk"> Strategy check after each draw</label>
+    <label><input type="checkbox" id="fastChk"> Fast play</label>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Session stats</summary>
+    <div class="session-stats" id="sessionStats"></div>
+  </details>
+
+  <details class="legend" open>
+    <summary>How to play</summary>
+    <ul>
+      <li><b>Bet</b> — choose a coin value, then 1 to 5 coins with Bet One. Bet Max sets 5 coins and deals right away.</li>
+      <li><b>Deal</b> — you get five cards from a fresh 52-card deck, shuffled every hand.</li>
+      <li><b>Hold</b> — tap the cards you want to keep (or press 1–5). Held cards are marked HELD.</li>
+      <li><b>Draw</b> — every card you didn't hold is replaced from the same deck. The final five cards are paid from the table above.</li>
+      <li><b>Lowest win</b> — a pair of Jacks, Queens, Kings or Aces returns your bet. A pair of 10s or lower pays nothing.</li>
+      <li><b>Max coins</b> — the Royal Flush pays {{ vp.pays.royal[0] }} per coin for 1–4 coins but {{ vp.pays.royal[4] }} for 5 coins ({{ vp.pays.royal[4] / 5 }} per coin). That bonus is worth more than 1% of return, so always play 5 coins and lower the coin value instead if the bet is too big.</li>
+    </ul>
+  </details>
+
+  <div class="game-copy">
+    <h2>Why 9/6 matters</h2>
+    <p>
+      Jacks or Better machines are named for two numbers on the glass: what a Full House and
+      a Flush pay per coin. This table is <b>9/6</b>, the full-pay version, worth
+      {{ vp.returnPct }}% with perfect play, a {{ vp.houseEdge }}% house edge. Casinos cut
+      those two numbers first. An 8/5 machine looks identical at a glance and returns about 97.3%,
+      roughly six times the cost per hand. Check the Full House and Flush rows before you sit down.
+    </p>
+
+    <h2>The Best Hold button</h2>
+    <p>
+      Best Hold isn't a rule of thumb. For the hand on screen it tries all 32 ways to hold
+      cards, deals out every possible draw from the 47 unseen cards (over 2.6 million final
+      hands), and averages the paytable return of each. The top answer is the mathematically
+      optimal hold for your coin level. Turn on <b>Strategy check</b> and the log tells you
+      after each draw whether your hold matched it and what any mistake cost.
+    </p>
+
+    <h2>Simple strategy you can memorize</h2>
+    <p>
+      Hold the first item on this list that your hand contains. It's a simplified list, not
+      perfect strategy: it returns about {{ vp.simpleStrategyReturnPct }}% versus
+      {{ vp.returnPct }}% for perfect play, so use Best Hold when you want the exact answer.
+    </p>
+    <ol class="vp-strategy">
+      <li>Royal flush, straight flush, four of a kind</li>
+      <li>4 cards to a royal flush</li>
+      <li>Full house, flush, straight, three of a kind</li>
+      <li>4 cards to a straight flush</li>
+      <li>Two pair</li>
+      <li>High pair (Jacks or better)</li>
+      <li>3 cards to a royal flush</li>
+      <li>4 cards to a flush</li>
+      <li>Low pair (2s through 10s)</li>
+      <li>4 cards to an outside straight (open at both ends, like 6-7-8-9)</li>
+      <li>2 suited high cards</li>
+      <li>3 cards to a straight flush</li>
+      <li>2 unsuited high cards (if you have three, keep the lowest two)</li>
+      <li>10 with a suited Jack, Queen or King</li>
+      <li>1 high card</li>
+      <li>Nothing: draw five new cards</li>
+    </ol>
+    <p>
+      High cards are Jacks, Queens, Kings and Aces. Two habits cost players the most: holding a
+      kicker next to a pair, and keeping a lone high card instead of a low pair. A pair of
+      threes beats a single Ace.
+    </p>
+  </div>
+
+  <p class="strategy-link"><a href="/strategy/house-edge/">Compare video poker's edge with every table game →</a></p>
+  <p class="strategy-link"><a href="/games/">Try another game →</a></p>
+  <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/video-poker/" rel="nofollow">Report a bug</a></p>
+</div>

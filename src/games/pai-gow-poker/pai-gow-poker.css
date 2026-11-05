@@ -1,0 +1,90 @@
+/* ============================================================
+   Pai Gow Poker — layout only. Shared components come from
+   /games/shared/card-table.css, which loads first.
+   Seven cards must fit one row at 320px, so cards are sized
+   down a step on phones.
+   ============================================================ */
+
+.pg-table { padding: var(--s-4) var(--s-3); }
+
+.pg-divider { height: 1px; background: var(--edge-mint); margin: var(--s-3) 0; }
+
+.pg-rows { display: flex; flex-direction: column; gap: var(--s-3); }
+
+.pg-row {
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: var(--s-2);
+  background: rgba(8, 24, 16, 0.35);
+}
+.pg-row.pg-low { border-color: var(--edge-mint); }
+.pg-row.r-player { border-color: var(--mint); box-shadow: 0 0 0 1px var(--mint-dim); }
+.pg-row.r-dealer, .pg-row.r-copy { border-color: rgba(255, 138, 128, 0.45); }
+
+.pg-row-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+  flex-wrap: wrap;
+}
+.pg-row-label { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+.pg-row-name { font-size: 13px; font-weight: 700; color: var(--mint); }
+
+.pg-badge { margin-left: auto; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: var(--r-pill); }
+.pg-badge.is-win { background: var(--mint); color: #081810; }
+.pg-badge.is-lose, .pg-badge.is-copy { background: rgba(255, 138, 128, 0.16); color: var(--lose); }
+
+.pg-cards { gap: 4px; flex-wrap: nowrap; justify-content: center; min-height: 0; }
+
+.pg-cards .pcard,
+.pg-cards .pcard-back,
+.pg-slot {
+  width: 42px;
+  height: 59px;
+}
+
+.pg-slot {
+  flex: 0 0 auto;
+  border: 2px dashed var(--edge-mint);
+  border-radius: var(--r-sm);
+}
+
+.pg-cards .pcard-btn:not(:disabled):hover .pcard { transform: translateY(-3px); }
+.pg-cards .pcard { transition: transform 0.12s ease; }
+
+.pg-empty { text-align: center; color: var(--text-dim); font-size: 13px; padding: var(--s-4) 0; }
+
+.pg-status { text-align: center; font-size: 13.5px; color: var(--text-muted); min-height: 1.4em; margin-top: var(--s-3); }
+.pg-status.is-ok { color: var(--mint); }
+.pg-status.is-bad { color: var(--lose); font-weight: 600; }
+
+.pg-hint { text-align: center; font-size: 13px; color: var(--text-muted); margin: var(--s-2) auto 0; max-width: 520px; }
+
+.pg-spots { max-width: 200px; margin: 0 auto; grid-template-columns: 1fr; }
+
+#arrangeBar .btn-roll { min-width: 130px; }
+#newHandWrap { margin: var(--s-3) 0; }
+
+.pg-hw-intro { color: var(--text-muted); font-size: 14px; margin: 0 0 var(--s-2); }
+.pg-hw { margin: 0 0 var(--s-3); padding-left: var(--s-5); color: var(--text-muted); font-size: 14px; line-height: 1.65; }
+.pg-hw li { margin-bottom: var(--s-2); }
+.pg-hw b { color: var(--text); }
+
+@media (max-width: 360px) {
+  .pg-table { padding: var(--s-3) var(--s-2); }
+  .pg-cards .pcard, .pg-cards .pcard-back, .pg-slot { width: 36px; height: 51px; }
+  .pg-cards .pcard-corner { font-size: 10.5px; left: 3px; }
+  .pg-cards .pcard-corner-suit { font-size: 9.5px; }
+  .pg-cards .pcard-suit-big { font-size: 17px; padding-top: 10px; }
+}
+
+@media (min-width: 701px) {
+  .pg-table { padding: var(--s-5); }
+  .pg-cards { gap: var(--s-2); }
+  .pg-cards .pcard, .pg-cards .pcard-back, .pg-slot { width: 58px; height: 82px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-cards .pcard { transition: none; }
+}

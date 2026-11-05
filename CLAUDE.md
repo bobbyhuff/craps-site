@@ -8,14 +8,16 @@ itself still serves from the old `craps-site.redclayreserve.workers.dev` host na
 
 ## Stack
 
-Plain Eleventy + vanilla CSS/JS. **No bundler, no framework, no test runner, no linter** —
-`package.json` has exactly one dependency (`@11ty/eleventy`). Client-side game code
+Plain Eleventy + vanilla CSS/JS. **No bundler, no framework, no linter** —
+`package.json` has exactly one dependency (`@11ty/eleventy`). Tests use Node's built-in
+`node --test` (no test dependency): `npm test` runs `tests/*.test.js`. Client-side game code
 (`craps.js`, `blackjack.js`) is a plain `<script>` tag, not a module — it can't
 `import`/`require` anything, which shapes how shared data gets to it (see "Payout data" below).
 
 ```bash
 npm run build   # writes to _site/
 npm run serve   # eleventy --serve, local dev
+npm test        # game-engine tests (node --test), ~15s
 ```
 
 ## File structure
@@ -26,7 +28,11 @@ src/
                     post.njk (Pit/strategy article layout, adds Article schema when `date` is set)
   _data/           odds.js, blackjackOdds.js — see "Payout data" below
   css/site.css     global design tokens + marketing-page styles
-  games/<name>/    one folder per game: index.njk + <name>.css + <name>.js
+  games/<name>/    one folder per game: index.njk + <name>.css + <name>.js (+ <x>-engine.js
+                    for the poker-family games: pure rules, no DOM, require()-able by tests)
+  games/shared/    cards.js (deck/shuffle/seeded RNG/card markup), table-kit.js (overlay,
+                    session stats, fast play, announcer), card-table.css — used by video
+                    poker, three card poker and pai gow. Older games keep their own copies.
   strategy/*.md    flat files or per-game subfolders, frontmatter + prose, rendered via post.njk
   the-pit/*.md     blog posts, same pattern as strategy/ (renamed from blog/ — see below)
   blog/            redirect stubs only, real posts live in the-pit/ now
@@ -56,6 +62,20 @@ Markdown. `strategy` (recursive) and `pit` are Eleventy collections in `.elevent
 The top-level `/strategy/` and `/strategy/<game>/` hub pages are hand-authored card/list
 links, not collection loops — update them directly when adding an article. `/the-pit/`
 does loop its collection automatically.
+
+**Shared CSS**: a page can set `sharedCss:` frontmatter (base.njk links it before `extraCss`).
+The three poker-family games use `/games/shared/card-table.css` this way.
+
+**Craps and Crapless Craps share one engine.** `craps.js` reads `RULES`, which is
+`CRAPLESS_ODDS` when `/games/crapless-craps/odds.js` (`src/_data/craplessOdds.js`) is loaded
+after the standard `odds.js`, else `ODDS`. Every rule difference is a data key
+(`pointNumbers`, `comeOutNaturals`, `comeOutCraps`, `dontBets`, `buyNumbers`, ...), never a
+fork in the code. Both pages share `_includes/craps-*.njk` partials. Crapless here = the
+standard "only 7 wins the come-out, 11 is a point" ruleset (5.38% Pass Line).
+
+**Tests** (`tests/`): engines are required directly; `craps-harness.js` loads the real browser
+`craps.js` into a Node `vm` context with a stub DOM. Seed randomness with `CARDS.seededRng`.
+Any published house edge in a data file should have a test that recomputes it.
 
 ## SEO frontmatter
 
@@ -201,5 +221,5 @@ Cloudflare Workers (`workers/scripts/craps-site`), deployed from `main` via Wran
 `0stakes.com` registered and pointed at the same project. `npm run build` output (`_site/`)
 is what ships, including `_redirects` — Wrangler validates it strictly at deploy time (see
 "Redirects and the domain move"), so a bad `_redirects` line fails the whole deploy, not just
-the redirect. `_site/` and `node_modules/` are gitignored, not committed. No CI/test step
-currently — verify changes locally (`npm run serve` + a manual playtest) before pushing.
+the redirect. `_site/` and `node_modules/` are gitignored, not committed. No CI step
+currently — run `npm test`, then verify locally (`npm run serve` + a manual playtest) before pushing.

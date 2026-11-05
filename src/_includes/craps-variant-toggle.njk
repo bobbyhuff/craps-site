@@ -1,0 +1,5 @@
+{#- Standard / Crapless switch shown under the title on both craps pages. -#}
+<nav class="variant-toggle" aria-label="Craps version">
+  <a href="/games/craps/" {% if crapsVariant == "standard" %}class="is-active" aria-current="page"{% endif %}>Standard Craps</a>
+  <a href="/games/crapless-craps/" {% if crapsVariant == "crapless" %}class="is-active" aria-current="page"{% endif %}>Crapless Craps</a>
+</nav>

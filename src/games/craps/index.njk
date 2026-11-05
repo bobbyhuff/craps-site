@@ -33,6 +33,7 @@ breadcrumb:
 
 <div class="app">
   <h1 class="page-title">Free Craps Table</h1>
+  {% set crapsVariant = "standard" %}{% include "craps-variant-toggle.njk" %}
 
   <div class="overlay" id="setupOverlay">
     <div class="overlay-box">
@@ -63,21 +64,14 @@ breadcrumb:
     </div>
   </div>
 
-  <div id="notice"></div>
+  <div id="notice" role="status" aria-live="polite"></div>
 
   <div class="roll-history-wrap">
     <span class="chip-label">History</span>
     <div class="roll-history" id="rollHistory"></div>
   </div>
 
-  <div class="bet-opts">
-    <div class="mode-toggle" id="modeToggle">
-      <span class="chip-label">Number bets</span>
-      <label><input type="radio" name="numMode" value="place" checked> Place</label>
-      <label><input type="radio" name="numMode" value="buy"> Buy</label>
-    </div>
-    <label class="let-it-ride"><input type="checkbox" id="letItRide"> Let it ride <span class="hint">(keep Place/Buy/Hardway bets up after a win)</span></label>
-  </div>
+{% include "craps-bet-options.njk" %}
 
   <div class="table">
 
@@ -103,11 +97,7 @@ breadcrumb:
 
   </div>
 
-  <div class="table-actions">
-    <button class="btn-outline" id="toggleWorkingBtn">Bets Off</button>
-    <button class="btn-outline" id="clearBetsBtn">Clear All Bets</button>
-    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
-  </div>
+{% include "craps-table-actions.njk" %}
 
   <div class="actionbar">
     <div class="chip-strip">
@@ -119,12 +109,17 @@ breadcrumb:
         <div class="die" id="die1">-</div>
         <div class="die" id="die2">-</div>
       </div>
-      <div class="roll-total" id="rollTotal">Roll the dice to begin</div>
+      <div class="roll-total" id="rollTotal" aria-live="polite">Roll the dice to begin</div>
       <button class="btn-roll" id="rollBtn">ROLL</button>
     </div>
   </div>
 
   <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Session roll stats</summary>
+    <div id="rollStats"></div>
+  </details>
 
   <details class="legend">
     <summary>Bet reference</summary>
@@ -139,6 +134,8 @@ breadcrumb:
       <li><b>Any Seven</b> — one-roll, wins on 7. Pays {{ odds.anySevenPayStr }}.</li>
       <li><b>Any Craps</b> — one-roll, wins on 2,3,12. Pays {{ odds.anyCrapsPayStr }}.</li>
       <li><b>Hardways</b> — number rolls as a double (e.g. 3+3) before a 7 or before that number rolls "easy". Hard 4/10 pay {{ odds.hardPay[4] }}:1, Hard 6/8 pay {{ odds.hardPay[6] }}:1.</li>
+      <li><b>Come-out roll</b> — Place, Buy, Hardway bets and Come-bet odds are <i>off</i> on the come-out, the casino default: a come-out 7 doesn't take them down, and a come-out hit doesn't pay them. Tick "Bets work on the come-out" to call them on.</li>
+      <li><b>After a win</b> — choose whether a winning Place/Buy/Hardway bet comes down (you collect bet and winnings), stays up (you collect the winnings), or gets pressed (winnings go back on the bet in whole units, up to double; the rest is collected). Buy bets never auto-press, since adding to one costs a new commission.</li>
     </ul>
   </details>
 
@@ -147,6 +144,11 @@ breadcrumb:
     roll either wins, loses, or sets a point that the shooter then has to repeat before
     a 7 shows up. Every bet on the layout is a wager on how that loop plays out, priced
     off the fixed odds of two dice.
+  </p>
+  <p>
+    Want a table where the come-out can never crap out? Try
+    <a href="/games/crapless-craps/">Crapless Craps</a>, where 2, 3, 11 and 12 become points.
+    The trade-off is a {{ craplessOdds.houseEdgeStr.passLine }}% Pass Line edge instead of {{ odds.houseEdgeStr.passLine }}%.
   </p>
   <p class="strategy-link"><a href="/strategy/craps/how-to-play/">New to craps? Read the full how-to-play guide →</a></p>
 

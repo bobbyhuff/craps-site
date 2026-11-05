@@ -1,0 +1,182 @@
+---
+layout: base.njk
+title: Pai Gow Poker
+seoTitle: "Play Free Pai Gow Poker Online: Set Your Hands vs. the House Way | 0stakes"
+description: Play free Pai Gow Poker with a 53-card deck and joker. Split seven cards into a five-card and two-card hand, beat a dealer who follows a published house way, and learn why 41% of hands push. No ads, no account.
+sharedCss: /games/shared/card-table.css
+extraCss: /games/pai-gow-poker/pai-gow-poker.css
+extraJs: /games/pai-gow-poker/pai-gow-poker.js
+tags: ["game"]
+order: 7
+cardBlurb: Seven cards, two hands, one joker. Set them yourself or use the house way, and push about four hands in ten.
+status: "live"
+breadcrumb:
+  - name: Games
+    url: /games/
+  - name: Pai Gow Poker
+    url: /games/pai-gow-poker/
+---
+<!-- Payouts and house rules: src/_data/paiGowOdds.js. Hand evaluation,
+     joker rules and the house way: pg-engine.js. -->
+<script src="/games/pai-gow-poker/odds.js"></script>
+<script src="/games/shared/cards.js"></script>
+<script src="/games/shared/table-kit.js"></script>
+<script src="/games/pai-gow-poker/pg-engine.js"></script>
+
+{%- set pg = paiGowOdds %}
+<div class="app">
+  <h1 class="page-title">Free Pai Gow Poker</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Pai Gow Poker</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-real-money">Practice only. No real money, ever.</p>
+
+  <div class="statusbar">
+    <div class="sb-cell"><span class="sb-k">Bankroll</span><b id="bankroll">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">Net</span><b id="net">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">Bet</span><b id="betShown">$0.00</b></div>
+  </div>
+
+  <div id="notice" role="status" aria-live="polite"></div>
+
+  <div class="table pg-table">
+    <div class="pg-side" id="dealerSide">
+      <div class="seat-label">Dealer · house way</div>
+      <div class="pg-rows" id="dealerRows"></div>
+    </div>
+    <div class="pg-divider"></div>
+    <div class="pg-side" id="playerSide">
+      <div class="pg-rows" id="playerRows"></div>
+      <div class="seat-label">You</div>
+    </div>
+    <div class="pg-status" id="pgStatus" aria-live="polite"></div>
+    <div class="round-result" id="pgResult"></div>
+  </div>
+
+  <div class="bet-area" id="betArea">
+    <div class="bet-spots pg-spots">
+      <button type="button" class="bet-spot" id="betSpot">
+        <span class="bet-spot-label">Bet</span>
+        <span class="bet-spot-pay">{{ pg.winPays[0] }}:{{ pg.winPays[1] }} less {{ pg.commissionPct }}%</span>
+        <span class="bet-spot-amt" id="betAmt">—</span>
+      </button>
+    </div>
+    <div class="bet-controls">
+      <button class="btn-outline" id="clearBetBtn">Clear</button>
+      <button class="btn-outline" id="rebetBtn">Rebet</button>
+      <button class="btn-roll" id="dealBtn">Deal</button>
+    </div>
+  </div>
+
+  <div class="bet-controls hidden" id="arrangeBar">
+    <button class="btn-outline" id="autoBtn">Auto Arrange</button>
+    <button class="btn-outline" id="clearLowBtn">Reset</button>
+    <button class="btn-roll" id="setBtn">Set Hands</button>
+  </div>
+  <p class="pg-hint hidden" id="pgHint"></p>
+
+  <div class="bet-controls hidden" id="newHandWrap">
+    <button class="btn-outline" id="changeBetBtn">Change Bet</button>
+    <button class="btn-roll" id="sameBetBtn">Same Bet, Deal</button>
+  </div>
+
+  <div class="chip-strip">
+    <span class="chip-label">Chip</span>
+    <div id="chipSelector"></div>
+  </div>
+
+  <div class="toggle-row">
+    <label><input type="checkbox" id="hintChk"> Show house-way tip</label>
+    <label><input type="checkbox" id="fastChk"> Fast play</label>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Session stats</summary>
+    <div class="session-stats" id="sessionStats"></div>
+  </details>
+
+  <details class="legend" open>
+    <summary>How to play</summary>
+    <ul>
+      <li><b>Deal</b> — you and the dealer each get seven cards from a 53-card deck: a standard deck plus one joker.</li>
+      <li><b>Set your hands</b> — tap two cards to move them into your <b>two-card hand</b>. The other five are your <b>five-card hand</b>. Tap a card again to move it back.</li>
+      <li><b>One rule for setting</b> — the five-card hand must rank higher than (or equal to) the two-card hand. If your two-card hand is a pair, the five-card hand needs at least an equal pair. The game won't let you submit an illegal ("fouled") setting and tells you what to fix.</li>
+      <li><b>Two-card hands</b> — only pairs and high cards count. A pair of Aces is the best possible two-card hand.</li>
+      <li><b>Compare</b> — your five-card hand plays the dealer's five-card hand; your two-card hand plays the dealer's two-card hand.</li>
+      <li><b>Win both</b> — you win even money, minus a {{ pg.commissionPct }}% commission on the win. <b>Win one, lose one</b> — push, your bet comes back. <b>Lose both</b> — you lose.</li>
+      <li><b>Ties ("copies") go to the dealer.</b> A tied hand counts as a loss for you, so a win plus a copy is a push, and a loss plus a copy is a loss.</li>
+    </ul>
+  </details>
+
+  <details class="legend">
+    <summary>The joker &amp; house rules</summary>
+    <ul>
+      <li><b>Joker in the five-card hand</b> — it can complete a straight, flush or straight flush. If it doesn't, it counts as an Ace. It is <i>not</i> fully wild: it can't turn two pair into a full house.</li>
+      <li><b>Joker in a flush</b> — counts as the highest card of that suit you don't already hold.</li>
+      <li><b>Joker in the two-card hand</b> — always an Ace.</li>
+      <li><b>Five Aces</b> (four Aces plus the joker) is the best hand, above a royal flush.</li>
+      <li><b>A-2-3-4-5</b> is the second-highest straight, just below A-K-Q-J-10 (standard in Nevada and California).</li>
+      <li><b>Banking</b> — the dealer always banks. Player banking isn't offered.</li>
+    </ul>
+  </details>
+
+  <details class="legend">
+    <summary>The house way, step by step</summary>
+    <p class="pg-hw-intro">The dealer sets every hand with these rules, in this order. Auto Arrange uses the same rules for you. The joker counts as an Ace when grouping pairs.</p>
+    <ol class="pg-hw">
+      <li><b>Five Aces</b> — split off a pair of Aces for the two-card hand, unless you also hold a pair of Kings (then Kings go low).</li>
+      <li><b>Four of a kind</b> — with a pair or trips on the side, keep the four together and put the pair low. Otherwise: 2s–6s, keep together. 7s–10s, keep together if an Ace can go low, else split into two pairs. Jacks or higher, split into two pairs.</li>
+      <li><b>Two three-of-a-kinds</b> — split the higher set and put that pair low.</li>
+      <li><b>Full house</b> — split it: three of a kind high, the pair low. Exception: a pair of 2s with an Ace and King on the side stays together, A-K low.</li>
+      <li><b>Three of a kind</b> — three Aces: pair of Aces high, one Ace plus the next card low. Others: keep the set high, unless a straight or flush lets a pair go low.</li>
+      <li><b>Three pair</b> — highest pair low.</li>
+      <li><b>Two pair</b> — split them, lower pair low. Exception: if the higher pair is 10s or lower and you hold a single Ace, keep both pairs high and put the Ace low.</li>
+      <li><b>Straight or flush</b> (with no two pair or better) — play it in the five-card hand, choosing the version that leaves the strongest two-card hand.</li>
+      <li><b>One pair</b> — pair high, the next two highest cards low.</li>
+      <li><b>Nothing</b> — highest card high, the second and third highest cards low.</li>
+    </ol>
+  </details>
+
+  <div class="game-copy">
+    <h2>Why it plays so slow</h2>
+    <p>
+      About {{ pg.pushPct | round }}% of Pai Gow hands push: you win one hand and lose the other,
+      and nobody gets paid. That's why the game is popular with players who want a long session on a
+      small bankroll. You decide fewer outcomes per hour than at almost any other table.
+    </p>
+    <h2>What it costs</h2>
+    <p>
+      The {{ pg.commissionPct }}% commission on wins plus the dealer winning every copy add up to a house
+      edge of about {{ pg.houseEdge }}% per hand when you set your cards the house way. 0stakes measured that
+      figure by running this exact game engine for 1,000,000 hands, with both sides using the house way.
+      Expert hand-setting can shave a little off, but not much: the house way is already close to optimal.
+    </p>
+    <h2>Strategy tips</h2>
+    <ul>
+      <li>Put your <b>best possible two-card hand</b> low as long as the five-card hand stays legal and strong. The two-card hand decides a lot of pushes.</li>
+      <li>With <b>two pair</b>, splitting is usually right. Both pairs high leaves a weak two-card hand that rarely wins.</li>
+      <li>With <b>no pair</b>, the top card stays high and the next two go low. Don't break up an Ace-high five-card hand to make a King-Queen low.</li>
+      <li>If you're unsure, tap <b>Auto Arrange</b>: you'll be playing exactly the dealer's strategy.</li>
+    </ul>
+  </div>
+
+  <p class="strategy-link"><a href="/strategy/house-edge/">Compare Pai Gow's edge with other table games →</a></p>
+  <p class="strategy-link"><a href="/games/">Try another game →</a></p>
+  <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/pai-gow-poker/" rel="nofollow">Report a bug</a></p>
+</div>

@@ -51,7 +51,7 @@ breadcrumb:
     </div>
   </div>
 
-  <div id="notice"></div>
+  <div id="notice" role="status" aria-live="polite"></div>
 
   <div class="table bacc-table">
     <div class="bacc-hands">
@@ -66,7 +66,7 @@ breadcrumb:
         <div class="hand-total" id="bankerTotal"></div>
       </div>
     </div>
-    <div class="bacc-result" id="bacResult"></div>
+    <div class="bacc-result" id="bacResult" aria-live="polite"></div>
   </div>
 
   <div class="bet-area" id="betArea">
@@ -100,7 +100,8 @@ breadcrumb:
   </div>
 
   <div class="new-hand-wrap hidden" id="newHandWrap">
-    <button class="btn-roll" id="newHandBtn">New Hand</button>
+    <button class="btn-outline" id="newHandBtn">Change Bet</button>
+    <button class="btn-roll" id="sameBetBtn">Same Bet, Deal</button>
   </div>
 
   <div class="chip-strip">
@@ -113,6 +114,13 @@ breadcrumb:
   </div>
 
   <div class="log" id="log"></div>
+
+  <details class="legend road-wrap">
+    <summary>Scoreboard (bead plate)</summary>
+    <div class="bead-plate" id="beadPlate"></div>
+    <p class="road-counts" id="roadCounts"></p>
+    <p class="road-note">Casinos post these scoreboards to invite pattern-spotting. Every hand is dealt from the same shoe rules, and nothing on this board changes the odds of the next hand.</p>
+  </details>
 
   <details class="legend">
     <summary>Rules &amp; payouts</summary>

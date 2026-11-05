@@ -24,6 +24,7 @@ function newState(bankroll) {
     banker: { cards: [], shownCount: 0 },
     result: null, // { winner, playerTotal, bankerTotal, outcome, payoutAmt }
     isDealing: false,
+    road: [], // 'P' | 'B' | 'T' per hand, for the bead plate
     log: [],
   };
 }
@@ -219,12 +220,21 @@ async function dealInitial() {
   const playerNatural = isNatural(state.player.cards);
   const bankerNatural = isNatural(state.banker.cards);
 
-  if (!playerNatural && !bankerNatural) {
+  // Each third-card decision is logged in plain words, so the fixed
+  // drawing rules explain themselves as the hand plays out.
+  if (playerNatural || bankerNatural) {
+    const who = playerNatural && bankerNatural ? 'Both hands have' : (playerNatural ? 'Player has' : 'Banker has');
+    log(`${who} a natural. No third cards.`, 'neutral');
+  } else {
     let playerThirdValue = null;
-    if (handTotal(state.player.cards) <= 5) {
+    const pTwo = handTotal(state.player.cards);
+    if (pTwo <= 5) {
       const card = drawCard();
       playerThirdValue = cardValue(card);
+      log(`Player has ${pTwo}: draws (Player always draws on 0-5).`, 'neutral');
       await dealCardTo(state.player, card);
+    } else {
+      log(`Player has ${pTwo}: stands (Player stands on 6 or 7).`, 'neutral');
     }
 
     const bTotal = handTotal(state.banker.cards);
@@ -232,6 +242,11 @@ async function dealInitial() {
       ? ODDS.bankerThirdCardRule.playerStoodDrawTotals.includes(bTotal)
       : bankerShouldDrawOnThird(bTotal, playerThirdValue);
 
+    if (playerThirdValue === null) {
+      log(`Banker has ${bTotal}: ${bankerDraws ? 'draws' : 'stands'} (Player stood, so Banker draws on 0-5 like Player).`, 'neutral');
+    } else {
+      log(`Banker has ${bTotal} and Player's third card counts ${playerThirdValue}: Banker ${bankerDraws ? 'draws' : 'stands'}.`, 'neutral');
+    }
     if (bankerDraws) await dealCardTo(state.banker, drawCard());
   }
 
@@ -301,12 +316,23 @@ function settleRound() {
   }
 
   state.result = { winner, playerTotal: pTotal, bankerTotal: bTotal, betType: type, betAmount: bet, outcome, payoutAmt };
+  state.road.push(winner === 'player' ? 'P' : winner === 'banker' ? 'B' : 'T');
   state.betType = null;
   state.betAmount = 0;
 }
 
-function nextRound() {
+function nextRound(sameBet) {
   if (state.isDealing) return;
+  if (sameBet === true) {
+    state.phase = 'betting';
+    state.player = { cards: [], shownCount: 0 };
+    state.banker = { cards: [], shownCount: 0 };
+    state.result = null;
+    if (tryRebet()) { notice(''); dealInitial(); return; }
+    notice('Not enough bankroll to repeat that bet.');
+    render();
+    return;
+  }
   state.phase = 'betting';
   state.player = { cards: [], shownCount: 0 };
   state.banker = { cards: [], shownCount: 0 };
@@ -350,6 +376,26 @@ function render() {
   document.getElementById('newHandBtn').disabled = state.isDealing;
 
   renderLog();
+  renderRoad();
+  const same = document.getElementById('sameBetBtn');
+  same.disabled = state.isDealing || !state.lastBetType;
+  if (state.lastBetType) same.textContent = `Same Bet (${fmt(state.lastBetAmount)} ${state.lastBetType.charAt(0).toUpperCase() + state.lastBetType.slice(1)}), Deal`;
+}
+
+// Bead plate: one cell per hand, filled top-to-bottom then left-to-right,
+// six rows deep, the way it's drawn on a casino scoreboard. Shows the last
+// 60 hands. Past results don't predict future hands; this is a record.
+function renderRoad() {
+  const el = document.getElementById('beadPlate');
+  if (!el) return;
+  const road = state.road.slice(-60);
+  const cells = road.map(r => `<span class="bead bead-${r}" title="${r === 'P' ? 'Player' : r === 'B' ? 'Banker' : 'Tie'}">${r}</span>`);
+  el.innerHTML = cells.join('') || '<span class="bead-empty">Results appear here hand by hand.</span>';
+  const n = state.road.length;
+  const count = k => state.road.filter(r => r === k).length;
+  document.getElementById('roadCounts').textContent = n
+    ? `Player ${count('P')} · Banker ${count('B')} · Tie ${count('T')} in ${n} hand${n === 1 ? '' : 's'}`
+    : '';
 }
 
 function renderChips() {
@@ -419,7 +465,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('clearBetBtn').addEventListener('click', removeBet);
   document.getElementById('rebetBtn').addEventListener('click', rebet);
   document.getElementById('dealBtn').addEventListener('click', dealClick);
-  document.getElementById('newHandBtn').addEventListener('click', nextRound);
+  document.getElementById('newHandBtn').addEventListener('click', () => nextRound(false));
+  document.getElementById('sameBetBtn').addEventListener('click', () => nextRound(true));
   document.getElementById('resetBtn').addEventListener('click', resetBankroll);
 
   showOverlay({

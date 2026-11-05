@@ -16,6 +16,19 @@
 // "n:d" string living next to it.
 
 const ODDS = {
+  // Ruleset keys craps.js reads so the same engine can also run Crapless
+  // Craps (src/_data/craplessOdds.js overrides these).
+  variant: 'standard',
+  gameName: 'Craps',
+  pointNumbers: [4, 5, 6, 8, 9, 10],
+  comeOutNaturals: [7, 11], // Pass/Come win on the come-out
+  comeOutCraps: [2, 3, 12], // Pass/Come lose on the come-out
+  dontBets: true,
+  buyNumbers: [4, 5, 6, 8, 9, 10],
+  // Smallest bet that a Place bet pays cleanly on (7:6 needs multiples of
+  // $6, 9:5 and 7:5 multiples of $5). Used for presets and Press/Regress.
+  placeUnit: { 4: 5, 5: 5, 6: 6, 8: 6, 9: 5, 10: 5 },
+
   // True odds behind Pass/Don't Pass/Come/Don't Come. Zero house edge.
   trueOdds: { 4: [2, 1], 10: [2, 1], 5: [3, 2], 9: [3, 2], 6: [6, 5], 8: [6, 5] },
 

@@ -1,0 +1,203 @@
+---
+layout: base.njk
+title: Three Card Poker
+seoTitle: "Play Free Three Card Poker Online: Ante, Play & Pair Plus | 0stakes"
+description: Play free Three Card Poker against a dealer who needs Queen-high to qualify. Ante, Play, Pair Plus and the Ante Bonus at real casino payouts, plus the Q-6-4 strategy hint. No ads, no account.
+sharedCss: /games/shared/card-table.css
+extraCss: /games/three-card-poker/three-card-poker.css
+extraJs: /games/three-card-poker/three-card-poker.js
+tags: ["game"]
+order: 6
+cardBlurb: Ante, Play and Pair Plus against a dealer who needs Queen-high to qualify. One decision a hand, and it's simpler than it looks.
+status: "live"
+breadcrumb:
+  - name: Games
+    url: /games/
+  - name: Three Card Poker
+    url: /games/three-card-poker/
+---
+<!-- Payouts: src/_data/threeCardPokerOdds.js. Rules: tcp-engine.js. -->
+<script src="/games/three-card-poker/odds.js"></script>
+<script src="/games/shared/cards.js"></script>
+<script src="/games/shared/table-kit.js"></script>
+<script src="/games/three-card-poker/tcp-engine.js"></script>
+
+{%- set t = threeCardPokerOdds %}
+<div class="app">
+  <h1 class="page-title">Free Three Card Poker</h1>
+
+  <div class="overlay" id="setupOverlay">
+    <div class="overlay-box">
+      <h2 id="overlayTitle">Welcome to Three Card Poker</h2>
+      <p id="overlayText">Set your starting bankroll to begin.</p>
+      <input type="number" id="overlayInput" min="1" step="1" value="200" inputmode="numeric">
+      <div class="overlay-buttons">
+        <button class="btn-outline" id="overlayCancel" style="display:none;">Cancel</button>
+        <button class="btn-roll" id="overlayConfirm">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-real-money">Practice only. No real money, ever.</p>
+
+  <div class="statusbar">
+    <div class="sb-cell"><span class="sb-k">Bankroll</span><b id="bankroll">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">Net</span><b id="net">$0.00</b></div>
+    <div class="sb-cell"><span class="sb-k">On the table</span><b id="onTable">$0.00</b></div>
+  </div>
+
+  <div id="notice" role="status" aria-live="polite"></div>
+
+  <div class="table tcp-table">
+    <div class="tcp-seat">
+      <div class="seat-label" id="dealerLabel">Dealer</div>
+      <div class="hand" id="dealerHand"></div>
+      <div class="hand-total" id="dealerTotal"></div>
+    </div>
+    <div class="tcp-divider"><span>Dealer plays with Queen-high or better</span></div>
+    <div class="tcp-seat">
+      <div class="hand" id="playerHand"></div>
+      <div class="hand-total" id="playerTotal"></div>
+      <div class="seat-label">You</div>
+    </div>
+    <div class="round-result" id="tcpResult"></div>
+    <div class="tcp-breakdown hidden" id="tcpBreakdown"></div>
+  </div>
+
+  <div class="bet-area" id="betArea">
+    <div class="bet-spots tcp-spots">
+      <button type="button" class="bet-spot" id="spotPairPlus">
+        <span class="bet-spot-label">Pair Plus</span>
+        <span class="bet-spot-pay">bonus bet</span>
+        <span class="bet-spot-amt" id="amtPairPlus">—</span>
+      </button>
+      <button type="button" class="bet-spot" id="spotAnte">
+        <span class="bet-spot-label">Ante</span>
+        <span class="bet-spot-pay">{{ t.antePlay[0] }}:{{ t.antePlay[1] }} + bonus</span>
+        <span class="bet-spot-amt" id="amtAnte">—</span>
+      </button>
+      <div class="bet-spot tcp-play-spot" aria-disabled="true">
+        <span class="bet-spot-label">Play</span>
+        <span class="bet-spot-pay">matches Ante</span>
+        <span class="bet-spot-amt" id="amtPlay">after you look</span>
+      </div>
+    </div>
+    <p class="tcp-hint-text">Tap Ante and/or Pair Plus to add your chip. The Play bet is only made after you see your cards.</p>
+    <div class="bet-controls">
+      <button class="btn-outline" id="clearBetBtn">Clear</button>
+      <button class="btn-outline" id="rebetBtn">Rebet</button>
+      <button class="btn-roll" id="dealBtn">Deal</button>
+    </div>
+  </div>
+
+  <div class="bet-controls tcp-decision hidden" id="decisionBar">
+    <button class="btn-outline tcp-fold" id="foldBtn">Fold</button>
+    <button class="btn-roll" id="playBtn">Play</button>
+  </div>
+  <p class="tcp-strategy hidden" id="strategyHint" aria-live="polite"></p>
+
+  <div class="bet-controls hidden" id="newHandWrap">
+    <button class="btn-outline" id="changeBetBtn">Change Bet</button>
+    <button class="btn-roll" id="sameBetBtn">Same Bet, Deal</button>
+  </div>
+
+  <div class="chip-strip">
+    <span class="chip-label">Chip</span>
+    <div id="chipSelector"></div>
+  </div>
+
+  <div class="toggle-row">
+    <label><input type="checkbox" id="hintChk"> Show strategy hint</label>
+    <label><input type="checkbox" id="fastChk"> Fast play</label>
+  </div>
+
+  <div class="table-actions">
+    <button class="btn-outline" id="resetBtn">Reset Bankroll</button>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <details class="legend">
+    <summary>Session stats</summary>
+    <div class="session-stats" id="sessionStats"></div>
+  </details>
+
+  <details class="legend" open>
+    <summary>Hand rankings &amp; payouts</summary>
+    <div class="tcp-pay-grid">
+      <div>
+        <h3 class="tcp-h3">Hand rankings</h3>
+        <ol class="tcp-ranks">
+          <li><b>Straight Flush</b> — three in a row, same suit</li>
+          <li><b>Three of a Kind</b></li>
+          <li><b>Straight</b> — three in a row (A-2-3 low to Q-K-A high)</li>
+          <li><b>Flush</b> — three of one suit</li>
+          <li><b>Pair</b></li>
+          <li><b>High Card</b></li>
+        </ol>
+      </div>
+      <div>
+        <h3 class="tcp-h3">Ante Bonus</h3>
+        <table class="paytable" id="anteBonusTable">
+          <tr data-key="straightFlush"><td>Straight Flush</td><td>{{ t.anteBonusStr.straightFlush }}</td></tr>
+          <tr data-key="trips"><td>Three of a Kind</td><td>{{ t.anteBonusStr.trips }}</td></tr>
+          <tr data-key="straight"><td>Straight</td><td>{{ t.anteBonusStr.straight }}</td></tr>
+        </table>
+        <p class="tcp-table-note">Paid on the Ante whenever you Play, even if the dealer beats you.</p>
+      </div>
+      <div>
+        <h3 class="tcp-h3">Pair Plus <span class="tcp-tag">{{ t.pairPlus.label }} table</span></h3>
+        <table class="paytable" id="pairPlusTable">
+          <tr data-key="straightFlush"><td>Straight Flush</td><td>{{ t.pairPlusStr.straightFlush }}</td></tr>
+          <tr data-key="trips"><td>Three of a Kind</td><td>{{ t.pairPlusStr.trips }}</td></tr>
+          <tr data-key="straight"><td>Straight</td><td>{{ t.pairPlusStr.straight }}</td></tr>
+          <tr data-key="flush"><td>Flush</td><td>{{ t.pairPlusStr.flush }}</td></tr>
+          <tr data-key="pair"><td>Pair</td><td>{{ t.pairPlusStr.pair }}</td></tr>
+        </table>
+        <p class="tcp-table-note">Pays on your hand alone. The dealer's cards don't matter.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="legend">
+    <summary>How to play</summary>
+    <ul>
+      <li><b>Bet</b> — put chips on the Ante, Pair Plus, or both. Pair Plus alone is allowed; you then just see if your three cards make a pair or better.</li>
+      <li><b>Look and decide</b> — with an Ante up you see your three cards (the dealer's stay face down) and choose: <b>Fold</b> and lose the Ante, or <b>Play</b> by adding a Play bet equal to the Ante.</li>
+      <li><b>Folding</b> — forfeits the Ante and any Pair Plus bet, the standard casino procedure. Correct strategy never folds a pair or better, so this only costs you when you fold a hand Pair Plus would have paid.</li>
+      <li><b>Dealer qualifies</b> with Queen-high or better. If not, your Ante pays {{ t.antePlay[0] }}:{{ t.antePlay[1] }} and your Play bet is returned.</li>
+      <li><b>Dealer qualifies</b> — compare hands. Beat the dealer: Ante and Play both pay {{ t.antePlay[0] }}:{{ t.antePlay[1] }}. Lose: both lose. Exact tie: both push.</li>
+      <li><b>Ante Bonus</b> — a straight or better pays the bonus on your Ante whenever you Play, win or lose.</li>
+    </ul>
+  </details>
+
+  <div class="game-copy">
+    <h2>How it differs from regular poker</h2>
+    <p>
+      There's no drawing and no bluffing: three cards each, one decision. The ranking also
+      flips in the middle. In five-card poker a flush beats a straight; with only three cards,
+      a straight is the rarer hand (720 ways versus 1,096 for a flush out of 22,100), so it ranks higher.
+      Three of a kind is rarer than a straight here too, which is why it sits just under the straight flush.
+    </p>
+
+    <h2>The one strategy rule: Q-6-4</h2>
+    <p>
+      Play any Queen-6-4 or better, fold anything worse. Compare your cards highest first:
+      Q-7-2 plays (7 beats 6), Q-5-K is really K-Q-5 and plays, Q-6-3 folds. Any pair or better always plays.
+      Exact enumeration of all 22,100 hands confirms this rule makes the best decision on every one of them.
+      Played that way, the Ante and Play cost {{ t.houseEdge.ante }}% of the Ante, or
+      {{ t.houseEdge.elementOfRisk }}% of everything you put on the table.
+    </p>
+
+    <h2>Is Pair Plus worth it?</h2>
+    <p>
+      On this {{ t.pairPlus.label }} table, Pair Plus has a {{ t.houseEdge.pairPlus }}% house edge, more than double
+      the Ante. It's the bet that pays 40:1 on a straight flush, and it's the bet the casino likes you making.
+      The older 40-30-6-4-1 table, where a flush pays 4:1, cuts that to {{ t.pairPlusTables['40-30-6-4-1'].houseEdge }}%. Look at the flush line before you play it.
+    </p>
+  </div>
+
+  <p class="strategy-link"><a href="/strategy/house-edge/">See where Three Card Poker ranks among casino bets →</a></p>
+  <p class="strategy-link"><a href="/games/">Try another game →</a></p>
+  <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/three-card-poker/" rel="nofollow">Report a bug</a></p>
+</div>

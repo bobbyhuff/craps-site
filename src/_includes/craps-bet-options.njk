@@ -1,0 +1,29 @@
+{#- Bet options shared by /games/craps/ and /games/crapless-craps/. craps.js
+    wires every id here; both pages run the same engine. -#}
+  <div class="bet-opts">
+    <div class="mode-toggle" id="modeToggle">
+      <span class="chip-label">Number bets</span>
+      <label><input type="radio" name="numMode" value="place" checked> Place</label>
+      <label><input type="radio" name="numMode" value="buy"> Buy</label>
+    </div>
+    <label class="let-it-ride after-win">
+      <span class="chip-label">After a win</span>
+      <select id="afterWin" aria-label="What happens to a winning Place, Buy or Hardway bet">
+        <option value="down">Take bet down</option>
+        <option value="up">Leave bet up</option>
+        <option value="press">Press it</option>
+      </select>
+    </label>
+    <label class="let-it-ride"><input type="checkbox" id="comeOutWorking"> Bets work on the come-out <span class="hint">(Place, Buy, Hardways, Come odds)</span></label>
+  </div>
+
+  <div class="presets">
+    <span class="chip-label">Quick bets</span>
+    <div class="preset-btns">
+      <button type="button" class="mini-btn" data-preset="place68">6 &amp; 8</button>
+      <button type="button" class="mini-btn" data-preset="inside">Inside</button>
+      <button type="button" class="mini-btn" data-preset="ironCross">Iron Cross</button>
+      <button type="button" class="mini-btn" id="mollyBtn">3-Point Molly</button>
+    </div>
+    <p class="preset-note">Sized from your chip: $5 units, $6 on the 6 and 8. Molly places one step per tap (Pass Line, then max odds and Come bets). Presets just place bets for you. They don't change the house edge.</p>
+  </div>

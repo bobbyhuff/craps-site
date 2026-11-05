@@ -572,3 +572,34 @@ main {
   .table { padding: var(--s-5); }
   .log { height: 170px; }
 }
+
+/* ============================================================
+   Same-bet redeal + bead-plate scoreboard
+   ============================================================ */
+
+.new-hand-wrap { display: flex; gap: var(--s-2); justify-content: center; flex-wrap: wrap; }
+.new-hand-wrap.hidden { display: none; }
+
+.bead-plate {
+  display: grid;
+  grid-template-rows: repeat(6, 26px);
+  grid-auto-flow: column;
+  grid-auto-columns: 26px;
+  gap: 3px;
+  overflow-x: auto;
+  padding: 2px 0 var(--s-2);
+}
+.bead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+}
+.bead-P { background: var(--mint); color: #081810; }
+.bead-B { background: var(--bone); color: #081810; }
+.bead-T { border: 2px solid var(--text-dim); color: var(--text-muted); }
+.bead-empty { grid-row: 1 / span 6; font-size: 12.5px; color: var(--text-dim); white-space: nowrap; align-self: center; }
+.road-counts { font-size: 12.5px; color: var(--text-muted); margin: 0 0 var(--s-2); font-variant-numeric: tabular-nums; }
+.road-note { font-size: 12px; color: var(--text-dim); margin: 0 0 var(--s-3); }

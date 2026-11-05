@@ -550,3 +550,15 @@ main:has(.app) { max-width: none; padding: 0; }
   .rl-cell { min-height: 48px; font-size: 15px; }
   .log { height: 170px; }
 }
+
+/* ============================================================
+   Result feedback: winning pocket + winning outside boxes stay
+   marked until the next spin; per-spin net; session color count
+   ============================================================ */
+
+.rl-cell.is-winner { box-shadow: 0 0 0 2px var(--bone), 0 0 14px rgba(237, 242, 238, 0.55); z-index: 1; position: relative; }
+.rl-obox.is-hit { border-color: var(--mint); box-shadow: 0 0 0 1px var(--mint-dim), 0 0 12px rgba(53, 208, 122, 0.25); }
+.rl-spin-net { text-align: center; font-size: 14px; font-weight: 700; min-height: 1.3em; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+.rl-spin-net.is-win { color: var(--win); }
+.rl-spin-net.is-lose { color: var(--lose); }
+.rl-counts { text-align: center; font-size: 11.5px; color: var(--text-dim); margin-top: var(--s-1); min-height: 1em; }

@@ -1,8 +1,8 @@
 ---
 layout: base.njk
 title: Home
-seoTitle: "Free Casino Games: Craps, Blackjack, Roulette & Baccarat | 0stakes"
-description: Practice craps, blackjack, roulette and baccarat free with true odds and real payouts. Learn strategy, compare house edges and test casino betting systems.
+seoTitle: "Free Casino Games: Craps, Blackjack, Roulette, Poker & More | 0stakes"
+description: Practice craps, blackjack, roulette, baccarat, video poker and table poker games free with true odds and real payouts. Learn strategy, compare house edges and test casino betting systems.
 ---
 <div class="hero">
   <h1>ZERO STAKES. TRUE ODDS.</h1>
@@ -54,6 +54,35 @@ description: Practice craps, blackjack, roulette and baccarat free with true odd
       <a class="card-link" href="/strategy/baccarat/">Learn Baccarat</a>
     </div>
   </div>
+  <div class="card">
+    <h3>Video Poker</h3>
+    <p>Full-pay 9/6 Jacks or Better with an exact best-hold advisor.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/video-poker/">Play Video Poker →</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Three Card Poker</h3>
+    <p>Ante, Play and Pair Plus against a Queen-high dealer.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/three-card-poker/">Play Three Card Poker →</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Pai Gow Poker</h3>
+    <p>Seven cards, two hands, one joker, and a published house way.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/pai-gow-poker/">Play Pai Gow Poker →</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Crapless Craps</h3>
+    <p>No craps on the come-out. 2, 3, 11 and 12 become points.</p>
+    <div class="card-cta">
+      <a class="btn" href="/games/crapless-craps/">Play Crapless Craps →</a>
+      <a class="card-link" href="/strategy/craps/">Learn Craps</a>
+    </div>
+  </div>
 </div>
 
 <h2>THE CASINO MATH, WITHOUT THE CASINO.</h2>
@@ -81,10 +110,12 @@ description: Practice craps, blackjack, roulette and baccarat free with true odd
 </thead>
 <tbody>
 <tr><td>Craps Odds</td><td>0.00%</td></tr>
+<tr><td>Video Poker (9/6, perfect play)</td><td>{{ videoPokerOdds.houseEdge }}%</td></tr>
 <tr><td>Baccarat Banker</td><td>{{ baccaratOdds.houseEdge.banker }}%</td></tr>
 <tr><td>Craps Pass Line</td><td>{{ odds.houseEdgeStr.passLine }}%</td></tr>
 <tr><td>European Roulette</td><td>2.70%</td></tr>
 <tr><td>American Roulette</td><td>{{ rouletteOdds.houseEdge.standard }}%</td></tr>
+<tr><td>Crapless Craps Pass Line</td><td>{{ craplessOdds.houseEdgeStr.passLine }}%</td></tr>
 <tr><td>Baccarat Tie</td><td>{{ baccaratOdds.houseEdge.tie }}%</td></tr>
 </tbody>
 </table>
