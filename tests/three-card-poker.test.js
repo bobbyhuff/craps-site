@@ -134,4 +134,24 @@ test('exact enumeration confirms house edges and that Q-6-4 is optimal for every
   const eor = edge / (1 + plays / hands.length);
   assert.equal(edge.toFixed(2), ODDS.houseEdge.ante.toFixed(2));
   assert.equal(eor.toFixed(2), ODDS.houseEdge.elementOfRisk.toFixed(2));
+
+  // Published probabilities and the cost of common wrong strategies.
+  const evByHand = [];
+  for (const P of hands) {
+    const bonusR = ODDS.anteBonus[P.e.key];
+    const bonus = bonusR ? bonusR[0] / bonusR[1] : 0;
+    let sum = 0, n = 0;
+    for (const D of hands) {
+      if (D.a === P.a || D.a === P.b || D.a === P.c || D.b === P.a || D.b === P.b || D.b === P.c || D.c === P.a || D.c === P.b || D.c === P.c) continue;
+      n++;
+      sum += bonus + (!D.q ? 1 : P.e.score > D.e.score ? 2 : P.e.score < D.e.score ? -2 : 0);
+    }
+    evByHand.push({ e: P.e, ev: sum / n });
+  }
+  const edgeOf = playFn => (-evByHand.reduce((t, x) => t + (playFn(x.e) ? x.ev : -1), 0) / hands.length * 100).toFixed(2);
+  assert.equal(edgeOf(() => true), ODDS.houseEdge.alwaysPlay.toFixed(2));
+  assert.equal(edgeOf(e => e.cat > 0 || e.ranks[0] >= 12), ODDS.houseEdge.mimicDealer.toFixed(2));
+  assert.equal(edgeOf(e => e.cat > 0 || e.ranks[0] >= 13), ODDS.houseEdge.kingHigh.toFixed(2));
+  assert.equal((hands.filter(h => h.q).length / hands.length * 100).toFixed(2), ODDS.dealerQualifiesPct.toFixed(2));
+  assert.equal(((hands.length - plays) / hands.length * 100).toFixed(2), ODDS.foldPct.toFixed(2));
 });

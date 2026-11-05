@@ -36,13 +36,34 @@ const VIDEO_POKER_ODDS = {
   ],
 
   // Long-run return with mathematically optimal play at 5 coins. Published
-  // standard figure for 9/6 Jacks or Better (cross-checked by 0stakes'
-  // exact-EV hold advisor in tests/video-poker.test.js on sample hands).
+  // standard figure for 9/6 Jacks or Better, and reproduced exactly by
+  // tests/video-poker.test.js, which plays every one of the 2,598,960
+  // possible deals with the best of its 32 holds (99.5439%).
   returnPct: 99.54,
   houseEdge: 0.46,
+  // Same game and same optimal strategy, but with fewer than 5 coins the
+  // royal pays 250 per coin instead of 800 (exact, same test).
+  returnPctUnderMaxCoins: 98.37,
+  // Variance per hand, in units of one coin bet squared (exact, optimal play).
+  variance: 19.51,
+  // Average hands between royal flushes with optimal 5-coin play (exact).
+  royalCycle: 40391,
   // The simplified hold-priority list on the game page gives up a small
   // amount against perfect play; published figure for that list.
   simpleStrategyReturnPct: 99.46,
+
+  // Other common Jacks or Better paytables, for the comparison content on
+  // the strategy pages ONLY. The game itself always plays the 9/6 table
+  // above. Every other row of these tables is identical to 9/6; only the
+  // per-coin Full House and Flush payouts change. Returns are optimal-play,
+  // 5-coin figures, verified exactly in tests/video-poker.test.js (the 9/6
+  // and 8/5 rows) and matching published references for all four.
+  comparisonTables: [
+    { label: '9/6', fullHouse: 9, flush: 6, returnPct: 99.54 },
+    { label: '8/5', fullHouse: 8, flush: 5, returnPct: 97.30 },
+    { label: '7/5', fullHouse: 7, flush: 5, returnPct: 96.15 },
+    { label: '6/5', fullHouse: 6, flush: 5, returnPct: 95.00 },
+  ],
 };
 
 // Lookup by key: pays[key][coins - 1] -> total coins returned.

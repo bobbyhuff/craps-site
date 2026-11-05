@@ -63,13 +63,13 @@ Pass Line, Don't Pass, Come, and Don't Come don't get a clean "true odds" ratio 
 
 That's the whole reason a house-edge chart is more useful than a payout chart alone. A payout of "7:6" on Place 6 sounds fine in isolation. Compared against the true odds of {{ odds.trueOddsStr[6] }}, it's clearly a discount, and the size of that discount is exactly the {{ odds.houseEdgeStr.place6or8 }}% house edge in the row above.
 
-## Best bets in craps
+## The low-cost end of the chart
 
 Pass Line, Don't Pass, Come, and Don't Come sit at the top of the chart for a reason: they're the bets closest to true odds before you even add Odds behind them. Stack max Odds on top and the blended edge drops to {{ odds.houseEdgeStr.passLineFullOdds }}% (Pass Line/Come) or {{ odds.houseEdgeStr.dontPass }}%-adjacent territory (Don't Pass/Don't Come with lay odds) — about as close to a fair coin flip as a casino game gets.
 
 Place 6 and Place 8 belong in the same conversation. At {{ odds.houseEdgeStr.place6or8 }}%, they're barely worse than a bare Pass Line bet, and unlike Pass Line you can make them any time, not just on a come-out roll. For players who want a bet with low edge but more flexibility than Pass Line, Place 6/8 is the closest thing craps has to a second foundation bet — see it run over [1 million simulated rolls](/the-pit/craps-place-6-8-simulated/).
 
-Read more on the [Pass Line and Odds](/strategy/craps/pass-line-and-odds/) specifically, or see how a strategy built around several of these bets at once plays out in [3 Point Molly, explained](/the-pit/3-point-molly-craps-strategy/).
+For every bet ranked in order, including common layout bets the 0stakes table doesn't offer and what $10 in action costs per 100 rolls, see [what is the best bet in craps?](/strategy/craps/best-bets/) Read more on the [Pass Line and Odds](/strategy/craps/pass-line-and-odds/) specifically, or see how a strategy built around several of these bets at once plays out in [3 Point Molly, explained](/the-pit/3-point-molly-craps-strategy/).
 
 ## Worst bets in craps
 

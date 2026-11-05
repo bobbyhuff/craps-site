@@ -49,7 +49,14 @@ const TCP_ODDS = {
   houseEdge: {
     ante: 3.37,          // per Ante wagered, with Q-6-4 strategy
     elementOfRisk: 2.01, // per total amount wagered (Ante + Play)
+    // Cost of common wrong strategies, per Ante (same enumeration):
+    alwaysPlay: 7.65,    // never fold
+    mimicDealer: 3.45,   // play any Queen-high or better, ignore the 6-4
+    kingHigh: 4.99,      // play only King-high or better
   },
+  // Probabilities for the same rules (same enumeration):
+  dealerQualifiesPct: 69.59, // dealer has Queen-high or better
+  foldPct: 32.58,            // share of hands Q-6-4 strategy folds
 };
 
 function tcpRatioStr(pair) { return `${pair[0]}:${pair[1]}`; }
