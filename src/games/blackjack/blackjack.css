@@ -625,3 +625,24 @@ main {
   .table { padding: var(--s-5); }
   .log { height: 170px; }
 }
+
+/* ============================================================
+   Basic-strategy coach (optional hint + mistake flags)
+   ============================================================ */
+
+.bs-hint { text-align: center; font-size: 13.5px; color: var(--text-muted); min-height: 1.3em; margin: var(--s-2) 0 0; }
+.bs-hint b { color: var(--mint); }
+.action-bar .is-advised { box-shadow: 0 0 0 2px var(--mint-bright), var(--shadow-md); }
+
+.coach-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2) var(--s-4);
+  margin: var(--s-2) 0 0;
+}
+.coach-toggles label { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-dim); cursor: pointer; min-height: 32px; }
+.coach-toggles input { accent-color: var(--mint); width: 16px; height: 16px; }
+.coach-score { text-align: center; font-size: 12.5px; color: var(--text-muted); min-height: 1em; margin: var(--s-1) 0 0; }
+.kbd-hint { font-size: 11.5px; color: var(--text-dim); text-align: center; margin: var(--s-1) 0 var(--s-2); }
+.kbd-hint kbd { font-family: inherit; font-size: 11px; border: 1px solid var(--edge-mint); border-radius: 4px; padding: 0 4px; color: var(--text-muted); }

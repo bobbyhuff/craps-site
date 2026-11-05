@@ -18,6 +18,9 @@ breadcrumb:
 <!-- Single source of truth for every payout/odds/rule number blackjack.js
      uses — see src/_data/blackjackOdds.js. Must load before blackjack.js. -->
 <script src="/games/blackjack/odds.js"></script>
+<!-- Same decision table as the strategy chart and trainer; powers the
+     optional in-game basic-strategy hint and mistake flags. -->
+<script src="/games/blackjack/strategy.js"></script>
 
 <div class="app">
   <h1 class="page-title">Free Blackjack Table</h1>
@@ -51,7 +54,7 @@ breadcrumb:
     </div>
   </div>
 
-  <div id="notice"></div>
+  <div id="notice" role="status" aria-live="polite"></div>
 
   <div class="table">
     <div class="dealer-area">
@@ -93,6 +96,7 @@ breadcrumb:
     <button class="btn-outline" id="doubleBtn">Double</button>
     <button class="btn-outline" id="splitBtn">Split</button>
   </div>
+  <p class="bs-hint" id="bsHint" aria-live="polite"></p>
 
   <div class="new-hand-wrap hidden" id="newHandWrap">
     <button class="btn-roll" id="newHandBtn">New Hand</button>
@@ -102,6 +106,13 @@ breadcrumb:
     <span class="chip-label">Chip</span>
     <div id="chipSelector"></div>
   </div>
+
+  <div class="coach-toggles">
+    <label><input type="checkbox" id="hintChk"> Show basic-strategy hint</label>
+    <label><input type="checkbox" id="flagChk"> Flag strategy mistakes</label>
+  </div>
+  <p class="coach-score" id="coachScore"></p>
+  <p class="kbd-hint">Keys: <kbd>H</kbd> hit · <kbd>S</kbd> stand · <kbd>D</kbd> double · <kbd>P</kbd> split · <kbd>Enter</kbd> deal</p>
 
   <div class="table-actions">
     <button class="btn-outline" id="resetBtn">Reset Bankroll</button>

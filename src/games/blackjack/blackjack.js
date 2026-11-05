@@ -329,6 +329,55 @@ function canSplit(hand) {
     && state.bankroll + 1e-9 >= hand.bet;
 }
 
+// ---------- basic-strategy coach ----------
+// Reads the same decision table as the strategy chart and trainer
+// (src/_data/blackjackStrategy.js, loaded as BJ_STRATEGY). Returns
+// 'H' | 'S' | 'D' | 'P' for the active hand, already adjusted for what is
+// legal right now (a chart Double you can't take becomes Hit, or Stand on
+// soft 18+; a pair you can't split is played by its total).
+function strategyAdvice(hand) {
+  if (typeof BJ_STRATEGY === 'undefined' || !hand || hand.status !== 'active') return null;
+  const up = state.dealer.cards[0];
+  const upLabel = up.rank === 'A' ? 'A' : String(cardValue(up));
+  const col = BJ_STRATEGY.DEALER_UPCARDS.indexOf(upLabel);
+  const { total, soft } = handValue(hand.cards);
+  let dec = null;
+  if (canSplit(hand)) {
+    const lab = hand.cards[0].rank === 'A' ? 'A' : String(cardValue(hand.cards[0]));
+    const row = BJ_STRATEGY.PAIRS.find(r => r.hand === `${lab},${lab}`);
+    if (row && row.dec[col] === 'P') return 'P';
+  }
+  if (soft && total >= 13 && total <= 20) dec = BJ_STRATEGY.SOFT_TOTALS.find(r => r.total === total).dec[col];
+  else if (soft && total === 12) dec = 'H';
+  else if (total >= 21) dec = 'S';
+  else {
+    const rows = BJ_STRATEGY.HARD_TOTALS;
+    const row = total <= 8 ? rows[0] : total >= 17 ? rows[rows.length - 1] : rows.find(r => r.total === total);
+    dec = row.dec[col];
+  }
+  if (dec === 'D' && !canDouble(hand)) dec = soft && total >= 18 ? 'S' : 'H';
+  return dec;
+}
+
+const ACTION_WORD = { H: 'Hit', S: 'Stand', D: 'Double', P: 'Split' };
+
+// Called at the start of each player action. Logs a note when the action
+// differs from basic strategy (if "Flag mistakes" is on).
+function coachCheck(action) {
+  const chk = document.getElementById('flagChk');
+  if (!chk || !chk.checked) return;
+  const hand = activeHand();
+  const best = strategyAdvice(hand);
+  if (!best) return;
+  const { total, soft } = handValue(hand.cards);
+  const desc = `${soft ? 'soft ' : ''}${total} vs dealer ${state.dealer.cards[0].rank}`;
+  if (best === action) state.coach = { ok: (state.coach ? state.coach.ok : 0) + 1, miss: state.coach ? state.coach.miss : 0 };
+  else {
+    state.coach = { ok: state.coach ? state.coach.ok : 0, miss: (state.coach ? state.coach.miss : 0) + 1 };
+    log(`Basic strategy: ${ACTION_WORD[best]} on ${desc} (you chose ${ACTION_WORD[action]}).`, 'lose');
+  }
+}
+
 async function advanceHand() {
   for (let i = state.activeHandIndex + 1; i < state.hands.length; i++) {
     if (state.hands[i].status === 'active') { state.activeHandIndex = i; return; }
@@ -340,6 +389,7 @@ async function hit() {
   if (state.isDealing) return;
   const hand = activeHand();
   if (!canHit(hand)) return;
+  coachCheck('H');
   state.isDealing = true;
   render();
   await dealCardTo(hand, drawCard());
@@ -357,6 +407,7 @@ async function stand() {
   if (state.isDealing) return;
   const hand = activeHand();
   if (!canStand(hand)) return;
+  coachCheck('S');
   hand.status = 'stood';
   state.isDealing = true;
   render();
@@ -369,6 +420,7 @@ async function doubleDown() {
   if (state.isDealing) return;
   const hand = activeHand();
   if (!canDouble(hand)) return;
+  coachCheck('D');
   if (!spend(hand.bet)) return;
   hand.bet = Math.round(hand.bet * 2 * 100) / 100;
   hand.doubled = true;
@@ -391,6 +443,7 @@ async function split() {
   if (state.isDealing) return;
   const hand = activeHand();
   if (!canSplit(hand)) return;
+  coachCheck('P');
   if (!spend(hand.bet)) return;
   const [c1, c2] = hand.cards;
   const isAces = c1.rank === 'A';
@@ -529,6 +582,15 @@ function render() {
   document.getElementById('doubleBtn').disabled = !canDouble(hand) || state.isDealing;
   document.getElementById('splitBtn').disabled = !canSplit(hand) || state.isDealing;
 
+  const hintEl = document.getElementById('bsHint');
+  const advice = state.phase === 'playing' && !state.isDealing && document.getElementById('hintChk').checked ? strategyAdvice(hand) : null;
+  hintEl.innerHTML = advice ? `Basic strategy: <b>${ACTION_WORD[advice]}</b>` : '';
+  ['hitBtn', 'standBtn', 'doubleBtn', 'splitBtn'].forEach((id, i) =>
+    document.getElementById(id).classList.toggle('is-advised', advice === 'HSDP'[i]));
+  const c = state.coach;
+  document.getElementById('coachScore').textContent = c && document.getElementById('flagChk').checked
+    ? `Basic strategy this session: ${c.ok} of ${c.ok + c.miss} decisions correct.` : '';
+
   renderLog();
 }
 
@@ -621,6 +683,20 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('insuranceNoBtn').addEventListener('click', declineInsurance);
   document.getElementById('newHandBtn').addEventListener('click', nextRound);
   document.getElementById('resetBtn').addEventListener('click', resetBankroll);
+  document.getElementById('hintChk').addEventListener('change', render);
+  document.getElementById('flagChk').addEventListener('change', render);
+
+  // Keyboard: H hit, S stand, D double, P split, Enter = Deal / New Hand.
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('setupOverlay').classList.contains('hidden')) return;
+    if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (state.phase === 'playing') {
+      if (k === 'h') hit(); else if (k === 's') stand(); else if (k === 'd') doubleDown(); else if (k === 'p') split();
+    } else if (e.key === 'Enter' && !e.target.closest('button, a, summary')) {
+      if (state.phase === 'betting') dealClick(); else if (state.phase === 'payout') nextRound();
+    }
+  });
 
   showOverlay({
     title: "Welcome to Blackjack",

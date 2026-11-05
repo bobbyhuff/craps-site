@@ -45,6 +45,8 @@ function newState(bankroll) {
     lastResult: null, // winning pocket, e.g. '17', '0', '00'
     history: [],
     spins: 0,
+    lastSpinNet: null, // net result of the most recent spin, for the result line
+    colorCounts: { red: 0, black: 0, green: 0 },
     log: [],
   };
 }
@@ -170,6 +172,16 @@ function rebetLast() {
   const total = state.lastBets.reduce((s, b) => s + b.amount, 0);
   if (!spend(total)) return;
   state.bets = state.lastBets.map((b) => ({ ...b, id: nextBetId++ }));
+  render();
+}
+
+// Double every bet currently on the layout (one click instead of re-tapping
+// each spot). Needs the bankroll to cover the whole doubling.
+function doubleBets() {
+  if (state.phase !== 'betting' || !state.bets.length) return;
+  const total = Math.round(state.bets.reduce((s, b) => s + b.amount, 0) * 100) / 100;
+  if (!spend(total)) { notice(`Doubling needs ${fmt(total)}.`); return; }
+  state.bets.forEach((b) => { b.amount = Math.round(b.amount * 2 * 100) / 100; });
   render();
 }
 
@@ -299,7 +311,12 @@ async function spin() {
 
   const colorWord = winning === '0' || winning === '00' ? 'Green' : (ODDS.redNumbers.includes(parseInt(winning, 10)) ? 'Red' : 'Black');
   log(`Spin #${state.spins + 1}: ${winning} (${colorWord})`, 'roll-header');
+  state.colorCounts[colorWord.toLowerCase()]++;
+  const staked = state.bets.reduce((s, b) => s + b.amount, 0);
+  const before = state.bankroll;
   resolveBets(winning);
+  state.lastSpinNet = Math.round((state.bankroll - before - staked) * 100) / 100;
+  state.lastHitKinds = state.bets.filter((b) => b.numbers.includes(winning)).map((b) => b.type);
 
   state.lastBets = state.bets.map((b) => ({ ...b }));
   state.bets = [];
@@ -343,6 +360,7 @@ function render() {
   document.getElementById('spinBtn').disabled = state.phase !== 'betting' || !state.bets.length;
   document.getElementById('clearBetsBtn').disabled = state.phase !== 'betting' || !state.bets.length;
   document.getElementById('rebetBtn').disabled = state.phase !== 'betting' || !state.lastBets.length || state.bets.length > 0;
+  document.getElementById('doubleBtn').disabled = state.phase !== 'betting' || !state.bets.length;
 }
 
 function renderChips() {
@@ -356,7 +374,8 @@ function cellHtml(pocket) {
   const cls = pocketClass(pocket);
   const selected = state.betMode === 'combo' && pocket !== '0' && pocket !== '00' && state.comboSelection.includes(parseInt(pocket, 10));
   const bet = findBet('straightUp', [pocket]);
-  return `<button type="button" class="rl-cell ${cls} ${selected ? 'is-selected' : ''}" onclick="clickCell('${pocket}')">
+  const winner = state.lastResult === pocket && state.phase !== 'spinning';
+  return `<button type="button" class="rl-cell ${cls} ${selected ? 'is-selected' : ''} ${winner ? 'is-winner' : ''}" onclick="clickCell('${pocket}')" aria-label="${pocket}${bet ? `, ${fmt(bet.amount)} bet` : ''}${winner ? ', last winning number' : ''}">
     <span class="rl-cell-num">${pocket}</span>
     ${bet ? `<span class="rl-amt">${fmt(bet.amount)}</span>` : ''}
   </button>`;
@@ -384,7 +403,8 @@ function outsideBoxHtml(kind) {
   const bet = findBet(kind, def.numbers);
   const ratio = ODDS.payouts[def.ratioKey];
   const colorCls = kind === 'red' ? 'is-red-box' : kind === 'black' ? 'is-black-box' : '';
-  return `<div class="rl-obox ${colorCls}" onclick="clickOutside('${kind}')">
+  const hit = state.lastResult && state.phase !== 'spinning' && def.numbers.includes(state.lastResult);
+  return `<div class="rl-obox ${colorCls} ${hit ? 'is-hit' : ''}" onclick="clickOutside('${kind}')">
     <div class="rl-obox-label">${def.label}</div>
     <div class="rl-obox-pay">${ratio[0]}:${ratio[1]}</div>
     ${bet ? `<div class="rl-obox-amt">${fmt(bet.amount)}</div>` : ''}
@@ -454,11 +474,20 @@ function renderResult() {
   }
   el.textContent = state.lastResult;
   el.className = `rl-result ${pocketClass(state.lastResult)} ${state.phase === 'reveal' ? 'is-landed' : ''}`;
+  const netEl = document.getElementById('rlSpinNet');
+  if (netEl) {
+    const n = state.lastSpinNet;
+    netEl.textContent = n === null || state.phase !== 'betting' ? '' : (n > 0 ? `+${fmt(n)} this spin` : n < 0 ? `${fmt(n)} this spin` : 'Even this spin');
+    netEl.className = `rl-spin-net ${n > 0 ? 'is-win' : n < 0 ? 'is-lose' : ''}`;
+  }
 }
 
 function renderHistory() {
   const el = document.getElementById('rlHistory');
   el.innerHTML = state.history.map((p) => `<div class="rl-history-chip ${pocketClass(p)}">${p}</div>`).join('');
+  const c = state.colorCounts;
+  const cEl = document.getElementById('rlCounts');
+  if (cEl) cEl.textContent = state.spins ? `This session: ${c.red} red · ${c.black} black · ${c.green} green in ${state.spins} spins` : '';
 }
 
 function renderLog() {
@@ -475,6 +504,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('spinBtn').addEventListener('click', spin);
   document.getElementById('clearBetsBtn').addEventListener('click', clearAllBets);
   document.getElementById('rebetBtn').addEventListener('click', rebetLast);
+  document.getElementById('doubleBtn').addEventListener('click', doubleBets);
   document.getElementById('resetBtn').addEventListener('click', resetBankroll);
   document.querySelectorAll('input[name=betMode]').forEach((r) =>
     r.addEventListener('change', (e) => setBetMode(e.target.value))

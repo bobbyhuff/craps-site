@@ -51,13 +51,15 @@ breadcrumb:
     </div>
   </div>
 
-  <div id="notice"></div>
+  <div id="notice" role="status" aria-live="polite"></div>
 
   <div class="rl-wheel-wrap">
     <div class="rl-wheel-pointer"></div>
     <div class="rl-wheel" id="rlWheel"></div>
-    <div class="rl-result" id="rlResult">Place a bet and spin</div>
+    <div class="rl-result" id="rlResult" aria-live="polite">Place a bet and spin</div>
+    <div class="rl-spin-net" id="rlSpinNet" aria-live="polite"></div>
     <div class="rl-history" id="rlHistory"></div>
+    <div class="rl-counts" id="rlCounts"></div>
   </div>
 
   <div class="mode-toggle">
@@ -89,6 +91,7 @@ breadcrumb:
   <div class="table-actions">
     <button class="btn-outline" id="clearBetsBtn">Clear Bets</button>
     <button class="btn-outline" id="rebetBtn">Rebet</button>
+    <button class="btn-outline" id="doubleBtn">Double</button>
     <button class="btn-roll" id="spinBtn">Spin</button>
   </div>
 
