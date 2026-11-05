@@ -1,0 +1,65 @@
+/* ============================================================
+   Three Card Poker — layout only. Shared components come from
+   /games/shared/card-table.css, which loads first.
+   ============================================================ */
+
+.tcp-table { padding-top: var(--s-4); }
+.tcp-seat .hand { min-height: 64px; }
+
+.tcp-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: var(--s-3) 0;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+}
+.tcp-divider::before, .tcp-divider::after { content: ''; flex: 1; height: 1px; background: var(--edge-mint); }
+.tcp-divider span { flex: 0 1 auto; }
+
+.tcp-seat .seat-label:last-child { margin: var(--s-2) 0 0; }
+
+.tcp-breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-3) auto 0;
+  max-width: 460px;
+  font-size: 13px;
+}
+.tcp-breakdown h4 { margin: 0 0 var(--s-1); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+.tcp-breakdown ul { list-style: none; margin: 0; padding: 0; }
+.tcp-breakdown li { display: flex; justify-content: space-between; gap: var(--s-2); padding: 3px 0; border-bottom: 1px solid var(--edge); font-variant-numeric: tabular-nums; }
+.tcp-breakdown li i { color: var(--text-dim); font-style: normal; font-size: 11.5px; }
+.tcp-breakdown .r-win b { color: var(--win); }
+.tcp-breakdown .r-lose b { color: var(--lose); }
+.tcp-breakdown .r-push b { color: var(--text-muted); }
+
+.tcp-spots { grid-template-columns: repeat(3, 1fr); }
+.tcp-play-spot { cursor: default; opacity: 0.6; border-style: dotted; }
+.tcp-play-spot .bet-spot-amt { font-size: 11.5px; color: var(--text-dim); font-weight: 600; }
+.tcp-hint-text { font-size: 11.5px; color: var(--text-dim); margin: var(--s-2) 0 0; }
+
+.tcp-decision .btn-roll, .tcp-decision .tcp-fold { min-width: 130px; min-height: 52px; font-size: 15px; }
+.tcp-fold { color: var(--lose); border-color: rgba(255, 138, 128, 0.45); }
+.tcp-fold:hover { background: rgba(255, 138, 128, 0.08); }
+
+.tcp-strategy { text-align: center; font-size: 13.5px; color: var(--text-muted); margin: var(--s-2) 0 0; }
+.tcp-strategy b { color: var(--mint); }
+
+#newHandWrap { margin: var(--s-3) 0; }
+
+.tcp-pay-grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; padding-bottom: var(--s-3); }
+.tcp-h3 { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin: 0 0 var(--s-2); }
+.tcp-tag { font-weight: 500; color: var(--text-dim); letter-spacing: 0.02em; text-transform: none; }
+.tcp-ranks { margin: 0; padding-left: var(--s-5); color: var(--text-muted); font-size: 13.5px; line-height: 1.7; }
+.tcp-ranks b { color: var(--text); }
+.tcp-table-note { font-size: 12px; color: var(--text-dim); margin: var(--s-2) 0 0; }
+
+@media (min-width: 701px) {
+  .tcp-pay-grid { grid-template-columns: 1.1fr 1fr 1fr; }
+  .tcp-seat .hand { min-height: 82px; }
+}

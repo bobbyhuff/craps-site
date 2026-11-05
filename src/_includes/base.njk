@@ -41,6 +41,7 @@
 <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/site.css">
+{% if sharedCss %}<link rel="stylesheet" href="{{ sharedCss }}">{% endif %}
 {% if extraCss %}<link rel="stylesheet" href="{{ extraCss }}">{% endif %}
 </head>
 <body>

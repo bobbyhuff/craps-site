@@ -32,6 +32,23 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/games/baccarat/baccarat.css");
   eleventyConfig.addPassthroughCopy("src/games/baccarat/baccarat.js");
   eleventyConfig.addPassthroughCopy({ "src/_data/baccaratOdds.js": "games/baccarat/odds.js" });
+  // Crapless Craps reuses craps.js/craps.css; only its odds file is new.
+  // craplessOdds.js builds on odds.js, so the page loads both.
+  eleventyConfig.addPassthroughCopy({ "src/_data/craplessOdds.js": "games/crapless-craps/odds.js" });
+  // Shared card-game assets (video poker, three card poker, pai gow).
+  eleventyConfig.addPassthroughCopy("src/games/shared");
+  eleventyConfig.addPassthroughCopy("src/games/video-poker/video-poker.css");
+  eleventyConfig.addPassthroughCopy("src/games/video-poker/video-poker.js");
+  eleventyConfig.addPassthroughCopy("src/games/video-poker/vp-engine.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/videoPokerOdds.js": "games/video-poker/odds.js" });
+  eleventyConfig.addPassthroughCopy("src/games/three-card-poker/three-card-poker.css");
+  eleventyConfig.addPassthroughCopy("src/games/three-card-poker/three-card-poker.js");
+  eleventyConfig.addPassthroughCopy("src/games/three-card-poker/tcp-engine.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/threeCardPokerOdds.js": "games/three-card-poker/odds.js" });
+  eleventyConfig.addPassthroughCopy("src/games/pai-gow-poker/pai-gow-poker.css");
+  eleventyConfig.addPassthroughCopy("src/games/pai-gow-poker/pai-gow-poker.js");
+  eleventyConfig.addPassthroughCopy("src/games/pai-gow-poker/pg-engine.js");
+  eleventyConfig.addPassthroughCopy({ "src/_data/paiGowOdds.js": "games/pai-gow-poker/odds.js" });
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
   eleventyConfig.addPassthroughCopy("src/favicon-64.png");
   eleventyConfig.addPassthroughCopy("src/icon-512.png");

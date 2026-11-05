@@ -1,0 +1,111 @@
+/* ============================================================
+   Video poker — layout only. Shared components (status bar,
+   overlay, chips, buttons, cards, log, legend, paytable) come
+   from /games/shared/card-table.css, which loads first.
+   ============================================================ */
+
+.vp-sub {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: calc(var(--s-2) * -1) 0 var(--s-3);
+}
+
+.vp-paytable-wrap {
+  margin: var(--s-2) 0 var(--s-3);
+  border: 1px solid var(--edge-mint);
+  border-radius: var(--r-md);
+  background: var(--felt-well);
+}
+
+.vp-paytable { font-size: 12px; }
+.vp-paytable th, .vp-paytable td { padding: 4px 6px; }
+
+.vp-table { padding-top: var(--s-5); }
+
+.vp-hand {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-2);
+  justify-items: center;
+}
+
+.vp-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Bigger cards than the table games: they're the whole game here. */
+.vp-hand .pcard,
+.vp-hand .pcard-back {
+  width: min(100%, 64px);
+  height: auto;
+  aspect-ratio: 5 / 7;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.vp-hand .pcard-corner { font-size: 14px; }
+.vp-hand .pcard-corner-suit { font-size: 13px; }
+.vp-hand .pcard-suit-big { font-size: 26px; }
+
+.vp-slot.is-held .pcard {
+  transform: translateY(-6px);
+  box-shadow: 0 0 0 2px var(--mint), var(--shadow-md);
+}
+
+.vp-slot.is-advised .pcard { outline: 2px dashed var(--mint-bright); outline-offset: 3px; }
+
+.held-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  min-height: 1.3em;
+}
+.vp-slot.is-held .held-tag { color: var(--mint); }
+
+.vp-advice {
+  margin: var(--s-3) auto 0;
+  max-width: 420px;
+  background: var(--felt-well);
+  border: 1px solid var(--edge-mint);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  font-size: 13px;
+}
+.vp-advice-head { display: flex; justify-content: space-between; color: var(--text-dim); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--s-1); }
+.vp-advice ol { margin: 0 0 var(--s-2); padding-left: var(--s-5); }
+.vp-advice li { color: var(--text-muted); }
+.vp-advice li span { display: inline-block; min-width: 60%; }
+.vp-advice li b { float: right; font-variant-numeric: tabular-nums; color: var(--text); }
+.vp-advice li.is-best, .vp-advice li.is-best b { color: var(--mint); }
+.vp-apply { width: 100%; min-height: 40px; }
+
+.vp-bet-line {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-top: var(--s-3);
+}
+.vp-bet-line b { color: var(--bone); }
+
+.vp-controls .btn-outline { min-width: 84px; }
+.vp-controls .btn-roll { min-width: 120px; }
+
+.vp-strategy { color: var(--text-muted); line-height: 1.7; padding-left: var(--s-5); }
+
+@media (min-width: 701px) {
+  .vp-hand .pcard, .vp-hand .pcard-back { width: 92px; }
+  .vp-hand .pcard-corner { font-size: 17px; top: 6px; left: 7px; }
+  .vp-hand .pcard-corner-suit { font-size: 15px; }
+  .vp-hand .pcard-suit-big { font-size: 40px; }
+  .vp-paytable { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vp-hand .pcard { transition: none; }
+}
