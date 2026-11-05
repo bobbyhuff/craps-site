@@ -77,6 +77,9 @@ const ODDS = {
   houseEdge: {
     passLineFullOdds: 0.37,
     passLineSingleOdds: 0.85,
+    // Don't Pass + lay odds to win 3-4-5x the flat bet (6x laid on every
+    // point), per total wagered.
+    dontPassFullOdds: 0.27,
     dontPass: 1.36,
     passLine: 1.41,
     place6or8: 1.52,
@@ -88,6 +91,15 @@ const ODDS = {
     hard6or8: 9.09,
     hard4or10: 11.11,
     anySeven: 16.67,
+  },
+
+  // Common bets the 0stakes table does NOT offer, kept here only so the
+  // strategy pages can rank them without hardcoding numbers. Recomputed
+  // from the dice distribution in tests/craps.test.js.
+  referenceBets: {
+    big6or8: { name: 'Big 6 / Big 8', pay: [1, 1], houseEdge: 9.09 },
+    yo: { name: 'Yo (11), one roll', pay: [15, 1], houseEdge: 11.11 },
+    twoOrTwelve: { name: 'Aces (2) or Boxcars (12), one roll', pay: [30, 1], houseEdge: 13.89 },
   },
 };
 
@@ -111,6 +123,12 @@ ODDS.trueOddsAgainstStr = mapRatios(ODDS.trueOddsAgainst);
 // Fixed 2-decimal display strings, so every row of the house-edge ranking
 // table formats consistently regardless of whether the underlying number
 // happens to be a whole percentage (e.g. 4 vs 4.00).
+for (const k in ODDS.referenceBets) {
+  const b = ODDS.referenceBets[k];
+  b.payStr = ratioStr(b.pay);
+  b.houseEdgeStr = b.houseEdge.toFixed(2);
+}
+
 ODDS.houseEdgeStr = {};
 for (const k in ODDS.houseEdge) ODDS.houseEdgeStr[k] = ODDS.houseEdge[k].toFixed(2);
 
