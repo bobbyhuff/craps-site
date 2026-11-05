@@ -1198,7 +1198,7 @@ body.sheet-open { overflow: hidden; }
   display: flex;
   justify-content: center;
   gap: var(--s-1);
-  margin: calc(var(--s-2) * -1) auto var(--s-3);
+  margin: 0 auto 20px; /* .no-real-money below pulls up 12px */
   padding: 3px;
   width: fit-content;
   max-width: 100%;
@@ -1338,3 +1338,10 @@ body.sheet-open { overflow: hidden; }
 .cc-table th, .cc-table td { padding: var(--s-2) var(--s-3); border-bottom: 1px solid var(--edge); text-align: left; }
 .cc-table th { color: var(--text-dim); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 .cc-table td:first-child { color: var(--bone); font-weight: 600; }
+
+/* Desktop: the bet-options row now holds three controls; let it wrap
+   between controls, never inside the Place/Buy toggle. */
+@media (min-width: 701px) {
+  .bet-opts { flex-wrap: wrap; row-gap: var(--s-1); column-gap: var(--s-5); }
+  .mode-toggle { flex-wrap: nowrap; }
+}

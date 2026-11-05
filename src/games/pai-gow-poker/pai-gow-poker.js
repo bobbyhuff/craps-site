@@ -267,7 +267,7 @@ function renderPlayer() {
 
 function renderDealer() {
   const el = document.getElementById('dealerRows');
-  if (!state.dealerCards.length) { el.innerHTML = ''; return; }
+  if (!state.dealerCards.length) { el.innerHTML = `<div class="hand pg-cards">${'<div class="pcard-back is-ghost" aria-hidden="true"></div>'.repeat(7)}</div>`; return; }
   const ds = state.dealerSplit;
   if (!ds) {
     el.innerHTML = `<div class="hand pg-cards">${state.dealerCards.map(c => CARDS.cardHtml(c, { faceDown: true, isNew: state.fresh })).join('')}</div>`;

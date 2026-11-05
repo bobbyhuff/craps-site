@@ -98,6 +98,17 @@
 
 .vp-strategy { color: var(--text-muted); line-height: 1.7; padding-left: var(--s-5); }
 
+/* Phones: one line per paytable row so the cards stay above the fold. */
+.vp-coins-label { display: none; text-transform: none; letter-spacing: 0; font-weight: 500; }
+@media (max-width: 700px) {
+  .vp-coin-word { display: none; }
+  .vp-coins-label { display: inline; }
+  .vp-paytable { font-size: 11.5px; }
+  .vp-paytable td:first-child, .vp-paytable th:first-child { white-space: nowrap; }
+  .vp-paytable th, .vp-paytable td { padding: 3px 5px; }
+  .vp-table { padding-top: var(--s-4); }
+}
+
 @media (min-width: 701px) {
   .vp-hand .pcard, .vp-hand .pcard-back { width: 92px; }
   .vp-hand .pcard-corner { font-size: 17px; top: 6px; left: 7px; }

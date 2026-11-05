@@ -212,11 +212,12 @@ function renderHands() {
   const o = state.outcome;
   const pEl = document.getElementById('playerHand');
   const dEl = document.getElementById('dealerHand');
-  pEl.innerHTML = state.player.map((c, i) => CARDS.cardHtml(c, { isNew: state.fresh.player.has(i) })).join('');
-  dEl.innerHTML = state.dealer.map((c, i) => CARDS.cardHtml(c, {
+  const ghosts = '<div class="pcard-back is-ghost" aria-hidden="true"></div>'.repeat(3);
+  pEl.innerHTML = state.player.length ? state.player.map((c, i) => CARDS.cardHtml(c, { isNew: state.fresh.player.has(i) })).join('') : ghosts;
+  dEl.innerHTML = state.dealer.length ? state.dealer.map((c, i) => CARDS.cardHtml(c, {
     faceDown: !state.dealerRevealed,
     isNew: state.fresh.dealer.has(i) || (state.dealerRevealed && !o),
-  })).join('');
+  })).join('') : ghosts;
   state.fresh.player.clear(); state.fresh.dealer.clear();
 
   const pT = document.getElementById('playerTotal');

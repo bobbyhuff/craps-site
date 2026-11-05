@@ -710,7 +710,7 @@ function render() {
   const netEl = document.getElementById('net');
   netEl.textContent = fmt(net);
   netEl.className = net >= 0 ? 'positive' : 'negative';
-  document.getElementById('pointDisplay').textContent = state.point ?? 'OFF (come-out)';
+  document.getElementById('pointDisplay').textContent = state.point ?? 'OFF';
   document.getElementById('pointDisplay').closest('.sb-cell').classList.toggle('is-on', state.point !== null);
 
   renderRollDisplay();
