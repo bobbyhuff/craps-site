@@ -73,7 +73,7 @@ Don't Pass generally wins when 7 appears before the established point, and it lo
 
 If you're learning the layout, make a small Pass Line wager and watch a few points resolve. Once comfortable, experiment with one Odds bet. If you prefer having specific numbers in action, practice one $6 Place 6 or Place 8 wager before putting both out. Above all, compare **total dollars at risk**, not simply the published edge percentage. A lower-edge approach that requires much larger wagers can still cost more in absolute dollars.
 
-Use play money to test each approach on the [free craps table](/games/craps/). Want the exact numbers for every bet? See [Craps odds and payouts](/strategy/craps/house-edge/).
+Use play money to test each approach on the [free craps table](/games/craps/). Want the exact numbers for every bet? See [Craps odds and payouts](/strategy/craps/house-edge/), or [every craps bet ranked by house edge](/strategy/craps/best-bets/). Curious about the version with no craps on the come-out? [Crapless Craps vs. regular craps](/strategy/crapless-craps/crapless-vs-regular-craps/) shows what it costs.
 
 ## Frequently asked questions
 

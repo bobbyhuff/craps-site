@@ -72,14 +72,14 @@ collapsible session stats (hands, wagered, returned, net, biggest win, time).
 - **Session stats on the older games.** The shared `SessionStats` in `games/shared/table-kit.js`
   could be wired into blackjack/roulette/baccarat with a few lines each.
 - **Craps status bar** shows "OFF (come-out)" which wraps on 360px phones (pre-existing).
-- **`/strategy/craps/` hub** lists "Best Craps Strategies for Beginners" and "6/8 Craps Strategy
-  Explained" twice each (pre-existing duplicate cards).
+- ~~**`/strategy/craps/` hub** listed two articles twice each.~~ Fixed in the strategy-content pass.
 
 ## Top recommendations
 
 1. Optional localStorage bankroll that carries across games, with an explicit "start over".
 2. Wire `SessionStats` into blackjack, roulette and baccarat for consistent session summaries.
-3. A strategy hub page per new game (`/strategy/video-poker/` etc.) with a full 9/6 strategy chart.
+3. ~~A strategy hub page per new game.~~ Done: `/strategy/video-poker/`, `/strategy/three-card-poker/`,
+   `/strategy/pai-gow-poker/`, `/strategy/crapless-craps/`, 3 to 5 articles each.
 4. Roulette: a European single-zero table toggle (the content already compares the two).
 5. Opt-in sound effects (deal, dice, win) with one site-wide on/off preference.
 
