@@ -1,6 +1,6 @@
 # 0stakes
 
-A free, no-account, no-ads craps and blackjack practice site plus strategy content. Static
+A free, no-account, ad-supported (Google AdSense) casino practice site plus strategy content. Static
 site built with [Eleventy](https://www.11ty.dev/). Production domain is `0stakes.com`
 (`src/_data/site.js`), registered and pointed at this Cloudflare project. The Workers deploy
 itself still serves from the old `craps-site.redclayreserve.workers.dev` host name — see
@@ -134,7 +134,7 @@ Real values from `src/css/site.css` — this is the site's own palette, not any 
 
 **Type**: `DM Serif Display` (headings, self-hosted woff2) + `Inter` (UI/body, self-hosted
 variable woff2, also the nav wordmark). No Google Fonts CDN — self-hosted to keep the
-"no ads, no tracking" positioning honest.
+self-hosting honest (no third-party font requests).
 
 **Color** (`:root` custom properties):
 | Token | Value | Use |
