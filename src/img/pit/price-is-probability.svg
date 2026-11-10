@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="t d">
+  <title id="t">A 60 cent contract is a 60 percent chance</title>
+  <desc id="d">A one dollar contract split into a 60 cent YES share and a 40 cent NO share. Buying YES at 60 cents risks 60 cents to win 40 cents, which equals American odds of minus 150.</desc>
+  <rect width="760" height="300" rx="14" fill="#0e2419"/>
+  <text x="380" y="46" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="600" fill="#edf2ee">One $1.00 contract</text>
+  <rect x="60" y="80" width="360" height="74" rx="8" fill="#35d07a"/>
+  <rect x="420" y="80" width="280" height="74" rx="8" fill="#1c4a30"/>
+  <rect x="420" y="80" width="20" height="74" fill="#1c4a30"/>
+  <text x="240" y="126" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="700" fill="#081810">YES  60¢</text>
+  <text x="560" y="126" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="700" fill="#dce6df">NO  40¢</text>
+  <line x1="60" y1="172" x2="60" y2="186" stroke="#9fb0a6" stroke-width="2"/>
+  <line x1="700" y1="172" x2="700" y2="186" stroke="#9fb0a6" stroke-width="2"/>
+  <line x1="60" y1="179" x2="700" y2="179" stroke="#9fb0a6" stroke-width="2"/>
+  <text x="380" y="208" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="16" fill="#9fb0a6">The contract pays $1.00 if the event happens, $0 if it does not</text>
+  <text x="380" y="252" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" fill="#edf2ee">Risk 60¢ to win 40¢  =  <tspan fill="#56db92" font-weight="700">60% implied  =  -150 odds</tspan></text>
+  <text x="380" y="282" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#77887e">0stakes.com</text>
+</svg>
