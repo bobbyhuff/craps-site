@@ -105,3 +105,8 @@ Every bet in the chart above is playable for free, with the same odds data drivi
     <p>2, 3, 11 and 12 become points, at a 5.38% Pass Line edge.</p>
   </div>
 </div>
+
+## Related reading
+
+* [Prediction Market Prices, Explained as Odds](/the-pit/prediction-market-odds-explained/): how a contract price converts to odds, and the cost built into it.
+* [Is Kalshi Sports Betting Legal? The Court Fight, Explained](/the-pit/kalshi-sports-contracts-court-fight-explained/): where the courts stand on prediction market sports contracts.

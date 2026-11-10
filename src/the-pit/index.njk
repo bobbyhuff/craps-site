@@ -13,6 +13,7 @@ description: See popular casino strategies tested with real math and large-scale
   <button type="button" class="btn secondary" data-filter="roulette">Roulette</button>
   <button type="button" class="btn secondary" data-filter="craps">Craps</button>
   <button type="button" class="btn secondary" data-filter="baccarat">Baccarat</button>
+  <button type="button" class="btn secondary" data-filter="industry">Industry</button>
 </div>
 
 {% for game in ["blackjack", "roulette", "craps", "baccarat"] %}
@@ -31,11 +32,26 @@ description: See popular casino strategies tested with real math and large-scale
 </div>
 {% endfor %}
 
+<div class="pit-group" data-group="industry">
+  <h2>Industry</h2>
+  <p>How the gambling business and its rules work, explained with the math. Each piece shows when it was last updated.</p>
+  <div class="card-grid">
+    {% for post in collections.pit %}
+      {% if post.data.topic == "industry" %}
+      <div class="card">
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+        <p>{{ post.data.description }}</p>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
 <div class="pit-group" data-group="other">
   <h2>More From The Pit</h2>
   <div class="card-grid">
     {% for post in collections.pit %}
-      {% if not post.data.game %}
+      {% if not post.data.game and post.data.topic != "industry" %}
       <div class="card">
         <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
         <p>{{ post.data.description }}</p>

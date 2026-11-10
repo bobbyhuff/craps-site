@@ -13,6 +13,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/fonts");
+  eleventyConfig.addPassthroughCopy("src/img");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.css");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.js");
   // Same file Eleventy reads as the `odds` global data object, also published

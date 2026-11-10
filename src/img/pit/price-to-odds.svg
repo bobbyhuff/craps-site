@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="t d">
+  <title id="t">Contract price converted to implied probability and American odds</title>
+  <desc id="d">A ladder showing contract prices of 20, 40, 50, 60 and 80 cents, with implied probabilities of 20, 40, 50, 60 and 80 percent and American odds of plus 400, plus 150, plus 100, minus 150 and minus 400.</desc>
+  <rect width="760" height="360" rx="14" fill="#0e2419"/>
+  <text x="380" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="600" fill="#edf2ee">Contract price to American odds</text>
+  <g font-family="Inter,Arial,sans-serif" font-size="14" fill="#9fb0a6">
+    <text x="60" y="84">PRICE</text>
+    <text x="230" y="84">IMPLIED CHANCE</text>
+    <text x="640" y="84" text-anchor="end">ODDS</text>
+  </g>
+  <g font-family="Inter,Arial,sans-serif" font-size="20" fill="#dce6df">
+    <text x="60" y="130">20¢</text><rect x="230" y="112" width="80" height="22" rx="4" fill="#35d07a"/><text x="640" y="130" text-anchor="end" fill="#56db92" font-weight="700">+400</text>
+    <text x="60" y="176">40¢</text><rect x="230" y="158" width="160" height="22" rx="4" fill="#35d07a"/><text x="640" y="176" text-anchor="end" fill="#56db92" font-weight="700">+150</text>
+    <text x="60" y="222">50¢</text><rect x="230" y="204" width="200" height="22" rx="4" fill="#35d07a"/><text x="640" y="222" text-anchor="end" fill="#56db92" font-weight="700">+100</text>
+    <text x="60" y="268">60¢</text><rect x="230" y="250" width="240" height="22" rx="4" fill="#35d07a"/><text x="640" y="268" text-anchor="end" fill="#56db92" font-weight="700">-150</text>
+    <text x="60" y="314">80¢</text><rect x="230" y="296" width="320" height="22" rx="4" fill="#35d07a"/><text x="640" y="314" text-anchor="end" fill="#56db92" font-weight="700">-400</text>
+  </g>
+  <text x="380" y="346" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#77887e">Bar length = implied probability (full width = 100%). Before fees.  0stakes.com</text>
+</svg>

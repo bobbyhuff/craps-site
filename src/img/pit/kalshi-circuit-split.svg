@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-labelledby="t d">
+  <title id="t">Two appeals courts, two answers</title>
+  <desc id="d">Left card: Third Circuit, April 2026, Kalshi v. Flaherty about New Jersey. The contracts are likely swaps and New Jersey cannot enforce its gambling law. Right card: Ninth Circuit, August 2026, Kalshi v. Assad about Nevada. The contracts are likely not swaps and Nevada can enforce its gambling law. Both are preliminary rulings.</desc>
+  <rect width="760" height="340" rx="14" fill="#0e2419"/>
+  <text x="380" y="42" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="600" fill="#edf2ee">Same contracts, two answers</text>
+  <g font-family="Inter,Arial,sans-serif">
+    <rect x="40" y="66" width="320" height="220" rx="12" fill="#081810" stroke="#35d07a" stroke-width="2"/>
+    <text x="200" y="98" text-anchor="middle" font-size="14" fill="#9fb0a6">THIRD CIRCUIT  |  APRIL 2026</text>
+    <text x="200" y="124" text-anchor="middle" font-size="16" fill="#dce6df">Kalshi v. Flaherty (New Jersey)</text>
+    <text x="200" y="176" text-anchor="middle" font-size="30" font-weight="700" fill="#56db92">LIKELY SWAPS</text>
+    <text x="200" y="214" text-anchor="middle" font-size="16" fill="#edf2ee">Federal law overrides</text>
+    <text x="200" y="236" text-anchor="middle" font-size="16" fill="#edf2ee">New Jersey's gambling law</text>
+    <text x="200" y="266" text-anchor="middle" font-size="13" fill="#9fb0a6">Vote: 2 to 1</text>
+
+    <rect x="400" y="66" width="320" height="220" rx="12" fill="#081810" stroke="#ff8a80" stroke-width="2"/>
+    <text x="560" y="98" text-anchor="middle" font-size="14" fill="#9fb0a6">NINTH CIRCUIT  |  AUGUST 2026</text>
+    <text x="560" y="124" text-anchor="middle" font-size="16" fill="#dce6df">Kalshi v. Assad (Nevada)</text>
+    <text x="560" y="176" text-anchor="middle" font-size="30" font-weight="700" fill="#ff8a80">LIKELY NOT SWAPS</text>
+    <text x="560" y="214" text-anchor="middle" font-size="16" fill="#edf2ee">Nevada can enforce</text>
+    <text x="560" y="236" text-anchor="middle" font-size="16" fill="#edf2ee">its gambling law</text>
+    <text x="560" y="266" text-anchor="middle" font-size="13" fill="#9fb0a6">Rehearing denied, November 2026</text>
+  </g>
+  <text x="380" y="316" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#77887e">Both are preliminary rulings, not final decisions on the merits.  0stakes.com</text>
+</svg>

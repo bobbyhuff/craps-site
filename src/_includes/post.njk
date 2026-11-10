@@ -3,12 +3,12 @@ layout: base.njk
 ---
 {% if date %}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":{{ title | dump | safe }},"datePublished":"{{ date | dateToISO }}","description":{{ description | dump | safe }},"image":"{{ site.url }}/og-image.png","author":{"@type":"Organization","name":"0stakes"}}
+{"@context":"https://schema.org","@type":"Article","headline":{{ title | dump | safe }},"datePublished":"{{ date | dateToISO }}"{% if updated %},"dateModified":"{{ updated | dateToISO }}"{% endif %},"description":{{ description | dump | safe }},"image":"{{ site.url }}/og-image.png","author":{"@type":"Organization","name":"0stakes"}}
 </script>
 {% endif %}
 <article class="post">
   <h1>{{ title }}</h1>
-  {% if date %}<div class="post-date">{{ date | readableDate }}</div>{% endif %}
+  {% if date %}<div class="post-date">{{ date | readableDate }}{% if updated %} &middot; Updated {{ updated | readableDate }}{% endif %}</div>{% endif %}
   <div class="post-body">
     {{ content | safe }}
   </div>

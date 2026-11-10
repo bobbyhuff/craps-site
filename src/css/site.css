@@ -392,6 +392,7 @@ main {
 .post-body { line-height: 1.75; font-size: 16px; color: var(--text); }
 .post-body h2 { color: var(--mint); margin-top: var(--s-6); font-size: 25px; }
 .post-body ul { padding-left: var(--s-5); }
+.post-body img { display: block; max-width: 100%; height: auto; margin: var(--s-5) 0; border-radius: 12px; }
 
 .post-body code {
   background: var(--bg-deep);
