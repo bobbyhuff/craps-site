@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-labelledby="t d">
+  <title id="t">Before and after the 90 percent gambling loss rule</title>
+  <desc id="d">With $50,000 in winnings and $50,000 in losses, the old rule allowed $50,000 of deductible losses and left $0 taxable. The 2026 rule allows $45,000 of deductible losses and leaves $5,000 taxable.</desc>
+  <rect width="760" height="340" rx="14" fill="#0e2419"/>
+  <text x="380" y="42" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="600" fill="#edf2ee">Same year, same results: $50,000 won, $50,000 lost</text>
+  <g font-family="Inter,Arial,sans-serif">
+    <rect x="40" y="66" width="320" height="224" rx="12" fill="#081810" stroke="#35d07a" stroke-width="2"/>
+    <text x="200" y="98" text-anchor="middle" font-size="14" fill="#9fb0a6">BEFORE 2026</text>
+    <text x="200" y="132" text-anchor="middle" font-size="16" fill="#dce6df">Deductible losses</text>
+    <text x="200" y="164" text-anchor="middle" font-size="30" font-weight="700" fill="#edf2ee">$50,000</text>
+    <line x1="80" y1="190" x2="320" y2="190" stroke="#1c4a30" stroke-width="2"/>
+    <text x="200" y="220" text-anchor="middle" font-size="16" fill="#dce6df">Taxable gambling income</text>
+    <text x="200" y="262" text-anchor="middle" font-size="36" font-weight="700" fill="#56db92">$0</text>
+
+    <rect x="400" y="66" width="320" height="224" rx="12" fill="#081810" stroke="#ff8a80" stroke-width="2"/>
+    <text x="560" y="98" text-anchor="middle" font-size="14" fill="#9fb0a6">2026 AND LATER</text>
+    <text x="560" y="132" text-anchor="middle" font-size="16" fill="#dce6df">Deductible losses (90%)</text>
+    <text x="560" y="164" text-anchor="middle" font-size="30" font-weight="700" fill="#edf2ee">$45,000</text>
+    <line x1="440" y1="190" x2="680" y2="190" stroke="#1c4a30" stroke-width="2"/>
+    <text x="560" y="220" text-anchor="middle" font-size="16" fill="#dce6df">Taxable gambling income</text>
+    <text x="560" y="262" text-anchor="middle" font-size="36" font-weight="700" fill="#ff8a80">$5,000</text>
+  </g>
+  <text x="380" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#77887e">Applies to itemizers. Federal rule.  0stakes.com</text>
+</svg>

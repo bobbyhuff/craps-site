@@ -110,3 +110,4 @@ Every bet in the chart above is playable for free, with the same odds data drivi
 
 * [Prediction Market Prices, Explained as Odds](/the-pit/prediction-market-odds-explained/): how a contract price converts to odds, and the cost built into it.
 * [Is Kalshi Sports Betting Legal? The Court Fight, Explained](/the-pit/kalshi-sports-contracts-court-fight-explained/): where the courts stand on prediction market sports contracts.
+* [The New Gambling Loss Tax Rule: What 90% Costs You](/the-pit/gambling-loss-tax-deduction-explained/): how the 2026 loss-deduction limit changes what you owe.
