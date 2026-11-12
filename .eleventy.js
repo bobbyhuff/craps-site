@@ -14,6 +14,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/img");
+  // Accounts + wallet. supabase-js is self-hosted from node_modules (same no-third-party
+  // stance as the fonts), not loaded from a CDN.
+  eleventyConfig.addPassthroughCopy("src/js");
+  eleventyConfig.addPassthroughCopy({ "node_modules/@supabase/supabase-js/dist/umd/supabase.js": "js/supabase.js" });
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.css");
   eleventyConfig.addPassthroughCopy("src/games/craps/craps.js");
   // Same file Eleventy reads as the `odds` global data object, also published

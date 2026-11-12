@@ -1,0 +1,15 @@
+.account h1 { color: var(--bone); }
+.account-lede { color: var(--text-muted); line-height: 1.65; max-width: 36rem; }
+.account .field input[type="text"], .account .field input[type="password"] {
+  width: 100%; min-height: 46px; padding: var(--s-3); font: inherit; font-size: 16px;
+  color: var(--text); background: var(--felt-well); border: 1px solid var(--rail); border-radius: var(--r-sm);
+}
+.acct-tabs { display: flex; gap: var(--s-3); margin-bottom: var(--s-5); }
+.acct-tabs .btn[aria-pressed="true"] { border-color: var(--mint); color: var(--mint); }
+.wallet-card .wallet-name { margin: 0; color: var(--text-muted); }
+.wallet-balance { margin: var(--s-2) 0 var(--s-5); font-family: 'DM Serif Display', serif; font-size: 44px; color: var(--bone); }
+.wallet-balance small { font-family: inherit; font-size: 16px; color: var(--text-dim); }
+.ledger { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ledger th, .ledger td { padding: var(--s-2) var(--s-3); text-align: left; border-bottom: 1px solid var(--edge); }
+.ledger th { color: var(--text-dim); font-weight: 600; }
+.ledger .num { text-align: right; font-variant-numeric: tabular-nums; }

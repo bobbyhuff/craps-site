@@ -60,6 +60,7 @@
     <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
     <a href="/strategy/" {% if page.url.startsWith("/strategy/") %}class="active"{% endif %}>Strategy</a>
     <a href="/the-pit/" {% if page.url.startsWith("/the-pit/") %}class="active"{% endif %}>The Pit</a>
+    {% if supabase.url and supabase.anonKey %}<a id="wallet-chip" class="wallet-chip" href="/account/" hidden>Log in</a>{% endif %}
   </div>
 </nav>
 
@@ -77,6 +78,12 @@
   <span class="footer-help">Gambling problem? Call 1-800-GAMBLER or visit <a href="https://www.ncpgambling.org" rel="noopener">ncpgambling.org</a>.</span>
 </footer>
 
+{% if supabase.url and supabase.anonKey %}
+<script>window.STAKES_SUPABASE = {{ { url: supabase.url, anonKey: supabase.anonKey } | dump | safe }};</script>
+<script src="/js/supabase.js"></script>
+<script src="/js/wallet.js"></script>
+{% endif %}
+<script src="/js/wallet-bridge.js"></script>
 {% if extraJs %}<script src="{{ extraJs }}"></script>{% endif %}
 </body>
 </html>

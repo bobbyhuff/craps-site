@@ -1,0 +1,57 @@
+---
+layout: base.njk
+title: Account
+seoTitle: "Your 0stakes Account and Chip Wallet | 0stakes"
+description: Sign in to keep your play-money chip balance across games and devices. Chips are free, virtual, and can never be cashed out.
+permalink: /account/
+extraCss: /css/account.css
+extraJs: /js/account.js
+---
+<div class="account">
+  <h1>Your account</h1>
+  <p class="account-lede">Chips are play money. They can't be bought, sold or cashed out. An account just keeps your balance across games and devices. You can still play every game without one.</p>
+
+  {% if not supabase.url %}
+  <p class="form-notice" role="status">Accounts aren't connected yet, so sign-in is switched off.</p>
+  {% else %}
+  <p class="form-status" id="acct-status" role="status" tabindex="-1"></p>
+
+  <section id="acct-out" hidden>
+    <form id="acct-form" class="form-card" novalidate>
+      <div class="acct-tabs" role="group" aria-label="Sign in or create account">
+        <button type="button" class="btn secondary" data-mode="in" aria-pressed="true">Log in</button>
+        <button type="button" class="btn secondary" data-mode="up" aria-pressed="false">Create account</button>
+      </div>
+      <div class="field" id="f-username" hidden>
+        <label for="a-username">Username</label>
+        <input id="a-username" name="username" type="text" maxlength="20" autocomplete="username" pattern="[A-Za-z0-9_]{3,20}">
+        <p class="field-hint">3 to 20 letters, numbers or underscores.</p>
+      </div>
+      <div class="field">
+        <label for="a-email">Email</label>
+        <input id="a-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="a-password">Password</label>
+        <input id="a-password" name="password" type="password" minlength="8" maxlength="72" autocomplete="current-password" required>
+        <p class="field-hint" id="pw-hint" hidden>At least 8 characters.</p>
+      </div>
+      <button class="btn" type="submit" id="acct-submit">Log in</button>
+    </form>
+  </section>
+
+  <section id="acct-in" hidden>
+    <div class="form-card wallet-card">
+      <p class="wallet-name">Signed in as <strong id="w-name"></strong></p>
+      <p class="wallet-balance"><span id="w-balance">0</span> <small>chips</small></p>
+      <div class="btn-row">
+        <button class="btn" type="button" id="w-daily">Claim daily chips</button>
+        <button class="btn secondary" type="button" id="w-refill">Refill if broke</button>
+        <button class="btn secondary" type="button" id="w-out">Log out</button>
+      </div>
+    </div>
+    <h2>Recent activity</h2>
+    <table class="ledger"><thead><tr><th>When</th><th>What</th><th class="num">Chips</th><th class="num">Balance</th></tr></thead><tbody id="w-ledger"></tbody></table>
+  </section>
+  {% endif %}
+</div>

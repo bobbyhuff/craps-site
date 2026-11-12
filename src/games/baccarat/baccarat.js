@@ -11,6 +11,7 @@ const RESHUFFLE_CUTOFF = 60;
 let state = null;
 
 function newState(bankroll) {
+  globalThis.StakesWallet?.buyIn(bankroll);   // wallet bridge: a new session starts
   return {
     bankroll, startBankroll: bankroll,
     chip: 10,
@@ -65,7 +66,7 @@ function log(msg, cls) {
 function showOverlay({ title, text, defaultValue, showCancel, confirmLabel, onConfirm }) {
   const overlay = document.getElementById('setupOverlay');
   document.getElementById('overlayTitle').textContent = title;
-  document.getElementById('overlayText').textContent = text;
+  document.getElementById('overlayText').textContent = text + (globalThis.StakesWallet?.hint() ?? '');
   const input = document.getElementById('overlayInput');
   input.value = defaultValue;
   const cancelBtn = document.getElementById('overlayCancel');
@@ -75,7 +76,7 @@ function showOverlay({ title, text, defaultValue, showCancel, confirmLabel, onCo
   const confirmBtn = document.getElementById('overlayConfirm');
   confirmBtn.textContent = confirmLabel || 'Start';
   const doConfirm = () => {
-    const amt = parseFloat(input.value);
+    const amt = globalThis.StakesWallet ? StakesWallet.clamp(parseFloat(input.value)) : parseFloat(input.value);
     if (isNaN(amt) || amt <= 0) { input.focus(); return; }
     overlay.classList.add('hidden');
     cleanup();
@@ -354,6 +355,7 @@ function cardHtml(card, opts) {
 }
 
 function render() {
+  globalThis.StakesWallet?.sync(state.bankroll);   // wallet bridge: report net result
   document.getElementById('bankroll').textContent = fmt(state.bankroll);
   const net = Math.round((state.bankroll - state.startBankroll) * 100) / 100;
   const netEl = document.getElementById('net');
