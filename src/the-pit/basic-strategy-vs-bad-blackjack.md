@@ -45,6 +45,8 @@ Soft hands and totals outside 12-16 aren't part of the tested mistakes, so Playe
 | ROI (house edge) | -0.485% | -6.022% |
 | Dealer blackjack rate | 4.714% | 4.721% |
 
+{% barchart %}{"title": "Cost per dollar wagered over 1,000,000 hands", "rows": [{"label": "Basic strategy", "value": 0.485, "text": "-0.485%", "tone": "lose"}, {"label": "Bad strategy", "value": 6.022, "text": "-6.022%", "tone": "lose"}], "caption": "Same rules, same shoe. The only difference is the decisions."}{% endbarchart %}
+
 Player A's simulated edge, -0.485%, lands right where it should: the site's own [house edge ranking](/strategy/house-edge/) cites roughly 0.5% for perfect basic strategy under these exact rules. Player B's edge is more than 12 times steeper, at just over 6%. Player B also wagered less in total, since standing early and never doubling means fewer chips ever go on the table — and still lost more than eleven times as much money.
 
 ## Why it happens
@@ -57,7 +59,7 @@ None of these mistakes are exotic. They're the default instincts of a player who
 
 **Basic strategy doesn't guarantee a winning session, but it's the difference between a roughly 0.5% game and a roughly 6% game.** That gap compounds fast: over the same amount of action, a player making these four common mistakes loses on the order of ten times more than one playing correctly, without ever placing a single bet the "bad" player didn't also place.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 

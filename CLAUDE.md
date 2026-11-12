@@ -89,9 +89,23 @@ full `seoTitle` string.
 `breadcrumb: [{name, url}, ...]` is optional, only needed on pages 2+ levels deep — `base.njk`
 renders it as `BreadcrumbList` JSON-LD (always prepending "Home"), gated on the field being
 present. `ogType: article` on Pit posts (`post.njk` reads `date` to add `Article` JSON-LD
-automatically, no extra field needed for that part). `og:image`/`twitter:image` always point
-at `/og-image.png` site-wide — there's no per-page override mechanism, add one if a page
-ever needs a distinct share image.
+automatically, no extra field needed for that part). `og:image`/`twitter:image` use the
+page's `ogImage` (a root-relative path) or fall back to `/og-image.png`. Pit posts get
+`ogImage` automatically from `src/the-pit/the-pit.11tydata.js` whenever
+`src/img/og/<slug>.png` exists. Generate those with `python tools/make_og_images.py`
+(Pillow, reads the site's own woff2 fonts; `--force` regenerates all). Run it after adding
+a Pit post or changing a post title.
+
+**Pit charts**: `{% barchart %}{json}{% endbarchart %}` (paired shortcode in `.eleventy.js`)
+renders labelled horizontal bars from a JSON spec (`title`, `caption`, `rows` of `label`,
+`value`, `text`, optional `tone: "lose" | "muted"`). Only chart numbers that are already in
+the article's own tables, and keep the JSON on one line so Markdown passes the HTML through.
+
+**Accounts JS is page-scoped**: `base.njk` loads supabase-js, `wallet.js` and
+`wallet-bridge.js` only on `/games/*`, `/account/` and `/leaderboard/`. Every other page
+paints the nav chip from localStorage (`0stakes.chips`, cached by `wallet.js`, plus
+supabase-js's `sb-<ref>-auth-token`). A new page that needs `window.Wallet` must be added to
+the `needsWallet` condition.
 
 ## Payout data — always sourced from `src/_data/odds.js` / `blackjackOdds.js`
 
@@ -153,10 +167,11 @@ if you add a new filled component. Playing-card ink (`blackjack.css`'s `--pcard-
 near-black regardless of the brand accent.
 
 **Brand mark**: the ring/chip icon (two circles, one dashed to form radiating ticks — see
-`base.njk`'s inlined nav SVG) doubles as the "0" in "0stakes"; the nav renders it next to
-"STAKES" text, not the literal digit. Everywhere the brand appears as plain text (titles,
-meta, prose, the domain itself) uses the literal string "0stakes" — the icon substitution is
-visual-only, never spelled out as "0STAKES" in running text.
+`base.njk`'s inlined nav SVG) is the logo mark. The wordmark next to it spells the name out
+as "0stakes" with the "0" in Mint (the older icon-as-the-0 "STAKES" wordmark read as
+"STAKES" to visitors, so it was dropped; `/og-image.png` still shows the old lockup and
+should be redrawn). Everywhere the brand appears as plain text (titles, meta, prose, the
+domain itself) uses the literal string "0stakes", lowercase s, never "0Stakes" or "0STAKES".
 
 ## Voice and tone (content pages)
 

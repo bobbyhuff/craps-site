@@ -1,8 +1,8 @@
-{# The 0Stakes Insider signup. Include with {% set newsletterVariant = "compact" %} for the
+{# The 0stakes Insider signup. Include with {% set newsletterVariant = "compact" %} for the
    smaller article version; default is the full homepage version. #}
 {% set _nlLive = forms.mailerliteAccountId and forms.mailerliteFormId %}
 <section class="newsletter{% if newsletterVariant == 'compact' %} newsletter--compact{% endif %}" {% if newsletterVariant != 'compact' %}id="insider"{% endif %} aria-labelledby="nl-title-{{ newsletterVariant or 'full' }}">
-  <p class="newsletter-eyebrow">The 0Stakes Insider</p>
+  <p class="newsletter-eyebrow">The 0stakes Insider</p>
   <h2 class="newsletter-title" id="nl-title-{{ newsletterVariant or 'full' }}">The Math Casinos Hope You Ignore.</h2>
   <p class="newsletter-desc">Get original strategy breakdowns, million-hand simulations, and practical tips for playing smarter. Delivered free.</p>
   {% if newsletterVariant != 'compact' %}

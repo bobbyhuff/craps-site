@@ -11,6 +11,24 @@ module.exports = function (eleventyConfig) {
     return new Date(dateObj).toISOString().slice(0, 10);
   });
 
+  // Horizontal bar chart for Pit articles. Body is JSON:
+  //   {% barchart %}{"title": "...", "caption": "...", "rows": [{"label": "...", "value": 5.41, "text": "-5.41%", "tone": "lose"}]}{% endbarchart %}
+  // Bars scale to the largest |value| (or "max" if given). Every value is also printed as
+  // text, so the bars are decorative and the chart reads fine in a screen reader.
+  // Output has no indentation or blank lines so Markdown passes it through as raw HTML.
+  eleventyConfig.addPairedShortcode("barchart", (body) => {
+    const spec = JSON.parse(body);
+    const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    const max = spec.max || Math.max(...spec.rows.map((r) => Math.abs(r.value)));
+    const rows = spec.rows.map((r) => {
+      const pct = max && r.value ? Math.max(0.5, (Math.abs(r.value) / max) * 100) : 0;
+      const tone = r.tone ? ` pc-bar-${esc(r.tone)}` : "";
+      return `<div class="pc-row"><span class="pc-label">${esc(r.label)}</span><span class="pc-track" aria-hidden="true"><span class="pc-bar${tone}" style="width:${pct.toFixed(1)}%"></span></span><span class="pc-val">${esc(r.text != null ? r.text : r.value)}</span></div>`;
+    }).join("");
+    const cap = spec.caption ? `<figcaption>${esc(spec.caption)}</figcaption>` : "";
+    return `<figure class="pit-chart"><div class="pc-title">${esc(spec.title)}</div>${rows}${cap}</figure>`;
+  });
+
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/img");

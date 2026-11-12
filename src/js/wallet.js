@@ -93,6 +93,11 @@
   // Nav chip: "Log in" when signed out, chip balance when signed in.
   var chip = document.getElementById('wallet-chip');
   function paint() {
+    // Cache for the light pages, which paint the nav chip without loading supabase-js.
+    try {
+      if (W.user && W.balance !== null) localStorage.setItem('0stakes.chips', String(W.balance));
+      else localStorage.removeItem('0stakes.chips');
+    } catch (e) {}
     if (!chip) return;
     chip.hidden = false;
     chip.textContent = W.user && W.balance !== null ? W.balance.toLocaleString('en-US') + ' chips' : 'Log in';

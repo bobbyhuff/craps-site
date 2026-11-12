@@ -42,6 +42,10 @@ Roughly 1,000,000 total spins across 24,700 sessions per system (exact spin coun
 | Largest bet required | $320 | $170 | $5 |
 | Worst single-session drawdown | $635 | $440 | $155 |
 
+{% barchart %}{"title": "Cost per dollar wagered (ROI)", "rows": [{"label": "Martingale", "value": 5.412, "text": "-5.412%", "tone": "lose"}, {"label": "Fibonacci", "value": 5.611, "text": "-5.611%", "tone": "lose"}, {"label": "Flat", "value": 5.41, "text": "-5.410%", "tone": "lose"}], "caption": "Same house edge whatever the system."}{% endbarchart %}
+
+{% barchart %}{"title": "Sessions that busted the $500 bankroll", "rows": [{"label": "Martingale", "value": 38.6, "text": "38.6%", "tone": "lose"}, {"label": "Fibonacci", "value": 13.6, "text": "13.6%", "tone": "lose"}, {"label": "Flat", "value": 0.0, "text": "0.0%", "tone": "lose"}], "caption": "What the systems change is the shape of the results, not the cost."}{% endbarchart %}
+
 All three ROIs land within a few tenths of a percentage point of the same {{ rouletteOdds.houseEdge.standard }}% house edge, whether the system wagers $5 a spin the whole way or escalates to $320. Where the systems actually differ is the shape of the outcome: Fibonacci produces the highest rate of profitable sessions (74.8%) and the lowest bust rate of the two progressive systems, because it climbs more slowly than Martingale and gives back ground more slowly too. Martingale busts more than a third of its sessions outright. Flat betting almost never busts a $500 bankroll at $5 a spin in 50 spins, but it's also profitable in barely three sessions out of ten, since it has no mechanism for turning a short losing patch back into a win the way the progressive systems do.
 
 ## Why it happens
@@ -52,7 +56,7 @@ Every spin still carries the same {{ rouletteOdds.houseEdge.standard }}% edge re
 
 **Bet sizing changes volatility and how losses arrive. It does not remove roulette's {{ rouletteOdds.houseEdge.standard }}% house edge.** Fibonacci is a gentler ride than Martingale, busting less often for a similar edge, but "gentler" isn't the same as "better priced" — every version of this experiment loses money at close to the same rate per dollar wagered.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 
