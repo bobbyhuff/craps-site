@@ -8,6 +8,9 @@
     "enabled": true
   },
   "assets": {
-    "directory": "_site"
+    "directory": "_site",
+    // Serve _site/404.html (src/404.njk) with a 404 status for unknown paths, instead of
+    // an empty response.
+    "not_found_handling": "404-page"
   }
 }

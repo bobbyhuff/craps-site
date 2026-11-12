@@ -120,8 +120,8 @@ the `needsWallet` condition.
 - **`noindex: true`** frontmatter adds a robots noindex tag, drops the canonical, and keeps
   the page out of `sitemap.xml` (used by `/account/`, `/feedback/`, `404.html`).
 - **Game pages** get `WebApplication` JSON-LD from `base.njk` automatically (`tags: ["game"]`).
-- **`/404.html`** is built from `src/404.njk`. Cloudflare only serves it once the Wrangler
-  config sets `assets.not_found_handling` to `"404-page"`.
+- **`/404.html`** is built from `src/404.njk`. Cloudflare serves it for unknown paths
+  because `wrangler.jsonc` sets `assets.not_found_handling` to `"404-page"`.
 
 ## Payout data — always sourced from `src/_data/odds.js` / `blackjackOdds.js`
 
