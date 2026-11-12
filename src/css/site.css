@@ -602,3 +602,10 @@ main {
   .form-card { padding: var(--s-4); }
   .newsletter { padding: var(--s-5) var(--s-4); }
 }
+
+/* Nav wallet chip (rendered only when accounts are configured) */
+.wallet-chip {
+  padding: 4px 12px; border: 1px solid var(--edge-mint); border-radius: 999px;
+  color: var(--mint) !important; font-variant-numeric: tabular-nums;
+}
+.wallet-chip[hidden] { display: none; }

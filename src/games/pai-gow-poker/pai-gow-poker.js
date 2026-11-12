@@ -9,6 +9,7 @@ const CHIPS = [1, 5, 10, 25, 50, 100, 250];
 let state = null;
 
 function newState(bankroll) {
+  globalThis.StakesWallet?.buyIn(bankroll);   // wallet bridge: a new session starts
   return {
     bankroll, startBankroll: bankroll,
     chip: 10,
@@ -181,6 +182,7 @@ function resetBankroll() {
 
 // ---------- rendering ----------
 function render() {
+  globalThis.StakesWallet?.sync(state.bankroll);   // wallet bridge: report net result
   document.getElementById('bankroll').textContent = fmt(state.bankroll);
   const net = round2(state.bankroll - state.startBankroll);
   const netEl = document.getElementById('net');

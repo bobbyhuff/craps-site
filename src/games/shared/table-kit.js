@@ -55,7 +55,7 @@
   function showOverlay({ title, text, defaultValue, showCancel, confirmLabel, onConfirm }) {
     const overlay = document.getElementById('setupOverlay');
     document.getElementById('overlayTitle').textContent = title;
-    document.getElementById('overlayText').textContent = text;
+    document.getElementById('overlayText').textContent = text + (globalThis.StakesWallet?.hint() ?? '');
     const input = document.getElementById('overlayInput');
     input.value = defaultValue;
     const cancelBtn = document.getElementById('overlayCancel');
@@ -65,7 +65,7 @@
     const confirmBtn = document.getElementById('overlayConfirm');
     confirmBtn.textContent = confirmLabel || 'Start';
     const doConfirm = () => {
-      const amt = parseFloat(input.value);
+      const amt = globalThis.StakesWallet ? StakesWallet.clamp(parseFloat(input.value)) : parseFloat(input.value);
       if (isNaN(amt) || amt <= 0) { input.focus(); return; }
       overlay.classList.add('hidden');
       cleanup();
