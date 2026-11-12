@@ -103,6 +103,55 @@
     clearTimeout: function (t) { root.clearTimeout(t); },
   });
   root.StakesWallet = bridge;
+
+  // Buy-in dialog: shows the player's chip count with a Max button under the dialog text.
+  // textContent only; nothing here is built from untrusted strings.
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  bridge.paintOverlay = function () {
+    var text = document.getElementById('overlayText');
+    if (!text) return;
+    var box = document.getElementById('overlayWallet');
+    var w = root.Wallet;
+    if (!w || !w.enabled) { if (box) box.remove(); return; }
+    if (!box) { box = el('div', 'overlay-wallet'); box.id = 'overlayWallet'; text.insertAdjacentElement('afterend', box); }
+    box.textContent = '';
+    var input = document.getElementById('overlayInput');
+    if (w.user && w.balance !== null) {
+      var av = bridge.available();
+      var row = el('div', 'ow-row');
+      row.appendChild(el('span', 'ow-label', 'Your chips'));
+      row.appendChild(el('strong', 'ow-amt', av.toLocaleString('en-US')));
+      if (av >= 1 && input) {
+        var max = el('button', 'ow-max', 'Max');
+        max.type = 'button';
+        max.addEventListener('click', function () { input.value = av; input.focus(); });
+        row.appendChild(max);
+      }
+      box.appendChild(row);
+      box.appendChild(el('p', 'ow-note', av >= 1
+        ? 'You can bring up to this much, and your net result is saved.'
+        : 'Your wallet is empty, so this session will not be saved. Claim chips on your account page.'));
+      // Keep the pre-filled amount within what the wallet holds.
+      setTimeout(function () { if (av >= 1 && input && parseFloat(input.value) > av) input.value = av; }, 0);
+    } else {
+      var note = el('p', 'ow-note', 'Playing as a guest, so nothing is saved. ');
+      var a = el('a', null, 'Log in');
+      a.href = '/account/';
+      note.appendChild(a);
+      note.appendChild(document.createTextNode(' to play with your chips.'));
+      box.appendChild(note);
+    }
+  };
+  // The session check can finish after the dialog opens, so repaint when the wallet changes.
+  document.addEventListener('wallet:change', function () {
+    var o = document.getElementById('setupOverlay');
+    if (o && !o.classList.contains('hidden')) bridge.paintOverlay();
+  });
   // Settle when the tab is hidden or closed. Best effort: browsers may cancel in-flight requests.
   document.addEventListener('visibilitychange', function () { if (document.hidden) bridge.flushNow(); });
   root.addEventListener('pagehide', bridge.flushNow);
