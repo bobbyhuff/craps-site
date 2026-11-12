@@ -3,7 +3,7 @@ layout: base.njk
 ---
 {% if date %}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":{{ title | dump | safe }},"datePublished":"{{ date | dateToISO }}"{% if updated %},"dateModified":"{{ updated | dateToISO }}"{% endif %},"description":{{ description | dump | safe }},"image":"{{ site.url }}{{ ogImage or '/og-image.png' }}","author":{"@type":"Organization","name":"0stakes"}}
+{"@context":"https://schema.org","@type":"Article","headline":{{ title | dump | safe }},"datePublished":"{{ date | dateToISO }}","dateModified":"{{ (updated or date) | dateToISO }}","description":{{ description | dump | safe }},"image":"{{ site.url }}{{ ogImage or '/og-image.png' }}","mainEntityOfPage":"{{ site.url }}{{ page.url }}","author":{"@type":"Organization","name":"0stakes","url":"{{ site.url }}/about/"},"publisher":{"@type":"Organization","name":"0stakes","url":"{{ site.url }}/","logo":{"@type":"ImageObject","url":"{{ site.url }}/icon-512.png"}}}
 </script>
 {% endif %}
 <article class="post">
@@ -12,6 +12,7 @@ layout: base.njk
   <div class="post-body">
     {{ content | safe }}
   </div>
+  {% include "related.njk" %}
 </article>
 {% if page.url.startsWith("/strategy/") and not noNewsletter %}
 {% set newsletterVariant = "compact" %}

@@ -126,3 +126,26 @@ breadcrumb:
   <p class="strategy-link"><a href="/strategy/">Read strategy guides for every game →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/roulette/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+<h2>How to play free roulette</h2>
+<p>Pick a chip, tap any number, line or outside box on the layout to place a bet, then press <b>Spin</b>. The ball lands in one of {{ rouletteOdds.pocketCount }} pockets: 1 through 36, plus 0 and 00. Winning bets are paid and stay highlighted until the next spin. <b>Rebet</b> repeats your last layout and <b>Double</b> doubles every bet on the table.</p>
+<ul>
+  <li><b>Straight up</b> (one number) pays {{ rouletteOdds.payouts.straightUp | join(":") }}.</li>
+  <li><b>Split</b> (two numbers) pays {{ rouletteOdds.payouts.split | join(":") }}. <b>Street</b> (three) pays {{ rouletteOdds.payouts.street | join(":") }}.</li>
+  <li><b>Corner</b> (four numbers) pays {{ rouletteOdds.payouts.corner | join(":") }}. <b>Six line</b> pays {{ rouletteOdds.payouts.sixLine | join(":") }}.</li>
+  <li><b>Columns and dozens</b> pay {{ rouletteOdds.payouts.column | join(":") }}.</li>
+  <li><b>Red, black, odd, even, 1 to 18 and 19 to 36</b> pay {{ rouletteOdds.payouts.outside | join(":") }}.</li>
+</ul>
+<p>The full table of bets, true odds and house edge is in the <a href="/strategy/roulette/odds-payouts/">roulette odds and payouts chart</a>. New to the layout? Start with <a href="/strategy/roulette/how-to-play/">how to play roulette</a>.</p>
+
+{% set faq = [
+  { q: "Is this roulette game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "Is this American or European roulette?", a: "American. The wheel has " ~ rouletteOdds.pocketCount ~ " pockets including 0 and 00, which gives the house a " ~ rouletteOdds.houseEdge.standard ~ "% edge on every bet except the five-number top line, which costs " ~ rouletteOdds.houseEdge.topLine ~ "%." },
+  { q: "What is the best bet in roulette?", a: "There isn't one. Every bet on this wheel except the top line has the same " ~ rouletteOdds.houseEdge.standard ~ "% house edge. Choosing between a single number and red or black changes how often you win and how much, not what the game costs per dollar bet." },
+  { q: "Can a betting system beat roulette?", a: "No. Every spin is independent, so changing your bet size after a win or a loss does not change the edge on the next spin. Martingale, Fibonacci and flat betting all lose at the same rate per dollar wagered. The simulations in The Pit show the numbers." },
+  { q: "Are the spins random?", a: "Yes. Each spin is an independent, uniformly random pick from all " ~ rouletteOdds.pocketCount ~ " pockets. Past results never change the odds of the next spin." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

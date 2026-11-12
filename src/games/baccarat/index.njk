@@ -144,3 +144,25 @@ breadcrumb:
   </p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/baccarat/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+<h2>How to play free baccarat</h2>
+<p>Pick a chip, bet on <b>Player</b>, <b>Banker</b> or <b>Tie</b>, and press <b>Deal</b>. Two hands are dealt and the one closer to 9 wins. You never make a decision after the bet: every draw follows a fixed rule.</p>
+<ul>
+  <li>Aces count 1, tens and face cards count 0, and only the last digit of a total matters. A 7 and an 8 make 5.</li>
+  <li>An 8 or 9 on the first two cards is a natural and ends the hand.</li>
+  <li>Otherwise the Player hand draws on 0 through 5, and the Banker draws by a set table that depends on the Player's third card. The log explains each draw in plain English.</li>
+  <li>Player pays {{ baccaratOdds.payoutStr.player }}. Banker pays {{ baccaratOdds.payoutStr.banker }} minus a {{ baccaratOdds.bankerCommissionPct }}% commission. Tie pays {{ baccaratOdds.payoutStr.tie }}, and Player and Banker bets push on a tie.</li>
+</ul>
+<p>For the full rules see <a href="/strategy/baccarat/how-to-play/">how to play baccarat</a>, or compare the three bets in <a href="/strategy/baccarat/banker-vs-player-vs-tie/">Banker vs Player vs Tie</a>.</p>
+
+{% set faq = [
+  { q: "Is this baccarat game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "What is the best bet in baccarat?", a: "Banker. Its house edge is " ~ baccaratOdds.houseEdge.banker ~ "% even after the " ~ baccaratOdds.bankerCommissionPct ~ "% commission. Player costs " ~ baccaratOdds.houseEdge.player ~ "%, and Tie costs " ~ baccaratOdds.houseEdge.tie ~ "%." },
+  { q: "Why does the Banker bet charge a commission?", a: "The drawing rules let the Banker hand act on more information, so it wins slightly more often than the Player hand. The " ~ baccaratOdds.bankerCommissionPct ~ "% commission on Banker wins is what keeps a house edge on that bet." },
+  { q: "Do I need to memorize the third-card rules?", a: "No. The draws are automatic here and at a real table. They are worth reading once so the dealing makes sense, but they never change what you should bet." },
+  { q: "Does the scoreboard predict the next hand?", a: "No. The bead plate records what already happened. Each hand is dealt from an eight-deck shoe and past results give no usable signal about the next one." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

@@ -507,6 +507,22 @@ main {
 .list-item p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
 
 /* ============================================================
+   Related links, game guides (below a game table)
+   ============================================================ */
+
+.related { margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--edge); }
+.related h2 { color: var(--mint); font-size: 22px; margin: 0 0 var(--s-3); }
+.related-list { list-style: none; padding: 0 !important; margin: 0 0 var(--s-4); }
+.related-list li { border-bottom: 1px solid var(--edge); }
+.related-list a { display: block; padding: var(--s-3) 0; color: var(--bone); text-decoration: none; line-height: 1.4; }
+.related-list a:hover { color: var(--mint-bright); }
+
+.game-guide { max-width: 640px; margin: 0 auto; padding: 0 var(--s-4) var(--s-7); }
+.game-guide h3 { font-size: 17px; margin: var(--s-5) 0 var(--s-2); color: var(--bone); font-family: inherit; font-weight: 600; }
+.game-guide h3 + p { margin-top: 0; }
+@media (min-width: 720px) { .game-guide { max-width: 720px; padding: 0 var(--s-5) var(--s-7); } }
+
+/* ============================================================
    Responsive
    ============================================================ */
 

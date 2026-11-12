@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{ seoTitle }}</title>
 <meta name="description" content="{{ description }}">
-<link rel="canonical" href="{{ site.url }}{{ page.url }}">
-
+{% if noindex %}<meta name="robots" content="noindex,follow">
+{% else %}<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% endif %}
 <meta property="og:title" content="{{ seoTitle }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:type" content="{{ ogType or 'website' }}">
@@ -20,7 +21,17 @@
 
 {% if page.url == "/" %}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"0stakes","url":"{{ site.url }}/"}
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebSite","@id":"{{ site.url }}/#website","name":"0stakes","url":"{{ site.url }}/","publisher":{"@id":"{{ site.url }}/#org"}},
+{"@type":"Organization","@id":"{{ site.url }}/#org","name":"0stakes","url":"{{ site.url }}/","logo":{"@type":"ImageObject","url":"{{ site.url }}/icon-512.png","width":512,"height":512}}
+]}
+</script>
+{% endif %}
+
+{% if tags and ("game" in tags) %}
+{# Game pages: a free browser game. Name/description come from the page's own frontmatter. #}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":{{ ("Free " ~ title) | dump | safe }},"url":"{{ site.url }}{{ page.url }}","description":{{ description | dump | safe }},"applicationCategory":"GameApplication","genre":"Casino","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"0stakes","url":"{{ site.url }}/"}}
 </script>
 {% endif %}
 

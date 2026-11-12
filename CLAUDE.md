@@ -10,7 +10,7 @@ itself still serves from the old `craps-site.redclayreserve.workers.dev` host na
 
 Plain Eleventy + vanilla CSS/JS. **No bundler, no framework, no linter** —
 `package.json` has exactly one dependency (`@11ty/eleventy`). Tests use Node's built-in
-`node --test` (no test dependency): `npm test` runs `tests/*.test.js`. Client-side game code
+`node --test` (no test dependency): `npm test` runs `node --test`, which finds `tests/*.test.js` on any OS. Client-side game code
 (`craps.js`, `blackjack.js`) is a plain `<script>` tag, not a module — it can't
 `import`/`require` anything, which shapes how shared data gets to it (see "Payout data" below).
 
@@ -106,6 +106,22 @@ the article's own tables, and keep the JSON on one line so Markdown passes the H
 paints the nav chip from localStorage (`0stakes.chips`, cached by `wallet.js`, plus
 supabase-js's `sb-<ref>-auth-token`). A new page that needs `window.Wallet` must be added to
 the `needsWallet` condition.
+
+## Related links, FAQs and noindex
+
+- **Related articles are automatic.** `.eleventy.js` groups every article by game (Pit
+  `game:` frontmatter, or the `/strategy/<game>/` folder), `topic:`, or "general". `post.njk`
+  includes `related.njk` ("Keep reading", opt out with `noRelated: true`). Game pages and the
+  strategy hubs include `game-articles.njk`, which lists every guide and Pit post for that
+  game. A new article needs no list edits beyond the hand-written hub card.
+- **FAQs**: `{% set faq = [{ q, a }, ...] %}` then `{% include "faq.njk" %}` renders the
+  visible questions and the matching `FAQPage` JSON-LD from one list. Answers are plain text;
+  build numbers from the odds data with `~`, never hardcode them.
+- **`noindex: true`** frontmatter adds a robots noindex tag, drops the canonical, and keeps
+  the page out of `sitemap.xml` (used by `/account/`, `/feedback/`, `404.html`).
+- **Game pages** get `WebApplication` JSON-LD from `base.njk` automatically (`tags: ["game"]`).
+- **`/404.html`** is built from `src/404.njk`. Cloudflare only serves it once the Wrangler
+  config sets `assets.not_found_handling` to `"404-page"`.
 
 ## Payout data — always sourced from `src/_data/odds.js` / `blackjackOdds.js`
 

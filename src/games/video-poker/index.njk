@@ -171,3 +171,15 @@ breadcrumb:
   <p class="strategy-link"><a href="/games/">Try another game →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/video-poker/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+{% set faq = [
+  { q: "Is this video poker game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "What paytable does this video poker game use?", a: "Full-pay " ~ videoPokerOdds.version ~ " " ~ videoPokerOdds.game ~ ": " ~ videoPokerOdds.pays.fullHouse[0] ~ " for a full house and " ~ videoPokerOdds.pays.flush[0] ~ " for a flush per coin. With perfect play at max coins it returns " ~ videoPokerOdds.returnPct ~ "%, a " ~ videoPokerOdds.houseEdge ~ "% house edge." },
+  { q: "Why should I always bet max coins?", a: "The royal flush pays " ~ videoPokerOdds.pays.royal[0] ~ " per coin on one to four coins but " ~ videoPokerOdds.pays.royal[4] ~ " for five. Playing fewer than " ~ videoPokerOdds.maxCoins ~ " coins drops the return to " ~ videoPokerOdds.returnPctUnderMaxCoins ~ "%." },
+  { q: "How often does a royal flush hit?", a: "About once every " ~ videoPokerOdds.royalCycle ~ " hands with perfect play." },
+  { q: "Is the Best Hold advice exact?", a: "Yes. It works out the expected value of every possible hold by enumerating every draw, so it is the mathematically best play for this paytable, not a rule of thumb." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

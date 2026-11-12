@@ -70,7 +70,7 @@ If you use a strategy chart made for a different set of rules, some borderline d
 
 **Under the right conditions, it can create a player advantage.** Unlike a roulette wheel, a blackjack shoe changes as cards are dealt. The proportion of high and low cards remaining matters to the odds of future hands. Card-counting methods attempt to estimate that shift and adjust decisions or bet sizes accordingly.
 
-But card counting is not a shortcut to easy income. It requires accuracy under pressure, enough penetration into the shoe before reshuffling, favorable rules, an adequate bankroll to withstand variance, and the ability to increase wagers when conditions justify it. Casinos may also limit or refuse play to counters in many jurisdictions. A counting method's advantage depends on the exact game and how it's executed; no fixed profit rate should be promised.
+But card counting is not a shortcut to easy income. It requires accuracy under pressure, enough penetration into the shoe before reshuffling, favorable rules, an adequate bankroll to withstand variance, and the ability to increase wagers when conditions justify it. Casinos may also limit or refuse play to counters in many jurisdictions. A counting method's advantage depends on the exact game and how it's executed; no fixed profit rate should be promised. For the mechanics, see [how card counting works](/strategy/blackjack/card-counting/).
 
 A continuous-shuffling setup or shallow penetration can substantially undermine the opportunities a counter would need. And simply raising your bets after you lose is **not** card counting: it adds risk without changing the probability of the next hand in your favor.
 
