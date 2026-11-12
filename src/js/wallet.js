@@ -7,6 +7,7 @@
 //   Wallet.balance            number | null (null = signed out)
 //   Wallet.user               { id, email, username } | null
 //   Wallet.signUp(email, password, username) / signIn(email, password) / signOut()
+//   Wallet.resetPassword(email) / setPassword(newPassword)   Wallet.recovering is true after a reset link
 //   Wallet.claimDaily() / refill()   -> new balance, throws Error(code)
 //   Wallet.report(game, delta)       -> record a net win/loss (batch per session, not per bet)
 //   Wallet.history(limit)            -> ledger rows
@@ -42,7 +43,10 @@
   }
 
   W.ready = load();
-  sb.auth.onAuthStateChange(function () { load(); });
+  sb.auth.onAuthStateChange(function (event) {
+    if (event === 'PASSWORD_RECOVERY') W.recovering = true;   // arrived via a reset email link
+    load();
+  });
 
   W.signUp = async function (email, password, username) {
     var r = await sb.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
@@ -54,6 +58,17 @@
     if (r.error) fail(r.error);
   };
   W.signOut = async function () { await sb.auth.signOut(); };
+  // Sends a reset link that returns to /account/. Never reveals whether the email has an account.
+  W.resetPassword = async function (email) {
+    var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/account/' });
+    if (r.error) fail(r.error);
+  };
+  W.setPassword = async function (password) {
+    var r = await sb.auth.updateUser({ password: password });
+    if (r.error) fail(r.error);
+    W.recovering = false;
+    emit();
+  };
 
   async function rpc(name, args) {
     var r = await sb.rpc(name, args);
