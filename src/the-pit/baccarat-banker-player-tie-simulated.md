@@ -33,6 +33,8 @@ Standard baccarat drawing rules on a real 8-deck shoe (reshuffled when fewer tha
 | Net result | -$106,892 | -$122,430 | -$1,454,050 |
 | ROI (house edge) | -1.069% | -1.224% | -14.541% |
 
+{% barchart %}{"title": "Simulated cost per dollar wagered", "rows": [{"label": "Banker", "value": 1.069, "text": "-1.069%", "tone": "lose"}, {"label": "Player", "value": 1.224, "text": "-1.224%", "tone": "lose"}, {"label": "Tie", "value": 14.541, "text": "-14.541%", "tone": "lose"}], "caption": "$10,000,000 wagered on each bet."}{% endbarchart %}
+
 The simulated edges land almost exactly on the published theoretical numbers for standard 8-deck baccarat: Banker at {{ baccaratOdds.houseEdge.banker }}%, Player at {{ baccaratOdds.houseEdge.player }}%, Tie at {{ baccaratOdds.houseEdge.tie }}%. The small gaps between simulated and theoretical are normal sampling variance at this trial count, most visible on Tie since it only resolves on about 1 in 10 hands.
 
 ## Why it happens
@@ -43,7 +45,7 @@ Banker wins slightly more often than Player because of baccarat's fixed drawing 
 
 **Banker is the strongest standard baccarat wager, Player is close behind it, and Tie is dramatically worse than both.** Betting Tie loses money about 13-14 times faster than betting Banker on the same amount of action, for a bet that "feels" like a bonus side option rather than the worst price at the table.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 

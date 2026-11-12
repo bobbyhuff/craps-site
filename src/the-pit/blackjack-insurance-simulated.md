@@ -59,6 +59,8 @@ Smaller sample sizes, same 30.87% probability, show why a handful of insurance b
 | 1,000 | 306 (30.6%) | -$410 | -8.20% |
 | 10,000 | 3,057 (30.6%) | -$4,145 | -8.29% |
 
+{% barchart %}{"title": "Insurance ROI by number of bets", "rows": [{"label": "100", "value": 22.0, "text": "-22.00%", "tone": "lose"}, {"label": "1,000", "value": 8.2, "text": "-8.20%", "tone": "lose"}, {"label": "10,000", "value": 8.29, "text": "-8.29%", "tone": "lose"}, {"label": "1,000,000", "value": 7.61, "text": "-7.61%", "tone": "lose"}], "caption": "Small samples swing. The long run settles on a steady loss."}{% endbarchart %}
+
 A short run can land above or below the true rate in either direction. The 1,000,000-hand simulation is what that same 30.87% rate converges toward once volume is large enough to smooth the swings out.
 
 ## Why insurance feels safer than it is

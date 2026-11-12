@@ -2,7 +2,7 @@
 layout: base.njk
 title: Pai Gow Poker
 seoTitle: "Play Free Pai Gow Poker Online: Set Your Hands vs. the House Way | 0stakes"
-description: Play free Pai Gow Poker with a 53-card deck and joker. Split seven cards into a five-card and two-card hand, beat a dealer who follows a published house way, and learn why 41% of hands push. No account.
+description: Play free Pai Gow Poker with a 53-card deck and joker. Split seven cards into a five-card and two-card hand, beat a dealer who follows a published house way, and learn why 41% of hands push. No account needed.
 sharedCss: /games/shared/card-table.css
 extraCss: /games/pai-gow-poker/pai-gow-poker.css
 extraJs: /games/pai-gow-poker/pai-gow-poker.js
@@ -183,3 +183,15 @@ breadcrumb:
   <p class="strategy-link"><a href="/games/">Try another game →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/pai-gow-poker/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+{% set faq = [
+  { q: "Is this Pai Gow Poker game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "What is the house edge in Pai Gow Poker?", a: "About " ~ paiGowOdds.houseEdge ~ "% playing the house way against a dealer banker. It comes from the " ~ paiGowOdds.commissionPct ~ "% commission on winning bets and from the banker winning copies." },
+  { q: "Why do so many hands push?", a: "You only win when both of your hands beat the dealer's, and only lose when both lose. One of each is a push, which happens on roughly " ~ paiGowOdds.pushPct ~ "% of hands. That is why a bankroll lasts longer here than at most tables." },
+  { q: "How does the joker work?", a: "It completes a straight, a flush or a straight flush. In any other hand it counts as an Ace." },
+  { q: "What does Auto Arrange do?", a: "It sets your seven cards with the same published house way the dealer uses, so you are playing the dealer's own strategy." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

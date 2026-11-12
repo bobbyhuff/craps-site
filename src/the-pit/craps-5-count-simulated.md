@@ -39,6 +39,8 @@ Both strategies place $6 on 6 and $6 on 8 ({{ odds.placeOdds[6][0] }}:{{ odds.pl
 | Net result | -$42,241 | -$52,888 |
 | ROI on money wagered | -1.635% | -1.442% |
 
+{% barchart %}{"title": "Net loss over the same dice", "rows": [{"label": "5-Count", "value": 42241, "text": "-$42,241", "tone": "lose"}, {"label": "Bets immediately", "value": 52888, "text": "-$52,888", "tone": "lose"}], "caption": "The 5-Count lost less only because it wagered 29.6% less. Its ROI was no better."}{% endbarchart %}
+
 Strategy A wagered 29.6% less money than Strategy B over the identical stretch of dice, and lost 20.1% less in raw dollars as a direct result of exposing less money. But its ROI, the cost per dollar actually wagered, was not better than Strategy B's. Both numbers sit close to the same {{ odds.houseEdgeStr.place6or8 }}% theoretical edge on Place 6 and Place 8; the small gap between -1.635% and -1.442% here is sampling variance from Strategy A's smaller, filtered sample, not a real edge in either direction.
 
 ## Why it happens
@@ -49,7 +51,7 @@ Every dice roll is independent of every roll before it. A shooter who has alread
 
 **Waiting can reduce the amount of money exposed to the house edge. It does not create a mathematical advantage.** Betting less often is a real, legitimate way to manage bankroll and variance, and the 5-Count does that. It is not a way to beat the {{ odds.houseEdgeStr.place6or8 }}% edge on Place 6 and Place 8, because no amount of watching past rolls changes what an independent future roll of the dice is going to do.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 

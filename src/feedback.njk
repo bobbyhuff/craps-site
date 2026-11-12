@@ -3,12 +3,13 @@ layout: base.njk
 title: Feedback
 seoTitle: "Feedback, Suggestions & Bug Reports | 0stakes"
 description: Found a bug or have an idea for a game, strategy, or simulation? Send feedback to 0stakes.
+noindex: true
 permalink: /feedback/
 ---
 {% set _live = forms.formspreeEndpoint %}
 <div class="feedback">
-  <h1>Help Improve 0Stakes</h1>
-  <p class="feedback-lede">Found a bug? Have an idea for a game, strategy, or simulation? We'd love to hear from you. Your feedback helps make 0Stakes better.</p>
+  <h1>Help Improve 0stakes</h1>
+  <p class="feedback-lede">Found a bug? Have an idea for a game, strategy, or simulation? We'd love to hear from you. Your feedback helps make 0stakes better.</p>
 
   {% if not _live %}
   <p class="form-notice" role="status">The feedback form isn't connected yet, so it can't send anything right now.</p>

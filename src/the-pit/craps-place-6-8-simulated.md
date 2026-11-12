@@ -46,7 +46,7 @@ The simulated edge, -1.442%, lands close to the theoretical {{ odds.houseEdgeStr
 
 **Place 6 and 8 are among the better common bets in craps, but they still carry a real house edge.** They resolve often enough (5 ways each out of 36) to feel active, and the {{ odds.houseEdgeStr.place6or8 }}% cost per resolution is a fraction of what worse bets on the table charge, but "better than most other bets" is not the same as "even money." The house still wins this argument over enough rolls.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 

@@ -2,7 +2,7 @@
 layout: base.njk
 title: Three Card Poker
 seoTitle: "Play Free Three Card Poker Online: Ante, Play & Pair Plus | 0stakes"
-description: Play free Three Card Poker against a dealer who needs Queen-high to qualify. Ante, Play, Pair Plus and the Ante Bonus at real casino payouts, plus the Q-6-4 strategy hint. No account.
+description: Play free Three Card Poker against a dealer who needs Queen-high to qualify. Ante, Play, Pair Plus and the Ante Bonus at real casino payouts, plus the Q-6-4 strategy hint. No account needed.
 sharedCss: /games/shared/card-table.css
 extraCss: /games/three-card-poker/three-card-poker.css
 extraJs: /games/three-card-poker/three-card-poker.js
@@ -204,3 +204,14 @@ breadcrumb:
   <p class="strategy-link"><a href="/games/">Try another game →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/three-card-poker/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+{% set faq = [
+  { q: "Is this Three Card Poker game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "When should I play or fold in Three Card Poker?", a: "Play Queen-6-4 or better and fold anything weaker. That one rule is the full optimal strategy for the Ante and Play bets, and it puts the house edge at " ~ threeCardPokerOdds.houseEdge.ante ~ "% of the Ante." },
+  { q: "What does the dealer need to qualify?", a: "Queen high or better, which happens " ~ threeCardPokerOdds.dealerQualifiesPct ~ "% of the time. If the dealer doesn't qualify, the Ante pays " ~ (threeCardPokerOdds.antePlay | join(":")) ~ " and the Play bet pushes." },
+  { q: "Is the Pair Plus bet worth it?", a: "Not on this paytable. The " ~ threeCardPokerOdds.pairPlus.label ~ " table carries a " ~ threeCardPokerOdds.pairPlus.houseEdge ~ "% house edge, more than double the Ante bet played correctly." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

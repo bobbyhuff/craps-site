@@ -2,7 +2,7 @@
 layout: base.njk
 title: Craps
 seoTitle: "Play Free Craps Online: Full Table with True Odds | 0stakes"
-description: Play free craps in your browser. Full table with Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, and Hardways. True odds, real payouts, no account.
+description: Play free craps in your browser. Full table with Pass/Don't Pass, Come/Don't Come, Odds, Place, Buy, Field, and Hardways. True odds, real payouts, no account needed.
 extraCss: /games/craps/craps.css
 extraJs: /games/craps/craps.js
 tags: ["game"]
@@ -156,3 +156,25 @@ breadcrumb:
   <p class="strategy-link"><a href="/strategy/craps/">Read the full craps strategy guides →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/craps/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+<h2>How to play free craps</h2>
+<p>Pick a chip, tap <b>Pass Line</b>, and roll. The first roll of a round is the come-out.</p>
+<ul>
+  <li>A {{ odds.comeOutNaturals | join(" or ") }} on the come-out wins the Pass Line. A {{ odds.comeOutCraps | join(", ") }} loses it.</li>
+  <li>Any other number becomes the <b>point</b>. The Pass Line now wins if the point rolls again before a 7, and loses if the 7 comes first.</li>
+  <li>Once a point is set, tap the Pass Line again to add <b>Odds</b>. Odds pay the true odds ({{ odds.trueOddsStr[4] }} on 4 and 10, {{ odds.trueOddsStr[5] }} on 5 and 9, {{ odds.trueOddsStr[6] }} on 6 and 8) with no house edge.</li>
+  <li>Tap a number to Place or Buy it, or use a quick-bet preset to lay out a common strategy in one tap.</li>
+</ul>
+<p>That loop is the whole game. Everything else on the layout is a side wager on the same two dice, and most of them cost more.</p>
+
+{% set faq = [
+  { q: "Is this craps game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "What is the best bet in craps?", a: "The Pass Line with full odds. The Pass Line alone has a " ~ odds.houseEdgeStr.passLine ~ "% house edge, the Odds bet behind it has none, and together at this table's limits the combined edge falls to " ~ odds.houseEdgeStr.passLineFullOdds ~ "%. Don't Pass is slightly lower at " ~ odds.houseEdgeStr.dontPass ~ "%." },
+  { q: "What odds does this table allow?", a: "Up to " ~ odds.oddsMult[4] ~ "x your line bet on the 4 and 10, " ~ odds.oddsMult[5] ~ "x on the 5 and 9, and " ~ odds.oddsMult[6] ~ "x on the 6 and 8." },
+  { q: "Which craps bets should I avoid?", a: "The one-roll center bets. Any Seven costs " ~ odds.houseEdgeStr.anySeven ~ "%, Any Craps costs " ~ odds.houseEdgeStr.anyCraps ~ "%, and the Hard 4 and Hard 10 cost " ~ odds.houseEdgeStr.hard4or10 ~ "%. Placing the 6 or 8 at " ~ odds.houseEdgeStr.place6or8 ~ "% is the best bet outside the line bets." },
+  { q: "Do Place bets work on the come-out roll?", a: "Not by default. Place, Buy and Hardway bets and Come odds are off on the come-out, the same as in a casino. You can switch them on in Table settings." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

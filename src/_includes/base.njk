@@ -5,22 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{ seoTitle }}</title>
 <meta name="description" content="{{ description }}">
-<link rel="canonical" href="{{ site.url }}{{ page.url }}">
-
+{% if noindex %}<meta name="robots" content="noindex,follow">
+{% else %}<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% endif %}
 <meta property="og:title" content="{{ seoTitle }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:type" content="{{ ogType or 'website' }}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<meta property="og:image" content="{{ site.url }}/og-image.png">
+<meta property="og:image" content="{{ site.url }}{{ ogImage or '/og-image.png' }}">
 <meta property="og:site_name" content="0stakes">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ seoTitle }}">
 <meta name="twitter:description" content="{{ description }}">
-<meta name="twitter:image" content="{{ site.url }}/og-image.png">
+<meta name="twitter:image" content="{{ site.url }}{{ ogImage or '/og-image.png' }}">
 
 {% if page.url == "/" %}
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"0stakes","url":"{{ site.url }}/"}
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebSite","@id":"{{ site.url }}/#website","name":"0stakes","url":"{{ site.url }}/","publisher":{"@id":"{{ site.url }}/#org"}},
+{"@type":"Organization","@id":"{{ site.url }}/#org","name":"0stakes","url":"{{ site.url }}/","logo":{"@type":"ImageObject","url":"{{ site.url }}/icon-512.png","width":512,"height":512}}
+]}
+</script>
+{% endif %}
+
+{% if tags and ("game" in tags) %}
+{# Game pages: a free browser game. Name/description come from the page's own frontmatter. #}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":{{ ("Free " ~ title) | dump | safe }},"url":"{{ site.url }}{{ page.url }}","description":{{ description | dump | safe }},"applicationCategory":"GameApplication","genre":"Casino","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"0stakes","url":"{{ site.url }}/"}}
 </script>
 {% endif %}
 
@@ -48,43 +59,83 @@
 </head>
 <body>
 
+{% set accounts = supabase.url and supabase.anonKey %}
+{# Only pages that move chips or read accounts load supabase-js (~200 KB) + wallet.js.
+   Every other page paints the nav chip from localStorage (see the inline script below). #}
+{% set needsWallet = accounts and (page.url.startsWith("/games/") or page.url == "/account/" or page.url == "/leaderboard/") %}
 <nav class="site-nav">
-  <a class="brand" href="/">
+  <a class="brand" href="/" aria-label="0stakes home">
     <svg viewBox="0 0 100 100" width="24" height="24" aria-hidden="true">
       <circle cx="50" cy="50" r="44" fill="none" stroke="#35D07A" stroke-width="11" stroke-dasharray="19.97 26.11" stroke-dashoffset="9.99"></circle>
       <circle cx="50" cy="50" r="28" fill="none" stroke="#35D07A" stroke-width="11"></circle>
     </svg>
-    <span>STAKES</span>
+    <span><b>0</b>stakes</span>
   </a>
-  <div class="nav-links">
+  <div class="nav-end">
+    {% if accounts %}<a id="wallet-chip" class="wallet-chip" href="/account/" hidden>Log in</a>{% endif %}
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-links" id="nav-links">
     <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
     <a href="/strategy/" {% if page.url.startsWith("/strategy/") %}class="active"{% endif %}>Strategy</a>
     <a href="/the-pit/" {% if page.url.startsWith("/the-pit/") %}class="active"{% endif %}>The Pit</a>
-    {% if supabase.url and supabase.anonKey %}<a href="/leaderboard/" {% if page.url == "/leaderboard/" %}class="active"{% endif %}>Leaderboard</a>{% endif %}
-    {% if supabase.url and supabase.anonKey %}<a id="wallet-chip" class="wallet-chip" href="/account/" hidden>Log in</a>{% endif %}
+    {% if accounts %}<a href="/leaderboard/" {% if page.url == "/leaderboard/" %}class="active"{% endif %}>Leaderboard</a>{% endif %}
   </div>
 </nav>
+<script>
+(function () {
+  var nav = document.currentScript.previousElementSibling;
+  var btn = nav.querySelector('.nav-toggle');
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
 
 <main>
 {{ content | safe }}
 </main>
+{% if tags and ("game" in tags) %}
+<script>try { localStorage.setItem('0stakes.lastGame', JSON.stringify({ url: {{ page.url | dump | safe }}, name: {{ title | dump | safe }} })); } catch (e) {}</script>
+{% endif %}
 
 <footer class="site-footer">
   <a href="/about/">About</a>
   <a href="/contact/">Contact</a>
   <a href="/privacy/">Privacy</a>
   <a href="/the-pit/">The Pit</a>
-  <a href="/#insider">0Stakes Insider</a>
+  <a href="/#insider">0stakes Insider</a>
   <a href="/feedback/?from={{ page.url | urlencode }}" rel="nofollow">Feedback</a>
   <span class="footer-help">Gambling problem? Call 1-800-GAMBLER or visit <a href="https://www.ncpgambling.org" rel="noopener">ncpgambling.org</a>.</span>
 </footer>
 
-{% if supabase.url and supabase.anonKey %}
+{% if needsWallet %}
 <script>window.STAKES_SUPABASE = {{ { url: supabase.url, anonKey: supabase.anonKey } | dump | safe }};</script>
 <script src="/js/supabase.js"></script>
 <script src="/js/wallet.js"></script>
-{% endif %}
 <script src="/js/wallet-bridge.js"></script>
+{% elif accounts %}
+<script>
+/* Light pages: no supabase-js. Paint the nav chip from what wallet.js cached on the last
+   game/account page, and from whether supabase-js left a session token behind. */
+(function () {
+  var chip = document.getElementById('wallet-chip');
+  if (!chip) return;
+  var ref = {{ supabase.url | dump | safe }}.replace(/^https?:\/\//, '').split('.')[0];
+  var signedIn = false, chips = null;
+  try {
+    signedIn = !!localStorage.getItem('sb-' + ref + '-auth-token');
+    chips = localStorage.getItem('0stakes.chips');
+  } catch (e) {}
+  chip.textContent = !signedIn ? 'Log in'
+    : chips !== null && chips !== '' ? Number(chips).toLocaleString('en-US') + ' chips' : 'Account';
+  chip.hidden = false;
+})();
+</script>
+{% endif %}
 {% if extraJs %}<script src="{{ extraJs }}"></script>{% endif %}
 </body>
 </html>

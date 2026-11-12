@@ -66,6 +66,8 @@ output.
 | Best session result | +$190 |
 | Worst session result | -$500 (full bankroll) |
 
+{% barchart %}{"title": "How the 24,700 Martingale sessions ended", "rows": [{"label": "Ended ahead", "value": 59.5, "text": "59.5%"}, {"label": "Busted", "value": 38.6, "text": "38.6%", "tone": "lose"}, {"label": "Behind, not busted", "value": 2.0, "text": "2.0%", "tone": "muted"}], "caption": "Up to 50 spins per session, $5 base bet, $500 bankroll. Shares add to 100.1% from rounding."}{% endbarchart %}
+
 ## The table limit almost never mattered
 
 The $500 table limit was set to be a realistic cap, but it turned out to be the wrong
@@ -86,6 +88,8 @@ Same seed, same 999,551 spins, flat $5 on red every time, no doubling:
 | Total wagered | $16,205,915 | $4,997,755 |
 | Net result | -$876,985 | -$271,605 |
 | ROI | -5.41% | -5.43% |
+
+{% barchart %}{"title": "Net loss on the same 999,551 spins", "rows": [{"label": "Martingale", "value": 876985, "text": "-$876,985", "tone": "lose"}, {"label": "Flat $5", "value": 271605, "text": "-$271,605", "tone": "lose"}], "caption": "Almost the same ROI (-5.41% vs -5.43%). Martingale lost more dollars because it wagered about 3.2 times as much."}{% endbarchart %}
 
 The ROI numbers land within a rounding error of each other, and both sit close to the {{
 rouletteOdds.houseEdge.standard }}% house edge itself. That's the entire finding: Martingale

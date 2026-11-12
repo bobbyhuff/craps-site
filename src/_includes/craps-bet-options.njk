@@ -1,5 +1,10 @@
 {#- Bet options shared by /games/craps/ and /games/crapless-craps/. craps.js
     wires every id here; both pages run the same engine. -#}
+  <details class="table-settings" id="tableSettings">
+    <summary>
+      <span class="ts-title">Table settings</span>
+      <span class="ts-sum" id="tableSettingsSummary" aria-hidden="true"></span>
+    </summary>
   <div class="bet-opts">
     <div class="mode-toggle" id="modeToggle">
       <span class="chip-label">Number bets</span>
@@ -16,6 +21,33 @@
     </label>
     <label class="let-it-ride"><input type="checkbox" id="comeOutWorking"> Bets work on the come-out <span class="hint">(Place, Buy, Hardways, Come odds)</span></label>
   </div>
+    <p class="preset-note">Quick bets are sized from your chip: $5 units, $6 on the 6 and 8. Molly places one step per tap (Pass Line, then max odds and Come bets). Presets just place bets for you. They don't change the house edge.</p>
+  </details>
+<script>
+/* Drawer: closed by default so the felt comes first; remembers the player's choice and
+   shows the live settings in the summary line. craps.js still wires every id inside. */
+(function () {
+  var d = document.getElementById('tableSettings');
+  var sum = document.getElementById('tableSettingsSummary');
+  try { if (localStorage.getItem('0stakes.crapsSettingsOpen') === '1') d.open = true; } catch (e) {}
+  d.addEventListener('toggle', function () {
+    try { localStorage.setItem('0stakes.crapsSettingsOpen', d.open ? '1' : '0'); } catch (e) {}
+  });
+  function paint() {
+    var mode = d.querySelector('input[name="numMode"]:checked');
+    var aw = document.getElementById('afterWin');
+    var co = document.getElementById('comeOutWorking');
+    sum.textContent = [
+      mode && mode.value === 'buy' ? 'Buy' : 'Place',
+      aw ? aw.options[aw.selectedIndex].text : '',
+      co && co.checked ? 'Working on come-out' : 'Off on come-out'
+    ].filter(Boolean).join(' · ');
+  }
+  d.addEventListener('change', paint);
+  window.paintTableSettings = paint;   // craps.js render() calls this after syncing the inputs
+  paint();
+})();
+</script>
 
   <div class="presets">
     <span class="chip-label">Quick bets</span>
@@ -25,5 +57,4 @@
       <button type="button" class="mini-btn" data-preset="ironCross">Iron Cross</button>
       <button type="button" class="mini-btn" id="mollyBtn">3-Point Molly</button>
     </div>
-    <p class="preset-note">Sized from your chip: $5 units, $6 on the 6 and 8. Molly places one step per tap (Pass Line, then max odds and Come bets). Presets just place bets for you. They don't change the house edge.</p>
   </div>

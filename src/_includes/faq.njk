@@ -1,0 +1,18 @@
+{#- Visible FAQ + matching FAQPage JSON-LD from one list, so the two can't drift.
+    Before including: {% set faq = [{ q: "Question?", a: "Plain-text answer." }, ...] %}
+    Answers are plain text (no HTML). Build numbers from the odds data with ~ so nothing
+    is hardcoded, e.g. a: "The edge is " ~ odds.houseEdgeStr.passLine ~ "%." -#}
+{% if faq and faq.length %}
+<h2>{{ faqTitle or "Frequently asked questions" }}</h2>
+{% for item in faq %}
+<h3>{{ item.q }}</h3>
+<p>{{ item.a }}</p>
+{% endfor %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{%- for item in faq %}
+{"@type":"Question","name":{{ item.q | dump | safe }},"acceptedAnswer":{"@type":"Answer","text":{{ item.a | dump | safe }}}}{% if not loop.last %},{% endif %}
+{%- endfor %}
+]}
+</script>
+{% endif %}

@@ -1,0 +1,23 @@
+{#- "Keep reading" block at the foot of every post.njk article. Picks other articles in the
+    same group (same game, or Industry, or the general strategy pages) via the
+    relatedArticles filter in .eleventy.js. Opt out with `noRelated: true`. -#}
+{% if not noRelated %}
+{% set _all = collections.strategy.concat(collections.pit) %}
+{% set _related = _all | relatedArticles(page.url, 6) %}
+{% set _group = _all | articleGroup(page.url) %}
+{% set _game = false %}
+{% for g in collections.games %}{% if g.fileSlug == _group %}{% set _game = g %}{% endif %}{% endfor %}
+{% if _related.length %}
+<aside class="related" aria-labelledby="related-title">
+  <h2 id="related-title">Keep reading</h2>
+  <ul class="related-list">
+    {% for item in _related %}
+    <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if _game %}
+  <div class="btn-row"><a class="btn" href="{{ _game.url }}">Play free {{ _game.data.title }} →</a></div>
+  {% endif %}
+</aside>
+{% endif %}
+{% endif %}

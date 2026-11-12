@@ -2,7 +2,7 @@
 layout: base.njk
 title: Blackjack
 seoTitle: "Play Free Blackjack Online: 6-Deck Shoe, True Payouts | 0stakes"
-description: Play free blackjack in your browser. Real 6-deck shoe, hit, stand, double down, split, and insurance. Blackjack pays 3:2, dealer stands on soft 17, no account.
+description: Play free blackjack in your browser. Real 6-deck shoe, hit, stand, double down, split, and insurance. Blackjack pays 3:2, dealer stands on soft 17, no account needed.
 extraCss: /games/blackjack/blackjack.css
 extraJs: /games/blackjack/blackjack.js
 tags: ["game"]
@@ -143,3 +143,25 @@ breadcrumb:
   <p class="strategy-link"><a href="/strategy/blackjack/">Read the blackjack rules and strategy guide →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/blackjack/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+<h2>How to play free blackjack</h2>
+<p>Pick a chip, tap the bet spot, and press <b>Deal</b>. You and the dealer each get two cards, with one dealer card face down. Your goal is a total closer to 21 than the dealer's without going over.</p>
+<ul>
+  <li><b>Hit</b> takes another card. <b>Stand</b> ends your turn.</li>
+  <li><b>Double</b> doubles the bet for exactly one more card. It is allowed on any first two cards, including after a split.</li>
+  <li><b>Split</b> turns a pair into two hands, each with its own bet.</li>
+  <li>The dealer then draws to 17 and stands on every 17, soft or hard.</li>
+</ul>
+<p>A two-card 21 pays {{ blackjackOdds.blackjackPayoutStr }}. Every other win pays even money, and a tie is a push. Turn on <b>Show basic-strategy hint</b> or <b>Flag strategy mistakes</b> under the table to check each decision against the <a href="/strategy/blackjack/basic-strategy/">basic strategy chart</a>, or drill single hands in the <a href="/games/blackjack/trainer/">strategy trainer</a>.</p>
+
+{% set faq = [
+  { q: "Is this blackjack game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "What rules does this blackjack table use?", a: "Six decks, dealer stands on soft 17, blackjack pays " ~ blackjackOdds.blackjackPayoutStr ~ ", double on any first two cards, double after split, one split per hand, and no surrender. Insurance pays " ~ blackjackOdds.insurancePayoutStr ~ "." },
+  { q: "Can I practice basic strategy here?", a: "Yes. Turn on the basic-strategy hint to see the correct play before you act, or turn on mistake flags to play first and get corrected after. Both use the same chart published on the strategy page, built for this table's exact rules." },
+  { q: "Should I take insurance?", a: "No. Insurance pays " ~ blackjackOdds.insurancePayoutStr ~ ", but the dealer's hole card is a ten less than one time in three, so the bet loses money over time. Basic strategy declines it every time." },
+  { q: "Can I practice card counting on this table?", a: "Yes. Cards come from a real six-deck shoe that is dealt down and reshuffled only when it runs low, so a running count stays meaningful from hand to hand. The status bar shows how many cards are left." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

@@ -1,0 +1,24 @@
+{#- Every strategy guide and Pit post for one game, as two link lists. Set `gameKey` before
+    including (defaults to the page's own folder name, which is right on /games/<game>/ and
+    /strategy/<game>/). Set `gameArticlesPitOnly = true` on hubs that already hand-list
+    their guides. Driven by the gameArticles filter in .eleventy.js. -#}
+{% set _key = gameKey or page.fileSlug %}
+{% set _all = collections.strategy.concat(collections.pit) %}
+{% set _guides = _all | gameArticles(_key, "strategy") %}
+{% set _pit = _all | gameArticles(_key, "pit") %}
+{% if _guides.length and not gameArticlesPitOnly %}
+<h2>Strategy guides</h2>
+<ul class="related-list">
+  {% for item in _guides %}
+  <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% if _pit.length %}
+<h2>Tested in The Pit</h2>
+<ul class="related-list">
+  {% for item in _pit %}
+  <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}

@@ -47,6 +47,8 @@ Short windows look very different from the long-run picture:
 | First 500 spins | 48.4% | 47.2% | 4.4% | -3.20% |
 | First 5,000 spins | 47.0% | 47.8% | 5.2% | -6.00% |
 
+{% barchart %}{"title": "ROI on red by sample size", "rows": [{"label": "First 50 spins", "value": 20.0, "text": "-20.00%", "tone": "lose"}, {"label": "First 500 spins", "value": 3.2, "text": "-3.20%", "tone": "lose"}, {"label": "First 5,000 spins", "value": 6.0, "text": "-6.00%", "tone": "lose"}, {"label": "All 1,000,000 spins", "value": 5.433, "text": "-5.433%", "tone": "lose"}], "caption": "Short samples swing widely. A million spins settles right next to the house edge."}{% endbarchart %}
+
 The first 50 spins in this run show zero greens at all and a red rate way off the true probability in either direction depending on the window; by 5,000 spins the numbers are already close to their long-run values. That's what convergence actually looks like: not a smooth march toward 47.37%, but a noisy one that only calms down once the sample is large.
 
 ## Why it happens
@@ -57,7 +59,7 @@ A fair coin-flip bet needs exactly two equally likely outcomes. Roulette's red/b
 
 **Red is not a 50/50 bet on an American wheel, because 0 and 00 aren't red or black.** They're the entire house edge, sitting quietly outside the 50/50 framing the bet seems to promise. A European wheel with only one zero cuts that gap roughly in half; see [American vs European Roulette](/strategy/roulette/american-vs-european/) for the side-by-side math.
 
-*Simulation and analysis by 0Stakes. Full methodology at [/methodology/](/methodology/).*
+*Simulation and analysis by 0stakes. Full methodology at [/methodology/](/methodology/).*
 
 ## Related
 

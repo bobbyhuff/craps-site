@@ -10,7 +10,7 @@ itself still serves from the old `craps-site.redclayreserve.workers.dev` host na
 
 Plain Eleventy + vanilla CSS/JS. **No bundler, no framework, no linter** —
 `package.json` has exactly one dependency (`@11ty/eleventy`). Tests use Node's built-in
-`node --test` (no test dependency): `npm test` runs `tests/*.test.js`. Client-side game code
+`node --test` (no test dependency): `npm test` runs `node --test`, which finds `tests/*.test.js` on any OS. Client-side game code
 (`craps.js`, `blackjack.js`) is a plain `<script>` tag, not a module — it can't
 `import`/`require` anything, which shapes how shared data gets to it (see "Payout data" below).
 
@@ -89,9 +89,39 @@ full `seoTitle` string.
 `breadcrumb: [{name, url}, ...]` is optional, only needed on pages 2+ levels deep — `base.njk`
 renders it as `BreadcrumbList` JSON-LD (always prepending "Home"), gated on the field being
 present. `ogType: article` on Pit posts (`post.njk` reads `date` to add `Article` JSON-LD
-automatically, no extra field needed for that part). `og:image`/`twitter:image` always point
-at `/og-image.png` site-wide — there's no per-page override mechanism, add one if a page
-ever needs a distinct share image.
+automatically, no extra field needed for that part). `og:image`/`twitter:image` use the
+page's `ogImage` (a root-relative path) or fall back to `/og-image.png`. Pit posts get
+`ogImage` automatically from `src/the-pit/the-pit.11tydata.js` whenever
+`src/img/og/<slug>.png` exists. Generate those with `python tools/make_og_images.py`
+(Pillow, reads the site's own woff2 fonts; `--force` regenerates all). Run it after adding
+a Pit post or changing a post title.
+
+**Pit charts**: `{% barchart %}{json}{% endbarchart %}` (paired shortcode in `.eleventy.js`)
+renders labelled horizontal bars from a JSON spec (`title`, `caption`, `rows` of `label`,
+`value`, `text`, optional `tone: "lose" | "muted"`). Only chart numbers that are already in
+the article's own tables, and keep the JSON on one line so Markdown passes the HTML through.
+
+**Accounts JS is page-scoped**: `base.njk` loads supabase-js, `wallet.js` and
+`wallet-bridge.js` only on `/games/*`, `/account/` and `/leaderboard/`. Every other page
+paints the nav chip from localStorage (`0stakes.chips`, cached by `wallet.js`, plus
+supabase-js's `sb-<ref>-auth-token`). A new page that needs `window.Wallet` must be added to
+the `needsWallet` condition.
+
+## Related links, FAQs and noindex
+
+- **Related articles are automatic.** `.eleventy.js` groups every article by game (Pit
+  `game:` frontmatter, or the `/strategy/<game>/` folder), `topic:`, or "general". `post.njk`
+  includes `related.njk` ("Keep reading", opt out with `noRelated: true`). Game pages and the
+  strategy hubs include `game-articles.njk`, which lists every guide and Pit post for that
+  game. A new article needs no list edits beyond the hand-written hub card.
+- **FAQs**: `{% set faq = [{ q, a }, ...] %}` then `{% include "faq.njk" %}` renders the
+  visible questions and the matching `FAQPage` JSON-LD from one list. Answers are plain text;
+  build numbers from the odds data with `~`, never hardcode them.
+- **`noindex: true`** frontmatter adds a robots noindex tag, drops the canonical, and keeps
+  the page out of `sitemap.xml` (used by `/account/`, `/feedback/`, `404.html`).
+- **Game pages** get `WebApplication` JSON-LD from `base.njk` automatically (`tags: ["game"]`).
+- **`/404.html`** is built from `src/404.njk`. Cloudflare serves it for unknown paths
+  because `wrangler.jsonc` sets `assets.not_found_handling` to `"404-page"`.
 
 ## Payout data — always sourced from `src/_data/odds.js` / `blackjackOdds.js`
 
@@ -153,10 +183,11 @@ if you add a new filled component. Playing-card ink (`blackjack.css`'s `--pcard-
 near-black regardless of the brand accent.
 
 **Brand mark**: the ring/chip icon (two circles, one dashed to form radiating ticks — see
-`base.njk`'s inlined nav SVG) doubles as the "0" in "0stakes"; the nav renders it next to
-"STAKES" text, not the literal digit. Everywhere the brand appears as plain text (titles,
-meta, prose, the domain itself) uses the literal string "0stakes" — the icon substitution is
-visual-only, never spelled out as "0STAKES" in running text.
+`base.njk`'s inlined nav SVG) is the logo mark. The wordmark next to it spells the name out
+as "0stakes" with the "0" in Mint (the older icon-as-the-0 "STAKES" wordmark read as
+"STAKES" to visitors, so it was dropped; `/og-image.png` still shows the old lockup and
+should be redrawn). Everywhere the brand appears as plain text (titles, meta, prose, the
+domain itself) uses the literal string "0stakes", lowercase s, never "0Stakes" or "0STAKES".
 
 ## Voice and tone (content pages)
 

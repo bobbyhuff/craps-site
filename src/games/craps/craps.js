@@ -729,6 +729,7 @@ function render() {
   document.querySelector(`input[name=numMode][value=${state.numMode}]`).checked = true;
   document.getElementById('afterWin').value = state.afterWin;
   document.getElementById('comeOutWorking').checked = state.comeOutWorking;
+  if (typeof window.paintTableSettings === 'function') window.paintTableSettings();
   document.getElementById('toggleWorkingBtn').textContent = anyWorkingBetsOn() ? 'Bets Off' : 'Bets On';
   const rb = document.getElementById('rebetBtn');
   const plan = rebetPlan();

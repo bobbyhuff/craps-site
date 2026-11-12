@@ -2,7 +2,7 @@
 layout: base.njk
 title: Crapless Craps
 seoTitle: "Play Free Crapless Craps Online: No Craps on the Come-Out | 0stakes"
-description: Play free Crapless Craps in your browser. 2, 3, 11 and 12 become points, Place bets cover all ten numbers, and the true 5.38% Pass Line edge is shown up front. No account.
+description: Play free Crapless Craps in your browser. 2, 3, 11 and 12 become points, Place bets cover all ten numbers, and the true 5.38% Pass Line edge is shown up front. No account needed.
 extraCss: /games/craps/craps.css
 extraJs: /games/craps/craps.js
 tags: ["game"]
@@ -190,3 +190,14 @@ breadcrumb:
   <p class="strategy-link"><a href="/strategy/craps/best-bets/">Every craps bet ranked by house edge →</a></p>
   <p class="bug-link"><a href="/feedback/?topic=bug&amp;from=/games/crapless-craps/" rel="nofollow">Report a bug</a></p>
 </div>
+
+<section class="game-guide post-body">
+{% set faq = [
+  { q: "Is this Crapless Craps game really free?", a: "Yes. Every chip is play money with no cash value. There is no deposit, no download and nothing to buy. An account is optional and only keeps your chip balance between visits." },
+  { q: "Is Crapless Craps better than regular craps?", a: "No. You can't lose the Pass Line on the come-out, but you also give up the 11 as a winner and take on four hard points. The Pass Line edge is " ~ craplessOdds.houseEdgeStr.passLine ~ "% here against " ~ odds.houseEdgeStr.passLine ~ "% at a standard table." },
+  { q: "Can you bet Don't Pass in Crapless Craps?", a: "No. With no craps numbers on the come-out there is no Don't Pass or Don't Come bet. Every line bet is a bet with the shooter." },
+  { q: "What do the 2, 3, 11 and 12 pay?", a: "Odds behind the line pay the true odds: " ~ (craplessOdds.trueOdds[2] | join(":")) ~ " on the 2 and 12 and " ~ (craplessOdds.trueOdds[3] | join(":")) ~ " on the 3 and 11. Placing them pays " ~ (craplessOdds.placeOdds[2] | join(":")) ~ " (a " ~ craplessOdds.houseEdgeStr.place2or12 ~ "% edge) and " ~ (craplessOdds.placeOdds[3] | join(":")) ~ " (a " ~ craplessOdds.houseEdgeStr.place3or11 ~ "% edge)." }
+] %}
+{% include "faq.njk" %}
+{% include "game-articles.njk" %}
+</section>

@@ -1,0 +1,27 @@
+---
+layout: base.njk
+title: Page not found
+seoTitle: "Page Not Found | 0stakes"
+description: That page doesn't exist. Pick a free casino game or a strategy guide instead.
+permalink: /404.html
+eleventyExcludeFromCollections: true
+noindex: true
+---
+<div class="hero">
+  <h1>No dice.</h1>
+  <p>That page doesn't exist, or it moved. Everything on 0stakes is one click from here.</p>
+  <div class="btn-row">
+    <a class="btn" href="/games/">Play a game</a>
+    <a class="btn secondary" href="/strategy/">Strategy guides</a>
+    <a class="btn secondary" href="/the-pit/">The Pit</a>
+  </div>
+</div>
+
+<div class="post-body">
+<h2>Games</h2>
+<ul class="related-list">
+  {% for game in collections.games %}
+  <li><a href="{{ game.url }}">{{ game.data.title }}</a></li>
+  {% endfor %}
+</ul>
+</div>

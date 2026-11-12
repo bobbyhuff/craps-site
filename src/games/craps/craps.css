@@ -1234,6 +1234,41 @@ body.sheet-open { overflow: hidden; }
   color: var(--text);
 }
 
+/* Table settings drawer (craps-bet-options.njk): closed by default so the felt is the
+   first thing on screen; the summary line shows the live settings. */
+.table-settings {
+  margin-bottom: var(--s-3);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-sm);
+  background: var(--felt-well);
+}
+.table-settings > summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px var(--s-3);
+  min-height: 44px;
+  padding: var(--s-2) var(--s-3);
+  cursor: pointer;
+  list-style: none;
+}
+.table-settings > summary::-webkit-details-marker { display: none; }
+.table-settings > summary::after {
+  content: '';
+  margin-left: auto;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.15s ease;
+}
+.table-settings[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+.ts-title { font-size: 13px; font-weight: 600; color: var(--bone); }
+.ts-sum { font-size: 12px; color: var(--text-dim); }
+.table-settings[open] .ts-sum { display: none; }
+.table-settings > .bet-opts { padding: 0 var(--s-3); margin-bottom: var(--s-2); }
+.table-settings > .preset-note { padding: 0 var(--s-3) var(--s-3); }
+
 .presets {
   display: flex;
   align-items: center;

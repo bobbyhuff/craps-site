@@ -63,6 +63,8 @@ long-run expected value of every hand dealt.
 | $25,000 | ~$350 |
 | $100,000 | ~$1,400 |
 
+{% barchart %}{"title": "Extra expected cost of 6:5 by total action", "rows": [{"label": "$1,000", "value": 14, "text": "~$14", "tone": "lose"}, {"label": "$5,000", "value": 70, "text": "~$70", "tone": "lose"}, {"label": "$10,000", "value": 140, "text": "~$140", "tone": "lose"}, {"label": "$25,000", "value": 350, "text": "~$350", "tone": "lose"}, {"label": "$100,000", "value": 1400, "text": "~$1,400", "tone": "lose"}]}{% endbarchart %}
+
 These are long-run expected-value estimates, the average cost if you played that much action
 an enormous number of times. Any single session can land above or below this figure purely
 from variance. The number that doesn't move is the rate: 6:5 costs about 1.4% more of

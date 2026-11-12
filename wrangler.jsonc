@@ -1,0 +1,16 @@
+// Same settings Wrangler's autoconfig generated on every production deploy (worker
+// craps-site, static assets only). Committing it lets non-production branch builds
+// (`npx wrangler versions upload`) find the assets directory instead of failing.
+{
+  "name": "craps-site",
+  "compatibility_date": "2026-11-10",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "_site",
+    // Serve _site/404.html (src/404.njk) with a 404 status for unknown paths, instead of
+    // an empty response.
+    "not_found_handling": "404-page"
+  }
+}

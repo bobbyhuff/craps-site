@@ -37,7 +37,7 @@ No. This is often a negative-expected-value hand whichever way you play it. The 
 
 ## What about surrender?
 
-Late surrender lets you give up a hand in exchange for losing half the original bet, generally after the dealer checks for blackjack. It is not offered at every table. Where it is available, standard charts often call for surrendering a two-card hard 16 versus a 10. Never assume a real casino has the same rules as the practice game.
+Late surrender lets you give up a hand in exchange for losing half the original bet, generally after the dealer checks for blackjack. It is not offered at every table. Where it is available, standard charts often call for surrendering a two-card hard 16 versus a 10. Never assume a real casino has the same rules as the practice game. The full list of surrender hands is in [when to surrender in blackjack](/strategy/blackjack/blackjack-surrender/).
 
 ## Why a pair of 8s is different
 
