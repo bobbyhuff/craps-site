@@ -603,9 +603,41 @@ main {
   .newsletter { padding: var(--s-5) var(--s-4); }
 }
 
-/* Nav wallet chip (rendered only when accounts are configured) */
-.wallet-chip {
-  padding: 4px 12px; border: 1px solid var(--edge-mint); border-radius: 999px;
-  color: var(--mint) !important; font-variant-numeric: tabular-nums;
+/* Nav wallet chip (rendered only when accounts are configured).
+   Needs the .nav-links a.wallet-chip selector: plain .nav-links a sets padding and a
+   transparent bottom border that would otherwise win and leave the pill open at the bottom. */
+.nav-links { align-items: center; }
+.nav-links a.wallet-chip {
+  padding: 5px 14px;
+  border: 1px solid var(--edge-mint);
+  border-radius: 999px;
+  color: var(--mint);
+  line-height: 1.2;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
-.wallet-chip[hidden] { display: none; }
+.nav-links a.wallet-chip:hover { color: var(--mint-bright); border-color: var(--mint); }
+.nav-links a.wallet-chip[hidden] { display: none; }
+.nav-links a { white-space: nowrap; }
+
+/* Phones: five nav items do not fit one row, so wrap them centered instead of squeezing
+   or clipping. The chip keeps a pill height, not the full 44px tap-target height. */
+@media (max-width: 640px) {
+  .nav-links { flex-wrap: wrap; justify-content: center; gap: 0 var(--s-1); }
+  .nav-links a { padding: 0 var(--s-2); }
+  .nav-links a.wallet-chip { min-height: 34px; padding: 0 14px; }
+}
+
+/* Chip count inside every game's buy-in dialog (built by wallet-bridge.js) */
+.overlay-wallet { margin: 0 0 var(--s-4, 16px); text-align: center; }
+.overlay-wallet .ow-row { display: flex; align-items: baseline; justify-content: center; gap: 10px; }
+.overlay-wallet .ow-label { color: var(--text-muted, #9fb0a6); font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
+.overlay-wallet .ow-amt { color: var(--mint, #35d07a); font-size: 26px; font-variant-numeric: tabular-nums; }
+.overlay-wallet .ow-max {
+  padding: 3px 10px; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  color: var(--mint, #35d07a); background: transparent;
+  border: 1px solid var(--edge-mint, rgba(53,208,122,.3)); border-radius: 999px;
+}
+.overlay-wallet .ow-max:hover { border-color: var(--mint, #35d07a); }
+.overlay-wallet .ow-note { margin: 6px 0 0; color: var(--text-dim, #77887e); font-size: 12.5px; line-height: 1.5; }
+.overlay-wallet .ow-note a { color: var(--mint, #35d07a); }

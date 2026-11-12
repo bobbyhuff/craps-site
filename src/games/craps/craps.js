@@ -272,7 +272,8 @@ function resetBankroll() {
 function showOverlay({ title, text, defaultValue, showCancel, confirmLabel, onConfirm }) {
   const overlay = document.getElementById('setupOverlay');
   document.getElementById('overlayTitle').textContent = title;
-  document.getElementById('overlayText').textContent = text + (globalThis.StakesWallet?.hint() ?? '');
+  document.getElementById('overlayText').textContent = text;
+  globalThis.StakesWallet?.paintOverlay();   // wallet bridge: chip count + Max
   const input = document.getElementById('overlayInput');
   input.value = defaultValue;
   const cancelBtn = document.getElementById('overlayCancel');
