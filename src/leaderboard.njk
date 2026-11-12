@@ -1,0 +1,33 @@
+---
+layout: base.njk
+title: Leaderboard
+seoTitle: "Chip Leaderboard: Top Bagholders and Daily Winners | 0stakes"
+description: The biggest chip balances on 0stakes and today's biggest winners. Chips are free play money with no cash value.
+permalink: /leaderboard/
+extraCss: /css/account.css
+extraJs: /js/leaderboard.js
+---
+<div class="account">
+  <h1>Leaderboard</h1>
+  <p class="account-lede">Chips are play money with no cash value. Boards show usernames only and refresh each time you open this page.</p>
+
+  {% if not supabase.url %}
+  <p class="form-notice" role="status">The leaderboard isn't connected yet.</p>
+  {% else %}
+  <p class="form-status" id="lb-status" role="status"></p>
+
+  <h2>Top 10 bagholders</h2>
+  <p class="field-hint">Biggest chip balances right now.</p>
+  <table class="ledger">
+    <thead><tr><th class="num">#</th><th>Player</th><th class="num">Chips</th></tr></thead>
+    <tbody id="lb-holders"><tr><td colspan="3">Loading...</td></tr></tbody>
+  </table>
+
+  <h2>Top 10 daily winners</h2>
+  <p class="field-hint">Biggest net winnings from games since midnight UTC (<span id="lb-reset"></span>).</p>
+  <table class="ledger">
+    <thead><tr><th class="num">#</th><th>Player</th><th class="num">Chips won</th></tr></thead>
+    <tbody id="lb-daily"><tr><td colspan="3">Loading...</td></tr></tbody>
+  </table>
+  {% endif %}
+</div>

@@ -60,6 +60,7 @@
     <a href="/games/" {% if page.url.startsWith("/games/") %}class="active"{% endif %}>Games</a>
     <a href="/strategy/" {% if page.url.startsWith("/strategy/") %}class="active"{% endif %}>Strategy</a>
     <a href="/the-pit/" {% if page.url.startsWith("/the-pit/") %}class="active"{% endif %}>The Pit</a>
+    {% if supabase.url and supabase.anonKey %}<a href="/leaderboard/" {% if page.url == "/leaderboard/" %}class="active"{% endif %}>Leaderboard</a>{% endif %}
     {% if supabase.url and supabase.anonKey %}<a id="wallet-chip" class="wallet-chip" href="/account/" hidden>Log in</a>{% endif %}
   </div>
 </nav>

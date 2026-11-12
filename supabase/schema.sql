@@ -189,3 +189,40 @@ revoke all on function public.claim_daily(), public.refill(), public.record_resu
   from public, anon;
 grant execute on function public.claim_daily(), public.refill(), public.record_result(text, bigint)
   to authenticated;
+
+-- ---------------------------------------------------------------- leaderboards (public)
+-- Only usernames and chip totals leave the database. Top 10 each.
+
+-- Biggest chip balances right now.
+create or replace function public.leaderboard_holders()
+returns table (rank int, username text, chips bigint)
+language sql stable security definer set search_path = public as
+$$
+  select (row_number() over (order by w.balance desc, p.created_at))::int,
+         p.username, w.balance
+    from public.wallets w
+    join public.profiles p on p.id = w.user_id
+   where w.balance > 0
+   order by w.balance desc, p.created_at
+   limit 10
+$$;
+
+-- Biggest net game winnings since 00:00 UTC today.
+create or replace function public.leaderboard_daily()
+returns table (rank int, username text, chips bigint)
+language sql stable security definer set search_path = public as
+$$
+  select (row_number() over (order by sum(t.amount) desc, p.username))::int,
+         p.username, sum(t.amount)::bigint
+    from public.transactions t
+    join public.profiles p on p.id = t.user_id
+   where t.kind = 'game'
+     and t.created_at >= (date_trunc('day', now() at time zone 'utc') at time zone 'utc')
+   group by p.id, p.username
+  having sum(t.amount) > 0
+   order by sum(t.amount) desc, p.username
+   limit 10
+$$;
+
+revoke all on function public.leaderboard_holders(), public.leaderboard_daily() from public;
+grant execute on function public.leaderboard_holders(), public.leaderboard_daily() to anon, authenticated;

@@ -81,3 +81,17 @@ your own SMTP provider under Authentication > Emails before real traffic.
 
 Handled by hand for now, as promised in `/privacy/`: Authentication > Users > delete the user.
 The wallet, profile and ledger rows cascade-delete with it.
+
+## Leaderboards
+
+`/leaderboard/` shows two public top-10 boards, from the SQL functions `leaderboard_holders()`
+(current balances) and `leaderboard_daily()` (net game winnings since 00:00 UTC, winners only).
+Only usernames and chip totals are exposed. The functions are `security definer`, so the tables
+themselves stay private. Run the leaderboard section of `supabase/schema.sql` on an existing
+project (it is idempotent).
+
+**Cheating:** results are reported by the browser, so anyone can inflate their own totals up to
+`max_daily_net_gain` per day (default 250,000). A leaderboard makes that worth doing. To bound it,
+lower `max_daily_net_gain` in `economy_settings` (it takes effect immediately). The real fix is
+server-side game resolution. Delete a cheater in Authentication > Users and they vanish from the
+boards. There is no username editing yet, so offensive usernames also have to be removed that way.
