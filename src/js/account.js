@@ -29,6 +29,7 @@
     $('pw-hint').hidden = m !== 'up';
     $('a-password').autocomplete = m === 'up' ? 'new-password' : 'current-password';
     $('acct-submit').textContent = m === 'up' ? 'Create account' : 'Log in';
+    $('acct-forgot').hidden = m === 'up';
     say('');
   }
   document.querySelectorAll('.acct-tabs [data-mode]').forEach(function (b) {
@@ -52,12 +53,32 @@
     $('acct-submit').disabled = false;
   });
 
+  $('acct-forgot').addEventListener('click', async function () {
+    var email = $('a-email').value.trim();
+    if (!email) { $('a-email').focus(); return say('Enter your email above, then press Forgot your password again.'); }
+    try {
+      await W.resetPassword(email);
+      say('If that email has an account, a reset link is on its way. It can take a few minutes.', true);
+    } catch (e) { say(msg(e)); }
+  });
+
+  $('reset-form').addEventListener('submit', async function (ev) {
+    ev.preventDefault();
+    var pw = $('r-password').value;
+    if (pw.length < 8) return say('Use at least 8 characters.');
+    $('reset-submit').disabled = true;
+    try { await W.setPassword(pw); $('r-password').value = ''; say('Password updated. You are signed in.', true); }
+    catch (e) { say(msg(e)); }
+    $('reset-submit').disabled = false;
+  });
+
   function fmtWhen(iso) { return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }); }
   function label(r) { return r.kind === 'game' ? 'Game: ' + r.game : r.kind.charAt(0).toUpperCase() + r.kind.slice(1); }
 
   async function paint() {
-    var signed = !!W.user;
-    $('acct-out').hidden = signed;
+    var signed = !!W.user && !W.recovering;
+    $('acct-reset').hidden = !(W.user && W.recovering);
+    $('acct-out').hidden = signed || !!W.recovering;
     $('acct-in').hidden = !signed;
     if (!signed) return;
     $('w-name').textContent = W.user.username || W.user.email;

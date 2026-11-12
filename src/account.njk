@@ -37,6 +37,19 @@ extraJs: /js/account.js
         <p class="field-hint" id="pw-hint" hidden>At least 8 characters.</p>
       </div>
       <button class="btn" type="submit" id="acct-submit">Log in</button>
+      <button class="linkish" type="button" id="acct-forgot">Forgot your password?</button>
+    </form>
+  </section>
+
+  <section id="acct-reset" hidden>
+    <form id="reset-form" class="form-card" novalidate>
+      <h2>Set a new password</h2>
+      <div class="field">
+        <label for="r-password">New password</label>
+        <input id="r-password" type="password" minlength="8" maxlength="72" autocomplete="new-password" required>
+        <p class="field-hint">At least 8 characters.</p>
+      </div>
+      <button class="btn" type="submit" id="reset-submit">Save password</button>
     </form>
   </section>
 

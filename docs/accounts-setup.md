@@ -13,7 +13,9 @@ link, `/account/` shows a "not connected" notice).
 3. Project Settings > API. Copy the **Project URL** and the **anon / publishable** key into
    `src/_data/supabase.js`. Both are public by design. **Never** use the `service_role` key.
 4. Authentication > URL Configuration. Set Site URL to `https://0stakes.com` and add
-   `http://localhost:8080` to Redirect URLs for local testing.
+   these Redirect URLs (password reset links return to `/account/`, and Supabase ignores any
+   redirect that is not on this list): `https://0stakes.com/account/` and
+   `http://localhost:8080/account/` for `npm run serve`.
 5. Authentication > Providers > Email. Leave "Confirm email" on (recommended). Under
    Authentication > Rate Limits, keep the defaults.
 6. `npm run build`, deploy as usual.
@@ -67,6 +69,15 @@ has four one-line hooks: `newState` (buy-in), `render` (sync), and the overlay c
 Known limits: a closed tab can lose the last few seconds of results if the browser cancels the
 request. Two tabs can bring the same chips to two tables. Both are acceptable for play money.
 
-## Not done yet
+## Password reset
 
-- Password reset page, and a privacy-policy update for stored emails (`/privacy/`).
+"Forgot your password?" on `/account/` calls `Wallet.resetPassword(email)`. The emailed link
+returns to `/account/`, where supabase-js fires `PASSWORD_RECOVERY`, `Wallet.recovering` becomes
+true and the page shows a "Set a new password" form. The reply never reveals whether an email
+has an account. Supabase's built-in email sender is limited to a few messages per hour: add
+your own SMTP provider under Authentication > Emails before real traffic.
+
+## Account deletion
+
+Handled by hand for now, as promised in `/privacy/`: Authentication > Users > delete the user.
+The wallet, profile and ledger rows cascade-delete with it.
